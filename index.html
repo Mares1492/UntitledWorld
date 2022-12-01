@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/stylesheet.css"  >
+    <meta charset="UTF-8">
+    <title>Planet</title>
+</head>
+<body>
+<div id = "modal" class="modal-overlay">
+    <div class="modal-content">
+
+        <div id="tile-name" class="modal-header">
+            Tile description
+        </div>
+        <div class="modal-body">
+            <div id="modal-content" ></div>
+        </div>
+        <div class="modal-footer">
+            <img id="landing-button" src="img/landing.png" width="45" height="45" alt="landing">
+            <img id="closeBtn" class="close-modal" width="30" height="30" src="img/x.png" alt="X">
+        </div>
+    </div>
+</div>
+<div class="world-description">
+    <label class="beautiful-text" for="story">Your story:</label>
+    <textarea id="story" placeholder="Put your story here..." rows="5" cols="33">This is a green planet with a lot of grass and trees.
+There are some mountains and a few rivers. There are also some cities and castles.
+There are also some farms and mines. There are also some caves.
+There are also some camps and houses. There are also some roads. There should also be a colony</textarea>
+    <button id="generate">Generate</button>
+</div>
+
+<div class="landscape-container" id="landscape-container">
+    <img src="img/world.png" alt="Some kind of planet">
+</div>
+<script src="index.js" ></script>
+</body>
+</html>
