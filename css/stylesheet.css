@@ -73,7 +73,7 @@ textarea:focus {
 .tiles{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -170,6 +170,9 @@ img{
 #take-off-button{
     cursor: pointer;
 }
+#go-to-button{
+    cursor: pointer;
+}
 
 .modal-header{
     text-decoration: underline #b4b1b8;
@@ -215,7 +218,7 @@ img{
 
 @keyframes landingAnimation{
     0%{
-        transform: translate(0, -1000px);
+        transform: translate(0, 1000px) scale(1.8);
         box-shadow:
                 0 5px 5px #801100,
                 0 10px 6px #B62203,
@@ -243,6 +246,7 @@ img{
                 0 30px 10px  #FAC000;
     }
     60%{
+        transform: scale(1.6);
         box-shadow:
                 0 10px 10px #801100,
                 0 5px 5px #B62203,
@@ -261,6 +265,7 @@ img{
                 0 18px 8px  #FAC000;
     }
     100%{
+        transform:translate(0, 0) scale(1);
         box-shadow:
                 0 1px 8px #801100,
                 0 2px 9px #B62203,
@@ -292,6 +297,7 @@ img{
                 0 17px 10px  #FAC000;
     }
     40%{
+        transform: scale(1.6);
         box-shadow:
                 0 5px 5px #801100,
                 0 10px 6px #B62203,
@@ -319,7 +325,7 @@ img{
                 0 30px 10px  #FAC000;
     }
     100%{
-        transform: translate(0, -1000px);
+        transform: translate(0, -1000px)  scale(2);;
         box-shadow:
                 0 5px 5px #801100,
                 0 10px 6px #B62203,
@@ -328,4 +334,25 @@ img{
                 0 25px 9px  #FF7500,
                 0 30px 10px  #FAC000;
     }
+}
+
+@keyframes playerPassing {
+    0%{
+        box-shadow:
+                0 5px 10px 5px #fad9c1,
+                0 5px 20px 10px #f9caa7
+    }
+    50%{
+        transform: scale(1.2);
+        box-shadow:
+                0 10px 20px 10px #fad9c1,
+                0 10px 20px 10px #f9caa7
+    }
+    100%{
+        box-shadow:
+                0 0 20px 10px #fad9c1,
+                0 0 10px 5px #f9caa7
+
+    }
+
 }

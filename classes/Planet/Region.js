@@ -15,6 +15,7 @@ class Region {
         this.height = height;
         this.planetName = planetName;
         this.filteredText = this.filterText();
+        this.cities = new Map();
         if (text.split('').length > 20) {
             this.basicTerrain = this.textBasedBasicTerrainGen();
         }
@@ -64,6 +65,25 @@ class Region {
             return [[this.terrainElements.rocket]];
         }
     }
+    addCity(city) {
+        if (this.cities.has(city.name)) {
+            console.log(`City ${city.name} already exists`);
+            return false;
+        }
+        this.cities.set(city.name, city);
+        return true;
+    }
+    getCities() {
+        return this.cities;
+    }
+    getCity(name) {
+        if (this.cities.has(name)) {
+            return this.cities.get(name);
+        }
+        console.log(`City ${name} not found`);
+        return false;
+    }
+
     getNumberOfElements(text) {
         let numberOfElements = new Map();
         text.split('.').forEach(sentence => sentence.split(' ').forEach(word => {
@@ -73,13 +93,12 @@ class Region {
                 numberOfElements.set(word, 1);
             }
         }));
-
         return numberOfElements;
     }
     getLandmarkSpawnMultiplier(key) {
         console.log(`Getting landmark spawn multiplier for ${key}`);
         const index = this.filteredText.indexOf(key);
-        console.log(`checking for pre ${key} word... It is ${this.filteredText.at(index-1)}`);
+        console.log(`Checking for pre ${key} word... It is ${this.filteredText.at(index-1)}`);
         let positive = this.isWordInElements(this.positiveAdjectives, this.filteredText.at(index-1));
         if (positive) {
             return 25;
@@ -161,7 +180,8 @@ class Region {
             element.height,
             element?.style,
             element?.description,
-            element?.passable,
+            element?.isLandable,
+            element?.isPassable,
             {planet:this.planetName,region:this.name}
         );
 
@@ -193,6 +213,7 @@ class Region {
         this.landscape[y][x].handleLanding(size);
     }
 
+
     getTile(x,y) {
         return this.landscape[y][x];
     }
@@ -216,7 +237,6 @@ class Region {
                         document.getElementById('take-off-button').style.display = 'block';
                     }else {
                         document.getElementById('take-off-button').style.display = 'none';
-                        
                     }
                     
                 }

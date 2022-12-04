@@ -35,7 +35,8 @@ class Planet {
     }
     addRegion(region) {
         if (this.regions.has(region.name)) {
-            console.log(`Region ${region.name} already exists`);
+            console.log(`Region '${region.name}' already exists`);
+            alert(`Region '${region.name}' already exists`);
         }
         else {
             this.regions.set(region.name, region);

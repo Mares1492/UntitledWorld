@@ -14,7 +14,7 @@ class Rocket extends Vehicle {
             return false;
         }
         console.log(`Landing at ${planet}|${region} at ${x},${y}`);
-        const landed = Planet.getPlanet(planet).getRegion(region).getTile(x,y).handleLanding(this.type,this.size);
+        const landed = Planet.getPlanet(planet).getRegion(region).getTile(x,y).handleLanding(this.type,this.size,this.img);
         if (landed) {
             this.x = x;
             this.y = y;
