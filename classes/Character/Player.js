@@ -1,6 +1,8 @@
 
 import Character from "./Character.js";
 import Planet from "../Planet/Planet.js";
+import planet from "../Planet/Planet.js";
+import region from "../Planet/Region.js";
 class Player extends Character{
   constructor(
       name,
@@ -23,8 +25,23 @@ class Player extends Character{
     this.equipped = equipped;
     this.abilities = abilities;
     this.transport = transport;
+    this.isAbleToAct = true;
   }
 
+    setIsUnableToAct(time) {
+        this.isAbleToAct = false;
+        setTimeout(() => {
+            this.isAbleToAct = true;
+        }, time);
+    }
+    getIsPlayerAbleToAct(action) {
+      if (this.isAbleToAct) {
+        return true;
+      }
+        alert(`You are not able to ${action} at the moment`);
+        return false;
+
+    }
 
     addAbility(ability) {
         if (this.abilities.has(ability.name)) {
@@ -106,7 +123,40 @@ class Player extends Character{
     goToRegion(region) {
         this.location = {...this.location, region:region};
     }
-    goToTile(tile) {
+
+    handleMovingToTile(tile) {
+        const xTo = tile.x;
+        const yTo = tile.y;
+        let xNow = this.getTile().x;
+        let yNow = this.getTile().y;
+        const region = Planet.getPlanet(this.getPlanet()).getRegion(this.getRegion());
+        let counter = 0;
+        let passable = true;
+        while (xTo !== xNow || yTo !== yNow) {
+                if (xNow < xTo) {
+                    xNow++;
+                    counter++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                }
+                if (xNow > xTo) {
+                    xNow--;
+                    counter++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                }
+                if (yNow < yTo) {
+                    yNow++;
+                    counter++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                }
+                if (yNow > yTo) {
+                    yNow--;
+                    counter++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                }
+            }
+            return {x:xNow,y:yNow};
+        }
+    goToTile(tile,updateMap) {
         const region = Planet
             .getPlanet(this.location.planet)
             .getRegion(this.location.region)
@@ -114,12 +164,23 @@ class Player extends Character{
             region
                 .getTile(this.location.tile.x,this.location.tile.y)
                 .handlePlayerDeparture()
+            updateMap();
+        const location = this.handleMovingToTile(tile);
+        console.log(`New location is x:${location.x} | y:${location.y}`);
+        //this.goToLocation({...this.location, tile:location});
         }
-        this.location = {...this.location, tile:tile};
-        region
+        const arrived = region
             .getTile(tile.x,tile.y)
             .handlePlayerArrival();
+        if (arrived) {
+            this.location = {...this.location, tile:tile};
+            return true;
+        }
+        return false;
+    }
 
+    handleLeavePlanetSurface() {
+        this.location = {...this.location, tile:null};
     }
     goToLocation(location) {
         this.location = location;
