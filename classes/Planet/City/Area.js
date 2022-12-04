@@ -1,5 +1,3 @@
-import Region from "./Region.js";
-
 const cityElements = {
     cityBuilding: {
         symbol:'|^|',
@@ -18,8 +16,11 @@ const cityElements = {
     water: {symbol:'~',color: '#F8F8F8',img:"img/water.png",width:"35",height:"35",style:"opacity: 0.5;",name:"Water"},
 };
 
-class City {
-    constructor(name) {
-
+class Area {
+    constructor(name=new Date().getTime().toString(),description="no data",location="no data") {
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.factions = [];
     }
 }
