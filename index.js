@@ -1,320 +1,214 @@
+import Planet from "./classes/Planet/Planet.js";
+import Player from "./classes/Character/Player.js";
+import Region from "./classes/Planet/Region.js";
+import Rocket from "./classes/Vehicle/Rocket.js";
 const submit = document.getElementById('generate');
 const landscapeContainer = document.getElementById('landscape-container');
-const close = document.getElementById("closeBtn");
-const modal = document.getElementById('modal');
-const tileName = document.getElementById('tile-name');
-const modalContent = document.getElementById('modal-content');
+const landingBtn = document.getElementById('landing-button');
+const takeOffBtn = document.getElementById('take-off-button');
+const goToBtn = document.getElementById('go-to-button');
+document.getElementById('take-off-button').style.display = 'none';
+document.getElementById('go-to-button').style.display = 'none';
 
-class Landscape {
-    constructor(text, width, height, terrainElements, positiveAdjectives,negativeAdjectives,positiveEconomicAdjectives,negativeEconomicAdjectives) {
-        this.text = text;
-        this.positiveAdjectives = positiveAdjectives;
-        this.negativeAdjectives = negativeAdjectives;
-        this.positiveEconomicAdjectives = positiveEconomicAdjectives;
-        this.negativeEconomicAdjectives = negativeEconomicAdjectives;
-        this.terrainElements = terrainElements;
-        this.width = width;
-        this.height = height;
-        this.filteredText = this.filterText();
-        this.basicTerrain = text
-            .split('.')[0]
-            .split(' ')
-            .map(word => this.isWordInElements(Object.keys(this.terrainElements), word)).filter(word=>word); //uses the first sentence to determine the basic terrain
-        console.log(`This lands basic terrain contains ${this.basicTerrain}`);
-        this.landscape = this.generate();
-        this.numberOfElements = this.getNumberOfElements(text);
-        if (this.basicTerrain.length) {
-            this.addElements();
-        }
-    }
-    generate() {
-        if (this.basicTerrain.length) {
-            let landscape = [];
-            let randomTerr = 0;
-            for (let y=0; y < this.height; y++) {
-                landscape.push([]);
-                for (let x=0; x < this.width; x++) {
-                    randomTerr = Math.floor(Math.random() * this.basicTerrain.length);
-                    const pickedTerrain = this.terrainElements[this.basicTerrain[randomTerr]];
-                    landscape[y][x] = new Terrain(
-                        pickedTerrain.name,
-                        pickedTerrain.symbol,
-                        x,
-                        y,
-                        pickedTerrain.color,
-                        pickedTerrain.img,
-                        pickedTerrain.width,
-                        pickedTerrain.height,
-                        pickedTerrain?.style
-                    );
-                    //landscape[y][x] = this.terrainElements[this.basicTerrain[randomTerr]];
-                }
-            }
-            return landscape;
-        } else {
-            return [[this.terrainElements.rocket]];
-        }
-    }
-    getNumberOfElements(text) {
-        let numberOfElements = new Map();
-        console.log(text);
-        text.split('.').forEach(sentence => sentence.split(' ').forEach(word => {
-            if (numberOfElements.has(word)) {
-                numberOfElements.set(word, numberOfElements.get(word) + 1);
-            } else {
-                numberOfElements.set(word, 1);
-            }
-        }));
+const homePlanet = new Planet(
+    "Home Planet",
+    "Terrestrial",
+    "Your home-planet",
+    "Breathable",
+    "Moderate",
+    "1G",
+    ["Hills","Mountains","Forests","trees","grass"],
+    "Moderate",
+    "Sapient life",
+    ["Water", "Minerals", "Metals","Lumber", "Plants", "Animals"],
+    null);
 
-        return numberOfElements;
-    }
-    getLandmarkSpawnMultiplier(key) {
-        console.log(`text by words: #${this.filteredText}#`);
-        let index = this.filteredText.indexOf(key);
-        console.log(`index of ${key} is ${index}`);
-        let positive = this.isWordInElements(this.positiveAdjectives, this.text.at(index-1));
-        if (positive) {
-            return 20;
-        }
-        let negative = this.isWordInElements(this.negativeAdjectives, this.text.at(index-1));
-        if (negative) {
-            return 5;
-        }
-        return 10;
-    }
-
-    filterText() {
-        let toFilter = ["of","and","so","the","are","a","an"];
-        return this.text.split(' ').filter(word => !toFilter.includes(word)).join(' ');
-    }
-
-
-    checkForCluster(element, x, y) {
-        let index = this.text.indexOf(element);
-        let cluster = [];
-        let negative = this.isWordInElements(this.negativeEconomicAdjectives, this.text.at(index-1));
-        if (negative) {
-            return false;
-        }
-        let positive = this.isWordInElements(this.positiveEconomicAdjectives, this.text.at(index-1));
-        if (positive) {
-            if (y !== 0) {
-                cluster.push({y:y - 1,x:x});
-            }
-            //check down
-            if (y !== this.height - 1) {
-                cluster.push({y:y + 1,x:x});
-            }
-            //check left
-            if (x !== 0) {
-                cluster.push({y:y,x:x-1});
-            }
-            //check right
-            if (x !== this.width - 1) {
-                cluster.push({y:y,x:x+1});
-            }
-            if (!cluster.length) {
-                return false;
-            }
-            return cluster;
-        }
-        return false;
-    }
-
-    createCluster(element, cluster) {
-        for (let i=0; i < cluster.length; i++) {
-            this.addElement(element, cluster[i].x, cluster[i].y);
-        }
-
-    }
-
-    isWordInElements(elements, key) {
-        if (key){
-            key = key.toLowerCase();
-            for (const element of elements) {
-                if(element.toLowerCase().
-                startsWith(key.slice(0, Math.max(element.length - 1, 1)))){
-                    return element;
-                }
-            }
-        }
-        return false;
-    }
-
-    addElement(element, x, y) {
-        this.landscape[y][x] = terrainElements[element];
-
-    }
-
-    addElements() {
-        const terrainElementKeys = Object.keys(this.terrainElements);
-        for (const [key, value] of this.numberOfElements.entries()) {
-            let element = this.isWordInElements(terrainElementKeys, key);
-            if (element) {
-                let spawnMultiplier = this.getLandmarkSpawnMultiplier(element);
-                console.log(`spawn multiplier for ${element} is ${spawnMultiplier}`);
-                for (let i = 0; i<(value+Math.floor(Math.random() * spawnMultiplier)); i++) { //10 is default but it will be based on adjectives
-                    let x = Math.floor(Math.random() * this.width);
-                    let y = Math.floor(Math.random() * this.height);
-                    //console.log(`adding element ${element} to ${x} : ${y}`);
-                    const cluster = this.checkForCluster(element, x, y)
-                    console.log(`cluster exists: ${cluster}`);
-                    if (cluster) {
-                        this.createCluster(element, cluster);
-                    }else {
-                        this.addElement(element, x, y);
-                    }
-                }
-            }
-        }
-    }
-
-
-    printLandscape() {
-        return this.landscape;
-    }
-}
-
-class Terrain {
-    constructor(name,symbol, x, y, color,img,width,height,style="",description="No data") {
-        this.color = color;
-        this.symbol = symbol;
-        this.x = x;
-        this.y = y;
-        this.name = name;
-        this.img = img;
-        this.width = width;
-        this.height = height;
-        this.style = style;
-        this.cluster = false;
-        this.description = description;
-    }
-    addToCluster(clusterNr) {
-        this.cluster = true;
-        this.clusterNr = clusterNr;
-    }
-    destroy() {
-        this.symbol = ' ';
-        this.img = '/img/fire.png';
-        this.description = 'This place was destroyed';
-    }
-    landAt() {
-        this.terrImg = this.img;
-        this.terrDescription = this.description;
-        this.img = '/img/rocket.png';
-        this.description = 'This is your rocket';
-    }
-    landOff() {
-        this.img = this.terrImg;
-        this.description = this.terrDescription;
-    }
-}
-
-class Rocket {
-    constructor(name, x, y,img,width,height) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.img = img;
-        this.width = width;
-        this.height = height;
-    }
-
-}
+const player = new Player(
+    "Player1",
+    {health:20, defense:0, attack:0, speed:1},
+    {str:10,dex:10,int:10,agi:10,cha:10},
+    {planet:"Home Planet",region:"Home",tile:{x:0,y:0}},
+    new Rocket("Rocket",0,0,"/img/rocket-on-ground.png",30));
+console.log(homePlanet);
+console.log(player);
 
 const terrainElements = {
-    rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'img/rocket.png', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'rocket'},
-    water: {symbol:'~',color: '#F8F8F8',img:"img/water.png",width:"35",height:"35",style:"opacity: 0.5;",name:"Water"},
-    ocean: {symbol:'~',color: '#F8F8F8',img:"img/water.png",width:"35",height:"35",style:"opacity: 0.5;",name:"Ocean"},
-    sand: {symbol:'.', color: '#909090',img:"img/sand.png",width:"8",height:"8",style:"opacity: 0.7;background-repeat: repeat;",name:"sand"},
-    rock: {symbol:':', color: '#909090',img:"img/rock.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"rock"},
-    desert: {symbol:'*', color: '#909090',img:"img/sand.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"desert"},
-    green: {symbol:',', color: '#909090',img:"img/grass.png",width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"Grass"},
-    grass: {symbol:',', color: '#B0B0B0',img:"img/grass.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Grass"},
-    trees: {symbol:'↑', color: '#585858',img:"img/tree.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Trees"},
+    rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'img/rocket.png', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'Rocket'},
+    ocean: {symbol:'~',color: '#F8F8F8',img:"img/water.png",width:"35",height:"35",style:"opacity: 0.5;",name:"An Ocean",passable:false,description:"A large body of water"},
+    sea: {symbol:'~',color: '#F8F8F8',img:"img/water.png",width:"35",height:"35",style:"opacity: 0.5;",name:"A sea",passable:false,description:"A large body of water, not as large as an ocean though"},
+    sand: {symbol:'.', color: '#909090',img:"img/sand.png",width:"8",height:"8",style:"opacity: 0.7;background-repeat: repeat;",name:"Sand"},
+    rock: {symbol:':', color: '#909090',img:"img/rock.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Rock"},
+    desert: {symbol:'*', color: '#909090',img:"img/desert.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Desert"},
+    plain: {symbol:',', color: '#B0B0B0',img:"img/grass.png",width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"Plains"},
+    wildness: {symbol:',', color: '#B0B0B0',img:["img/grass.png","img/forest.png","img/rock.png",],width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"wildness",description:"A wild place, with a lot of different things"},
+    grass: {symbol:',', color: '#909090',img:"img/grass.png",width:"13",height:"13",style:"opacity: 0.7;background-repeat: space;",name:"Grass"},
+    trees: {symbol:'↑', color: '#909090',img:"img/tree.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Trees"},
     town: {symbol:'|_|_|', color: '#909090',img:"img/town.png",width:"15",height:"15",style:"background-repeat: no-repeat;",name:"Town"},
-    palace: {symbol:'|^|^|^|', color: '#909090',img:"img/palace.png",width:"15",height:"15",name:"palace"},
-    forest: {symbol:'↑↑↑', color: '#585858',img:"img/forest.png",width:"30",height:"30",name:"forest"},
-    river: {symbol:'≈',color: '#F8F8F8',img:"img/river.png",width:"35",height:"35",style:"opacity: 0.5;background-repeat: space;",name:"River"},
-    mountain: {symbol:'/\\\\',color: '#606060',img:"img/mountain.png", width:"40",height:"40",name:"Mountain"},
-    road: {symbol:'─',color: '#A0A0A0',img:"img/road.png",width:"30",height:"30",name:"road"},
-    house: {symbol:'|^|',color: '#606060',img:"img/house.png",width:"23",height:"23",name:"house"},
-    castle: {symbol:'|_|',color: '#909090',img:"img/castle.png",width:"30",height:"30",name:"castle"},
-    city: {symbol:'|_|_|_|',color: '#909090',img:"img/city.png",width:"30",height:"30",name:"city"},
-    camp: {symbol:'(^)',color: '#606060',img:"img/camp.png",width:"25",height:"25",name:"camp"},
-    bridge: {symbol:'=',color: '#383838',img:"img/bridge.png",width:"30",height:"30",name:"Bridge"},
-    cave: {symbol:'()',color: '#606060',img:"img/cave.png",width:"20",height:"20",name:"Cave"},
-    mine: {symbol:'()',color: '#606060',img:"img/mine.png",width:"20",height:"20",name:"mine"},
-    farm: {symbol:'[=^=]',color: '#909090',img:"img/farm.png",width:"20",height:"20",name:"farm"},
-    village: {symbol:'|_|_|_|_|',color: '#909090',img:"img/village.png",width:"30",height:"30",name:"village"},
-    sky: {symbol:'\n',color: '#E8E8E8',img:"img/sky.png",width:"30",height:"30",name:"sky"},
-    colony: {symbol:'|-|(|)|_|',color: '#606060',img:"img/colony.png",width:"30",height:"30",name:"colony"},
-    lumbermill: {symbol:'↑__|_|_↑',color: '#606060',img:"img/lumbermill.png",width:"20",height:"20",name:"lumbermill"},
-    battle: {symbol:'X',color: '#606060',img:"img/battle.png",width:"20",height:"20",name:"battle"},
-    ruin: {symbol:'/||\\',color: '#606060',img:"img/ruin.png",width:"20",height:"20",name:"ruin"},
-    fire: {symbol:'F',color: '#606060',img:"img/fire.png",width:"20",height:"20",name:"fire"},
-    volcano:{symbol:'V',color: '#606060',img:"img/volcano.png",width:"30",height:"30",name:"volcano"},
+    palace: {symbol:'|^|^|^|', color: '#909090',img:"img/palace.png",width:"15",height:"15",name:"Palace"},
+    forest: {symbol:'↑↑↑', color: '#585858',img:"img/forest.png",width:"30",height:"30",name:"Forest",isLandable:false},
+    river: {symbol:'≈',color: '#F8F8F8',img:"img/river.png",width:"35",height:"35",style:"opacity: 0.5;background-repeat: space;",name:"River",description:"At this place, the river overflowed strongly. It is not possible to cross it.",isPassable:false,isLandable:false},
+    mountain: {symbol:'/\\\\',color: '#606060',img:["img/mountain.png","img/mountains.png"], width:"40",height:"40",name:"Mountains",isPassable:false},
+    quest: {symbol:'+',color: '#A0A0A0',img:"img/quest.png",width:"30",height:"30",name:"Quest Marker",description: "A quest marker. You can may find something interesting there."},
+    house: {symbol:'|^|',color: '#909090',img:"img/house.png",width:"15",height:"15",name:"House",description: "A lonely house in the centre of wildness."},
+    castle: {symbol:'|_|',color: '#909090',img:"img/castle.png",width:"30",height:"30",name:"Castle"},
+    city: {symbol:'|_|_|_|',color: '#909090',img:"img/city.png",width:"30",height:"30",name:"City"},
+    camp: {symbol:'(^)',color: '#606060',img:"img/camp.png",width:"25",height:"25",name:"Camp"},
+    //bridge: {symbol:'=',color: '#383838',img:"img/bridge.png",width:"30",height:"30",name:"Bridge"},
+    cave: {symbol:'()',color: '#606060',img:"img/cave.png",width:"20",height:"20",name:"Cave",description: "Dark and dusty cave. You can find something interesting there(or not).",isLandable:false},
+    mine: {symbol:'()',color: '#B0B0B0',img:"img/mine.png",width:"15",height:"15",name:"Mine",description:"A mine. You can find minerals there. Hard labor is required."},
+    farm: {symbol:'[=^=]',color: '#909090',img:"img/farm.png",width:"20",height:"20",name:"Farm"},
+    village: {symbol:'|_|_|_|_|',color: '#909090',img:"img/village.png",width:"30",height:"30",name:"Village"},
+    sky: {symbol:'\n',color: '#E8E8E8',img:"img/sky.png",width:"30",height:"30",name:"Sky"},
+    colony: {symbol:'|-|(|)|_|',color: '#606060',img:"img/colony.png",width:"30",height:"30",name:"Colony",description: "A colony. Nice."},
+    lumber: {symbol:'↑__|_|_↑',color: '#B0B0B0',img:"img/lumbermill.png",width:"15",height:"15",name:"Lumber-camp",description: "A lumber-camp. You can find wood there."},
+    battle: {symbol:'X',color: '#606060',img:"img/battle.png",width:"20",height:"20",name:"Battle",isPassable:false,description: "Battlefield..."},
+    ruin: {symbol:'/||\\',color: '#606060',img:"img/ruin.png",width:"20",height:"20",name:"Ruin"},
+    fire: {symbol:'F',color: '#606060',img:"img/fire.png",width:"20",height:"20",name:"Fire",isPassable:false},
+    volcano:{symbol:'V',color: '#606060',img:"img/volcano.png",width:"30",height:"30",name:"Volcano",isPassable:false},
+    hill:{symbol:'^#^',color: '#B0B0B0',img:"img/hill.png",width:"50",height:"50",name:"Hills"},
+    swamp:{symbol:'≈≈',color: '#606060',img:"img/swamp.png",width:"15",height:"15",name:"Swamp"},
+    lake:{symbol:'≈≈≈',color: '#909090',img:"img/lake.png",width:"30",height:"30",name:"Lake",description:"A lake big enough to be mentioned of"},
+    field:{symbol:'___',color: '#B0B0B0',img:"img/field.png",width:"37",height:"37",name:"Field"},
 }
 
-const positiveAdjectives = ["big","good","lot"];
-const negativeAdjectives = ["bad","small","little","few"]
-const positiveEconomicAdjectives = ["rich","wealthy","poverty","wealth"];
-const negativeEconomicAdjectives = ["poor","poverty","unwealthy","unwealth"];
+const positiveAdjectives = ["lot","many","much"];
+const negativeAdjectives = ["few"]
+const positiveEconomicAdjectives = ["rich","wealthy","poverty","wealth","big","good","huge","gigantic","vast","great"];
+const negativeEconomicAdjectives = ["poor","poverty","unwealthy","unwealth","bad","small","little","poorly"];
 
 // const description = "This is a green planet with a lot of grass and trees.
 // There are some mountains and a few rivers. There are also some cities and castles.
 // There are also some farms and mines. There are also some caves.
 // There are also some camps and houses. There are also some roads. There should also be a colony"
 
-
-
 const getStory = (type) => {
     const story = document.getElementById('story');
     if (type === "Text") {
         return story.value;
     }
-
 }
 
-const openModal=(desc,name)=> {
-    modalContent.innerHTML = desc;
-    tileName.innerHTML = name;
+const goToTile = () => {
+    if (player.getIsPlayerAbleToAct("go to new tile")) {
+        player.setIsUnableToAct(3000)
+        const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
+        const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
+        if (player.getTile().x === x && player.getTile().y === y) {
+            alert("You are already there!");
+        }
+        else {
+            const playerTile = player.getTile();
+            const timeout = (Math.abs(x-playerTile.x)*200+Math.abs(y-playerTile.y)*200);
+            const arrived = player.goToTile({x:x, y:y},updateMap);
+            if (arrived) {
+                console.log(timeout);
+                setTimeout(() => {
+                    updateMap();
+                },timeout+200);
 
-    modal.style.display = 'block'
-};
+                //TODO:tile based timeout maybe?
 
-const closeModal=()=> modal.style.display = 'none';
+            } else {
+                alert("You can't go there!")
+            }
+        }
+    }
+}
 
-// Close modal
+const tryToTakeOff = () => {
+    if (player.getIsPlayerAbleToAct("Take Off")) {
+        player.setIsUnableToAct(5000)
+        const landedOff = player.getTransport().takeOff();
+        if (landedOff) {
+            player.handleLeavePlanetSurface();
+            document.getElementById('go-to-button').style.display = 'none';
+            document.getElementById('landing-button').style.display = 'block';
+            document.getElementById('take-off-button').style.display = 'none';
 
-const generatePic = () =>{
-    const text = getStory("Text");
-    const landscape = new Landscape(text, parent.innerWidth/50, parent.innerHeight/45, terrainElements,positiveAdjectives,negativeAdjectives,positiveEconomicAdjectives,negativeEconomicAdjectives);
-    landscapeContainer.innerHTML = landscape.printLandscape().map(el =>
-        `<div class="tiles">
-            ${el.map(el => `
-                <div 
-                class="tile" 
-                style="background-color: ${el.color}" 
-                id="${el.x+''+el.y}"
-                onclick="openModal('${el.description}','${el.name}')"
-                 >
-                    <img 
-                        style="${el.style}" 
-                        src="${el.img}" 
-                        width="${el.width}" 
-                        height="${el.height}" 
-                        alt="${el.symbol}" 
-                        class="element" 
-                    >
-                </div>`).join('')}
-         </div>`).join('');
+            const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
+            const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
+            document.getElementById(`${x + '-' + y}`).style.animation = "takeOffAnimation 5s";
+            setTimeout(() => {
+                updateMap();
+            }, 5000);
+        } else {
+            alert("You can't take off from here!");
+        }
+    }
+}
+
+const tryToLand = async () => {
+    if (player.getIsPlayerAbleToAct("Land")) {
+        player.setIsUnableToAct(5000)
+        const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
+        const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
+        console.log(x, y, player.getPlanet(), player.getRegion())
+        const hasLanded = player.getTransport()
+            .landAt(player.getPlanet(), player.getRegion(), x, y);
+        if (hasLanded) {
+            player.goToTile({x: x, y: y}, updateMap);
+            updateMap();
+            document.getElementById('go-to-button').style.display = 'block';
+            document.getElementById('landing-button').style.display = 'none';
+            document.getElementById(`${x + '-' + y}`).style.animation = "landingAnimation 5s";
+            setTimeout(() => {
+                document.getElementById(`${x + '-' + y}`).style.animation = "";
+            }, 5000);
+        } else {
+            alert("You can't land here!");
+        }
+    }
+}
+
+const updateMap = (planet=homePlanet,regionName="Home") => {
+    const region = planet.getRegion(regionName)
+    landscapeContainer.innerHTML = region.getLandscape();
     landscapeContainer.scrollIntoView();
 }
 
+const generatePlanet = ({props}) => { // creates a new planet by optional params
+    new Planet(
+        props?.name,
+        props?.type,
+props?.description,
+        props?.temperature,
+        props?.gravity,
+        props?.gravity,
+        props?.terrain,
+        props?.water,
+        props?.life,
+        props?.resources);
 
-close.addEventListener('click', closeModal);
+}
+
+const generatePic = () =>{
+    const planet = Planet.getPlanet("Home Planet") //adjust to get planet from input
+    const text = getStory("Text");
+    const region = new Region(
+        "Home",
+        text,
+        parent.innerWidth/50,
+        parent.innerHeight/45,
+        terrainElements,
+        positiveAdjectives,
+        negativeAdjectives,
+        positiveEconomicAdjectives,
+        negativeEconomicAdjectives,
+        planet.name
+        );
+    player.location = {planet:planet.name,region:region.name};
+    console.log("Adding: ",region,"To: ",planet);
+    planet.addRegion(region);
+    updateMap();
+}
+
+
+addEventListener('error', updateMap);
+landingBtn.addEventListener('click', tryToLand);
+takeOffBtn.addEventListener('click', tryToTakeOff);
+goToBtn.addEventListener('click', goToTile);
 submit.addEventListener('click', generatePic);
+
 
 
 
