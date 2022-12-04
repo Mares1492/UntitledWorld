@@ -1,3 +1,7 @@
+* {
+    font-family: "Fira Code Retina", monospace;
+}
+
 label,
 textarea {
     font-size: .8rem;
@@ -11,13 +15,14 @@ textarea {
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
     resize: none;
+    transition: all .3s ease;
+}
+textarea:focus {
+    transform: scale(2) translateY(6em);
+    z-index: 10;
+
 }
 
-
-label {
-    display: block;
-    margin-bottom: 10px;
-}
 
 .beautiful-text{
     font-size: 1em;
@@ -85,6 +90,7 @@ label {
     justify-content: center;
     align-items: center;
     transition:all 100ms ease-in;
+    user-select: none;
 }
 
 .tile:hover{
@@ -92,14 +98,15 @@ label {
     transition: all 500ms ease;
     box-shadow: 1px 2px 3px  #000000;
     filter: opacity(1);
-    z-index: 10;
+    z-index: 5;
     cursor: pointer;
 }
 
 .tile:active{
     transform: scale(0.8);
-    transition: all 300ms ease-in-out;
+    transition: all 100ms ease-in-out;
     box-shadow: 1px 1px 1px #999;
+    z-index: 2;
 }
 
 img{
@@ -129,7 +136,7 @@ img{
 }
 
 .modal-content{
-    border: 1px solid #6f6d72;
+    border: 3px solid #6f6d72;
     background-color: #b4b1b8;
     border-radius: 5px;
     margin: 20% auto;
@@ -140,6 +147,8 @@ img{
     justify-content: center;
     align-items: center;
     box-sizing: content-box;
+    z-index: auto;
+    animation: ease-in 0.5s modalsAnimation;
 }
 
 .modal-header h2, .modal-footer h3{
@@ -158,6 +167,9 @@ img{
 #landing-button{
     cursor: pointer;
 }
+#take-off-button{
+    cursor: pointer;
+}
 
 .modal-header{
     text-decoration: underline #b4b1b8;
@@ -168,4 +180,152 @@ img{
 
 .modal-body{
     padding: 10px 20px;
+}
+
+.cords-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    border-bottom: 2px solid #6f6d72;
+
+}
+
+.cords{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+
+}
+
+@keyframes modalsAnimation{
+    from{
+        transform: scale(0) translateY(-1000px);
+        filter: opacity(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+
+@keyframes landingAnimation{
+    0%{
+        transform: translate(0, -1000px);
+        box-shadow:
+                0 5px 5px #801100,
+                0 10px 6px #B62203,
+                0 15px 7px #D73502,
+                0 4px 8px #FC6400,
+                0 25px 9px  #FF7500,
+                0 30px 10px  #FAC000;
+    }
+    20%{
+        box-shadow:
+                0 5px 5px #801100,
+                0 12px 6px #B62203,
+                0 7px 7px #D73502,
+                0 10px 8px #FC6400,
+                0 15px 9px  #FF7500,
+                0 17px 10px  #FAC000;
+    }
+    40%{
+        box-shadow:
+                0 5px 5px #801100,
+                0 10px 6px #B62203,
+                0 15px 7px #D73502,
+                0 20px 8px #FC6400,
+                0 25px 9px  #FF7500,
+                0 30px 10px  #FAC000;
+    }
+    60%{
+        box-shadow:
+                0 10px 10px #801100,
+                0 5px 5px #B62203,
+                0 12px 6px #D73502,
+                0 6px 7px #FC6400,
+                0 15px 8px  #FF7500,
+                0 8px 9px  #FAC000;
+    }
+    80%{
+        box-shadow:
+                0 3px 9px #801100,
+                0 6px 10px #B62203,
+                0 9px 5px #D73502,
+                0 12px 6px #FC6400,
+                0 15px 7px  #FF7500,
+                0 18px 8px  #FAC000;
+    }
+    100%{
+        box-shadow:
+                0 1px 8px #801100,
+                0 2px 9px #B62203,
+                0 3px 10px #D73502,
+                0 4px 5px #FC6400,
+                0 5px 6px  #FF7500,
+                0 6px 7px  #FAC000;
+    }
+}
+
+@keyframes takeOffAnimation {
+    0%{
+        transform: translate(0, 0);
+        box-shadow:
+                0 5px 5px #801100,
+                0 10px 6px #B62203,
+                0 15px 7px #D73502,
+                0 20px 8px #FC6400,
+                0 25px 9px  #FF7500,
+                0 30px 10px  #FAC000;
+    }
+    20%{
+        box-shadow:
+                0 5px 5px #801100,
+                0 7px 6px #B62203,
+                0 10px 7px #D73502,
+                0 12px 8px #FC6400,
+                0 15px 9px  #FF7500,
+                0 17px 10px  #FAC000;
+    }
+    40%{
+        box-shadow:
+                0 5px 5px #801100,
+                0 10px 6px #B62203,
+                0 15px 7px #D73502,
+                0 20px 8px #FC6400,
+                0 25px 9px  #FF7500,
+                0 30px 10px  #FAC000;
+    }
+    60%{
+        box-shadow:
+                0 10px 10px #801100,
+                0 8px 5px #B62203,
+                0 7px 6px #D73502,
+                0 6px 7px #FC6400,
+                0 5px 8px  #FF7500,
+                0 4px 9px  #FAC000;
+    }
+    80%{
+        box-shadow:
+                0 5px 5px #801100,
+                0 10px 6px #B62203,
+                0 15px 7px #D73502,
+                0 20px 8px #FC6400,
+                0 25px 9px  #FF7500,
+                0 30px 10px  #FAC000;
+    }
+    100%{
+        transform: translate(0, -1000px);
+        box-shadow:
+                0 5px 5px #801100,
+                0 10px 6px #B62203,
+                0 15px 7px #D73502,
+                0 20px 8px #FC6400,
+                0 25px 9px  #FF7500,
+                0 30px 10px  #FAC000;
+    }
 }
