@@ -58,8 +58,8 @@ class Terrain {
                 this.terrSize = this.width;
                 this.description = "You are here";
                 this.img = '/img/character/location.png';
-                this.width = 50;
-                this.height = 50;
+                this.width = 40;
+                this.height = 40;
             }
             console.log(`Arrived to ${this.name} at ${this.x},${this.y}`);
             return true;
