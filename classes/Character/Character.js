@@ -1,18 +1,16 @@
 class Character {
-  constructor(name, health=10, defense=0, attack=0, speed=0, level=1, status="alive", location=null,stats={}) {
+  constructor(name, params = {}, level=1, status="alive", location=null, stats={}) {
       this.name = name;
-      this.health = health;
-      this.defense = defense;
-      this.attack = attack;
-      this.speed = speed;
+      this.params = params;
       this.level = level;
       this.status = status;
       this.location = location;
       this.stats = stats;
 
   }
+
     handleAttack() {
-        console.log(`${this.name} attacks! ${this.attack} damage!`);
+        console.log(`${this.name} attacks! ${this.params.attack} damage!`);
     }
     die() {
         console.log(`${this.name} dies!`);
@@ -25,6 +23,7 @@ class Character {
             this.die();
         }
     }
+
 }
 
 export default Character;
