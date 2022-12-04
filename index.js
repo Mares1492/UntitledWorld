@@ -28,47 +28,47 @@ const player = new Player(
     {health:20, defense:0, attack:0, speed:1},
     {str:10,dex:10,int:10,agi:10,cha:10},
     {planet:"Home Planet",region:"Home",tile:{x:0,y:0}},
-    new Rocket("Rocket",0,0,"/img/rocket-on-ground.png",30));
+    new Rocket("Rocket",0,0,"./img/rocket-on-ground.png?",30));
 console.log(homePlanet);
 console.log(player);
 
 const terrainElements = {
-    rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'img/rocket.png', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'Rocket'},
-    ocean: {symbol:'~',color: '#F8F8F8',img:"img/water.png",width:"35",height:"35",style:"opacity: 0.5;",name:"An Ocean",passable:false,description:"A large body of water"},
-    sea: {symbol:'~',color: '#F8F8F8',img:"img/water.png",width:"35",height:"35",style:"opacity: 0.5;",name:"A sea",passable:false,description:"A large body of water, not as large as an ocean though"},
-    sand: {symbol:'.', color: '#909090',img:"img/sand.png",width:"8",height:"8",style:"opacity: 0.7;background-repeat: repeat;",name:"Sand"},
-    rock: {symbol:':', color: '#909090',img:"img/rock.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Rock"},
-    desert: {symbol:'*', color: '#909090',img:"img/desert.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Desert"},
-    plain: {symbol:',', color: '#B0B0B0',img:"img/grass.png",width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"Plains"},
-    wildness: {symbol:',', color: '#B0B0B0',img:["img/grass.png","img/forest.png","img/rock.png",],width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"wildness",description:"A wild place, with a lot of different things"},
-    grass: {symbol:',', color: '#909090',img:"img/grass.png",width:"13",height:"13",style:"opacity: 0.7;background-repeat: space;",name:"Grass"},
-    trees: {symbol:'↑', color: '#909090',img:"img/tree.png",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Trees"},
-    town: {symbol:'|_|_|', color: '#909090',img:"img/town.png",width:"15",height:"15",style:"background-repeat: no-repeat;",name:"Town"},
-    palace: {symbol:'|^|^|^|', color: '#909090',img:"img/palace.png",width:"15",height:"15",name:"Palace"},
-    forest: {symbol:'↑↑↑', color: '#585858',img:"img/forest.png",width:"30",height:"30",name:"Forest",isLandable:false},
-    river: {symbol:'≈',color: '#F8F8F8',img:"img/river.png",width:"35",height:"35",style:"opacity: 0.5;background-repeat: space;",name:"River",description:"At this place, the river overflowed strongly. It is not possible to cross it.",isPassable:false,isLandable:false},
-    mountain: {symbol:'/\\\\',color: '#606060',img:["img/mountain.png","img/mountains.png"], width:"40",height:"40",name:"Mountains",isPassable:false},
-    quest: {symbol:'+',color: '#A0A0A0',img:"img/quest.png",width:"30",height:"30",name:"Quest Marker",description: "A quest marker. You can may find something interesting there."},
-    house: {symbol:'|^|',color: '#909090',img:"img/house.png",width:"15",height:"15",name:"House",description: "A lonely house in the centre of wildness."},
-    castle: {symbol:'|_|',color: '#909090',img:"img/castle.png",width:"30",height:"30",name:"Castle"},
-    city: {symbol:'|_|_|_|',color: '#909090',img:"img/city.png",width:"30",height:"30",name:"City"},
-    camp: {symbol:'(^)',color: '#606060',img:"img/camp.png",width:"25",height:"25",name:"Camp"},
-    //bridge: {symbol:'=',color: '#383838',img:"img/bridge.png",width:"30",height:"30",name:"Bridge"},
-    cave: {symbol:'()',color: '#606060',img:"img/cave.png",width:"20",height:"20",name:"Cave",description: "Dark and dusty cave. You can find something interesting there(or not).",isLandable:false},
-    mine: {symbol:'()',color: '#B0B0B0',img:"img/mine.png",width:"15",height:"15",name:"Mine",description:"A mine. You can find minerals there. Hard labor is required."},
-    farm: {symbol:'[=^=]',color: '#909090',img:"img/farm.png",width:"20",height:"20",name:"Farm"},
-    village: {symbol:'|_|_|_|_|',color: '#909090',img:"img/village.png",width:"30",height:"30",name:"Village"},
-    sky: {symbol:'\n',color: '#E8E8E8',img:"img/sky.png",width:"30",height:"30",name:"Sky"},
-    colony: {symbol:'|-|(|)|_|',color: '#606060',img:"img/colony.png",width:"30",height:"30",name:"Colony",description: "A colony. Nice."},
-    lumber: {symbol:'↑__|_|_↑',color: '#B0B0B0',img:"img/lumbermill.png",width:"15",height:"15",name:"Lumber-camp",description: "A lumber-camp. You can find wood there."},
-    battle: {symbol:'X',color: '#606060',img:"img/battle.png",width:"20",height:"20",name:"Battle",isPassable:false,description: "Battlefield..."},
-    ruin: {symbol:'/||\\',color: '#606060',img:"img/ruin.png",width:"20",height:"20",name:"Ruin"},
-    fire: {symbol:'F',color: '#606060',img:"img/fire.png",width:"20",height:"20",name:"Fire",isPassable:false},
-    volcano:{symbol:'V',color: '#606060',img:"img/volcano.png",width:"30",height:"30",name:"Volcano",isPassable:false},
-    hill:{symbol:'^#^',color: '#B0B0B0',img:"img/hill.png",width:"50",height:"50",name:"Hills"},
-    swamp:{symbol:'≈≈',color: '#606060',img:"img/swamp.png",width:"15",height:"15",name:"Swamp"},
-    lake:{symbol:'≈≈≈',color: '#909090',img:"img/lake.png",width:"30",height:"30",name:"Lake",description:"A lake big enough to be mentioned of"},
-    field:{symbol:'___',color: '#B0B0B0',img:"img/field.png",width:"37",height:"37",name:"Field"},
+    rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'./img/rocket.png?', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'Rocket'},
+    ocean: {symbol:'~',color: '#F8F8F8',img:"./img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"An Ocean",passable:false,description:"A large body of water"},
+    sea: {symbol:'~',color: '#F8F8F8',img:"./img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"A sea",passable:false,description:"A large body of water, not as large as an ocean though"},
+    sand: {symbol:'.', color: '#909090',img:"./img/sand.png?",width:"8",height:"8",style:"opacity: 0.7;background-repeat: repeat;",name:"Sand"},
+    rock: {symbol:':', color: '#909090',img:"./img/rock.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Rock"},
+    desert: {symbol:'*', color: '#909090',img:"./img/desert.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Desert"},
+    plain: {symbol:',', color: '#B0B0B0',img:"./img/grass.png?",width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"Plains"},
+    wildness: {symbol:',', color: '#B0B0B0',img:["./img/grass.png?","./img/forest.png","./img/rock.png",],width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"wildness",description:"A wild place, with a lot of different things"},
+    grass: {symbol:',', color: '#909090',img:"./img/grass.png?",width:"13",height:"13",style:"opacity: 0.7;background-repeat: space;",name:"Grass"},
+    trees: {symbol:'↑', color: '#909090',img:"./img/tree.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Trees"},
+    town: {symbol:'|_|_|', color: '#909090',img:"./img/town.png?",width:"15",height:"15",style:"background-repeat: no-repeat;",name:"Town"},
+    palace: {symbol:'|^|^|^|', color: '#909090',img:"./img/palace.png?",width:"15",height:"15",name:"Palace"},
+    forest: {symbol:'↑↑↑', color: '#585858',img:"./img/forest.png?",width:"30",height:"30",name:"Forest",isLandable:false},
+    river: {symbol:'≈',color: '#F8F8F8',img:"./img/river.png?",width:"35",height:"35",style:"opacity: 0.5;background-repeat: space;",name:"River",description:"At this place, the river overflowed strongly. It is not possible to cross it.",isPassable:false,isLandable:false},
+    mountain: {symbol:'/\\\\',color: '#606060',img:["./img/mountain.png?","./img/mountains.png?"], width:"40",height:"40",name:"Mountains",isPassable:false},
+    quest: {symbol:'+',color: '#A0A0A0',img:"./img/quest.png?",width:"30",height:"30",name:"Quest Marker",description: "A quest marker. You can may find something interesting there."},
+    house: {symbol:'|^|',color: '#909090',img:"./img/house.png?",width:"15",height:"15",name:"House",description: "A lonely house in the centre of wildness."},
+    castle: {symbol:'|_|',color: '#909090',img:"./img/castle.png?",width:"30",height:"30",name:"Castle"},
+    city: {symbol:'|_|_|_|',color: '#909090',img:"./img/city.png?",width:"30",height:"30",name:"City"},
+    camp: {symbol:'(^)',color: '#606060',img:"./img/camp.png?",width:"25",height:"25",name:"Camp"},
+    //bridge: {symbol:'=',color: '#383838',img:"./img/bridge.png",width:"30",height:"30",name:"Bridge"},
+    cave: {symbol:'()',color: '#606060',img:"./img/cave.png?",width:"20",height:"20",name:"Cave",description: "Dark and dusty cave. You can find something interesting there(or not).",isLandable:false},
+    mine: {symbol:'()',color: '#B0B0B0',img:"./img/mine.png?",width:"15",height:"15",name:"Mine",description:"A mine. You can find minerals there. Hard labor is required."},
+    farm: {symbol:'[=^=]',color: '#909090',img:"./img/farm.png?",width:"20",height:"20",name:"Farm"},
+    village: {symbol:'|_|_|_|_|',color: '#909090',img:"./img/village.png?",width:"30",height:"30",name:"Village"},
+    sky: {symbol:'\n',color: '#E8E8E8',img:"./img/sky.png?",width:"30",height:"30",name:"Sky"},
+    colony: {symbol:'|-|(|)|_|',color: '#606060',img:"./img/colony.png?",width:"30",height:"30",name:"Colony",description: "A colony. Nice."},
+    lumber: {symbol:'↑__|_|_↑',color: '#B0B0B0',img:"./img/lumbermill.png?",width:"15",height:"15",name:"Lumber-camp",description: "A lumber-camp. You can find wood there."},
+    battle: {symbol:'X',color: '#606060',img:"./img/battle.png?",width:"20",height:"20",name:"Battle",isPassable:false,description: "Battlefield..."},
+    ruin: {symbol:'/||\\',color: '#606060',img:"./img/ruin.png?",width:"20",height:"20",name:"Ruin"},
+    fire: {symbol:'F',color: '#606060',img:"./img/fire.png?",width:"20",height:"20",name:"Fire",isPassable:false},
+    volcano:{symbol:'V',color: '#606060',img:"./img/volcano.png?",width:"30",height:"30",name:"Volcano",isPassable:false},
+    hill:{symbol:'^#^',color: '#B0B0B0',img:"./img/hill.png?",width:"50",height:"50",name:"Hills"},
+    swamp:{symbol:'≈≈',color: '#606060',img:"./img/swamp.png?",width:"15",height:"15",name:"Swamp"},
+    lake:{symbol:'≈≈≈',color: '#909090',img:"./img/lake.png?",width:"30",height:"30",name:"Lake",description:"A lake big enough to be mentioned of"},
+    field:{symbol:'___',color: '#B0B0B0',img:"./img/field.png?",width:"37",height:"37",name:"Field"},
 }
 
 const positiveAdjectives = ["lot","many","much"];
@@ -208,11 +208,3 @@ landingBtn.addEventListener('click', tryToLand);
 takeOffBtn.addEventListener('click', tryToTakeOff);
 goToBtn.addEventListener('click', goToTile);
 submit.addEventListener('click', generatePic);
-
-
-
-
-
-
-
-

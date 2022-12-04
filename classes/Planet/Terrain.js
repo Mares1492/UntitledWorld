@@ -57,7 +57,7 @@ class Terrain {
                 this.terrDescription = this.description;
                 this.terrSize = this.width;
                 this.description = "You are here";
-                this.img = '/img/character/location.png';
+                this.img = './img/character/location.png?';
                 this.width = 40;
                 this.height = 40;
             }
