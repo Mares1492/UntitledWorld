@@ -67,12 +67,11 @@ class Planet {
 
     static getPlanet(planetName) {
         if (Planet.planets.has(planetName)) {
-            const planet = Planet.planets.get(planetName);
-            console.log(`Planet '${planetName}' found`);
-            return planet;
+            return Planet.planets.get(planetName);
         }
         else {
             console.log(`Planet ${planetName} not found`);
+            return false;
         }
     }
 

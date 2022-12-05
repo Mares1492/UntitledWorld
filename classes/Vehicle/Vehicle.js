@@ -1,5 +1,5 @@
 class Vehicle {
-  constructor(name,speed,passengers=[],location=null,destination=null,owner=null,x=null,y=null,img,size=15,alt="[>_<]") {
+  constructor(name,speed,passengers=[],location=null,destination=null,owner=null,x=null,y=null,img,size=15,alt="[<|=|>]") {
     this.name = name;
     this.speed = speed;
     this.passengers = passengers;

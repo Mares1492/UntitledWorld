@@ -124,39 +124,98 @@ class Player extends Character{
         this.location = {...this.location, region:region};
     }
 
-    handleMovingToTile(tile) {
+    handleMovingToTile(tile,maxTilesToMove) {
         const xTo = tile.x;
         const yTo = tile.y;
         let xNow = this.getTile().x;
         let yNow = this.getTile().y;
         const region = Planet.getPlanet(this.getPlanet()).getRegion(this.getRegion());
-        let counter = 0;
+        let timeout = 0;
+        let loopCatcher = 0;
         let passable = true;
-        while (xTo !== xNow || yTo !== yNow) {
+        let currentTile = region.getTile(xNow,yNow);
+        while ((xTo !== xNow || yTo !== yNow) && loopCatcher < maxTilesToMove) {
+            //TODO: get rid of this code duplication(separate method for this may be too complicated to even be worth it)
+            loopCatcher++;
                 if (xNow < xTo) {
                     xNow++;
-                    counter++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                    timeout++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                    if (!passable) {
+                        xNow--;
+                        timeout--;
+                        if (yNow === yTo) {
+                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
+                                Math.floor(Math.random() * 2) === 0 ? yNow++ : yNow--;
+                                timeout++;
+                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                            }
+                        }
+                    }
                 }
                 if (xNow > xTo) {
                     xNow--;
-                    counter++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                    timeout++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                    if (!passable) {
+                        xNow++;
+                        timeout--;
+                        if (yNow === yTo) {
+                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
+                                Math.floor(Math.random() * 2) === 0 ? yNow++ : yNow--;
+                                timeout++;
+                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                            }
+                        }
+                    }
                 }
                 if (yNow < yTo) {
                     yNow++;
-                    counter++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                    timeout++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                    if (!passable) {
+                        yNow--;
+                        timeout--;
+                        if (xNow === xTo) {
+                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
+                                Math.floor(Math.random() * 2) === 0 ? xNow++ : xNow--;
+                                timeout++;
+                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                            }
+                        }
+
+                    }
                 }
                 if (yNow > yTo) {
                     yNow--;
-                    counter++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(counter);
+                    timeout++;
+                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                    if (!passable) {
+                        yNow++;
+                        timeout--;
+                        if (xNow === xTo) {
+                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
+                                Math.floor(Math.random() * 2) === 0 ? xNow++ : xNow--;
+                                timeout++;
+                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
+                            }
+                        }
+                    }
                 }
             }
             return {x:xNow,y:yNow};
         }
-    goToTile(tile,updateMap) {
+    goToTile(tile,updateMap,maxTilesToMove=50) {
+        const handleArrival = (argX,argY) => {
+            const arrived = region
+                .getTile(argX, argY)
+                .handlePlayerArrival();
+            if (arrived) {
+                this.location = {...this.location, tile: {x:argX, y:argY}};
+                return true;
+            }
+            return false;
+        }
         const region = Planet
             .getPlanet(this.location.planet)
             .getRegion(this.location.region)
@@ -165,18 +224,12 @@ class Player extends Character{
                 .getTile(this.location.tile.x,this.location.tile.y)
                 .handlePlayerDeparture()
             updateMap();
-        const location = this.handleMovingToTile(tile);
-        console.log(`New location is x:${location.x} | y:${location.y}`);
-        //this.goToLocation({...this.location, tile:location});
+            const location = this.handleMovingToTile(tile,maxTilesToMove);
+            if (location.x !== tile.x || location.y !== tile.y) {
+                return handleArrival(location.x,location.y);
+            }
         }
-        const arrived = region
-            .getTile(tile.x,tile.y)
-            .handlePlayerArrival();
-        if (arrived) {
-            this.location = {...this.location, tile:tile};
-            return true;
-        }
-        return false;
+        return handleArrival(tile.x,tile.y);
     }
 
     handleLeavePlanetSurface() {

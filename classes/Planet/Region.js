@@ -163,8 +163,6 @@ class Region {
     }
 
     addElement(element, x, y) {
-        console.log(`adding ${element.name} at ${x},${y}`);
-        console.log(element);
         let img = element.img;
         if (typeof element.img !== "string") {
             img = element.img[Math.floor(Math.random() * element.img.length)];
