@@ -312,52 +312,52 @@ img{
         transform: translate(0, 0) scale(1) ;
         z-index: auto;
         box-shadow:
-                0 7px 5px #801100,
-                0 5px 6px #B62203,
-                0 4px 7px #D73502,
-                0 3px 8px #FC6400,
-                0 8px 9px  #FF7500,
-                0 9px 10px  #FAC000;
+                0 3px 5px #801100,
+                0 4px 6px #B62203,
+                0 5px 7px #D73502,
+                0 6px 8px #FC6400,
+                0 7px 9px  #FF7500,
+                0 8px 10px  #FAC000;
     }
     20%{
         box-shadow:
                 0 5px 5px #801100,
-                0 7px 6px #B62203,
-                0 10px 7px #D73502,
-                0 12px 8px #FC6400,
-                0 15px 9px  #FF7500,
-                0 17px 10px  #FAC000;
+                0 10px 6px #B62203,
+                0 12px 7px #D73502,
+                0 15px 8px #FC6400,
+                0 18px 9px  #FF7500,
+                0 22px 10px  #FAC000;
     }
     40%{
-        transform: translate(0, -100px)  scale(1.6);
         box-shadow:
-                0 5px 5px #801100,
+                0 7px 5px #801100,
                 0 10px 6px #B62203,
                 0 15px 7px #D73502,
-                0 20px 8px #FC6400,
-                0 25px 9px  #FF7500,
-                0 30px 10px  #FAC000;
+                0 18px 8px #FC6400,
+                0 20px 9px  #FF7500,
+                0 35px 10px  #FAC000;
     }
     60%{
         box-shadow:
-                0 10px 10px #801100,
-                0 8px 5px #B62203,
-                0 7px 6px #D73502,
-                0 6px 7px #FC6400,
-                0 5px 8px  #FF7500,
-                0 4px 9px  #FAC000;
+                0 5px 10px #801100,
+                0 7px 5px #B62203,
+                0 12px 6px #D73502,
+                0 15px 7px #FC6400,
+                0 18px 8px  #FF7500,
+                0 22px 9px  #FAC000;
     }
     80%{
+        transform: translate(0, -70px)  scale(1.6);
         box-shadow:
-                0 5px 5px #801100,
-                0 10px 6px #B62203,
-                0 15px 7px #D73502,
-                0 20px 8px #FC6400,
-                0 25px 9px  #FF7500,
-                0 30px 10px  #FAC000;
+                0 15px 5px #801100,
+                0 20px 6px #B62203,
+                0 25px 7px #D73502,
+                0 35px 8px #FC6400,
+                0 55px 9px  #FF7500,
+                0 75px 10px  #FAC000;
     }
     100%{
-        transform: translate(0, -1000px)  scale(2.5);
+        transform: translate(0, -1000px)  scale(2);
         background: linear-gradient(
                 rgba(128, 17, 0, 1),
                 rgba(182, 34, 3, 1),
@@ -369,12 +369,12 @@ img{
         z-index: auto;
         opacity: 0.3;
         box-shadow:
-                0 5px 5px #801100,
-                0 10px 6px #B62203,
-                0 15px 7px #D73502,
-                0 20px 8px #FC6400,
-                0 25px 9px  #FF7500,
-                0 30px 10px  #FAC000;
+                0 15px 5px #801100,
+                0 25px 6px #B62203,
+                0 35px 7px #D73502,
+                0 45px 8px #FC6400,
+                0 55px 9px  #FF7500,
+                0 70px 10px  #FAC000;
     }
 }
 
