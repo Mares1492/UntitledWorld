@@ -114,7 +114,7 @@ class Region {
     }
 
     filterText() {
-        let toFilter = ["of","and","so","the","are","a","an","is","with","also"];
+        let toFilter = ["of","and","so","the","are","a","an","is","with","also","be","should",""," "];
 
         return this.text.replace(/[,-. ]/g,' ').split(' ').filter(word => (!toFilter.includes(word)));
     }
