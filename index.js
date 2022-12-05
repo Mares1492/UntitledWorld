@@ -43,15 +43,15 @@ const terrainElements = {
     wildness: {symbol:',', color: '#B0B0B0',img:["./img/grass.png?","./img/forest.png","./img/rock.png",],width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"wildness",description:"A wild place, with a lot of different things"},
     grass: {symbol:',', color: '#909090',img:"./img/grass.png?",width:"13",height:"13",style:"opacity: 0.7;background-repeat: space;",name:"Grass"},
     trees: {symbol:'↑', color: '#909090',img:"./img/tree.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Trees"},
-    town: {symbol:'|_|_|', color: '#909090',img:"./img/town.png?",width:"15",height:"15",style:"background-repeat: no-repeat;",name:"Town"},
+    town: {symbol:'|_|_|', color: '#606060',img:"./img/town.png?",width:"26",height:"26",style:"background-repeat: no-repeat;align-self:end;",name:"Town",isLandable:false,description:"Small and unimportant town"},
     palace: {symbol:'|^|^|^|', color: '#909090',img:"./img/palace.png?",width:"15",height:"15",name:"Palace"},
-    forest: {symbol:'↑↑↑', color: '#585858',img:"./img/forest.png?",width:"30",height:"30",name:"Forest",isLandable:false},
+    forest: {symbol:'↑↑↑', color: '#585858',img:"./img/forest.png?",width:"30",height:"30",name:"Forest",style:"align-self:end;",isLandable:false},
     river: {symbol:'≈',color: '#F8F8F8',img:"./img/river.png?",width:"35",height:"35",style:"opacity: 0.5;background-repeat: space;",name:"River",description:"At this place, the river overflowed strongly. It is not possible to cross it.",isPassable:false,isLandable:false},
-    mountain: {symbol:'/\\\\',color: '#606060',img:["./img/mountain.png?","./img/mountains.png?"], width:"40",height:"40",name:"Mountains",isPassable:false},
+    mountain: {symbol:'/\\\\',color: '#606060',img:["./img/mountain.png?","./img/mountains.png?"],style:"align-self:end;", width:"40",height:"40",name:"Mountains",isPassable:false},
     quest: {symbol:'+',color: '#A0A0A0',img:"./img/quest.png?",width:"30",height:"30",name:"Quest Marker",description: "A quest marker. You can may find something interesting there."},
     house: {symbol:'|^|',color: '#909090',img:"./img/house.png?",width:"15",height:"15",name:"House",description: "A lonely house in the centre of wildness."},
     castle: {symbol:'|_|',color: '#909090',img:"./img/castle.png?",width:"30",height:"30",name:"Castle"},
-    city: {symbol:'|_|_|_|',color: '#909090',img:"./img/city.png?",width:"30",height:"30",name:"City"},
+    city: {symbol:'|_|_|_|',color: '#909090',img:"./img/city.png?",width:"37",height:"37",name:"City",isLandable:false},
     camp: {symbol:'(^)',color: '#606060',img:"./img/camp.png?",width:"25",height:"25",name:"Camp"},
     //bridge: {symbol:'=',color: '#383838',img:"./img/bridge.png",width:"30",height:"30",name:"Bridge"},
     cave: {symbol:'()',color: '#606060',img:"./img/cave.png?",width:"20",height:"20",name:"Cave",description: "Dark and dusty cave. You can find something interesting there(or not).",isLandable:false},
@@ -59,7 +59,7 @@ const terrainElements = {
     farm: {symbol:'[=^=]',color: '#909090',img:"./img/farm.png?",width:"20",height:"20",name:"Farm"},
     village: {symbol:'|_|_|_|_|',color: '#909090',img:"./img/village.png?",width:"30",height:"30",name:"Village"},
     sky: {symbol:'\n',color: '#E8E8E8',img:"./img/sky.png?",width:"30",height:"30",name:"Sky"},
-    colony: {symbol:'|-|(|)|_|',color: '#606060',img:"./img/colony.png?",width:"30",height:"30",name:"Colony",description: "A colony. Nice."},
+    colony: {symbol:'|-|(|)|_|',color: '#606060',img:"./img/colony.png?",width:"30",height:"30",name:"Colony",style:"align-self:end;",description: "A colony. Nice."},
     lumber: {symbol:'↑__|_|_↑',color: '#B0B0B0',img:"./img/lumbermill.png?",width:"15",height:"15",name:"Lumber-camp",description: "A lumber-camp. You can find wood there."},
     battle: {symbol:'X',color: '#606060',img:"./img/battle.png?",width:"20",height:"20",name:"Battle",isPassable:false,description: "Battlefield..."},
     ruin: {symbol:'/||\\',color: '#606060',img:"./img/ruin.png?",width:"20",height:"20",name:"Ruin"},
@@ -89,25 +89,26 @@ const getStory = (type) => {
 }
 
 const goToTile = () => {
+    const maxTilesToMove = 50;
     if (player.getIsPlayerAbleToAct("go to new tile")) {
         player.setIsUnableToAct(3000)
         const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
         const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
+        const playerTile = player.getTile();
+        const lengthOfPath = Math.abs(playerTile.x - x) + Math.abs(playerTile.y - y);
         if (player.getTile().x === x && player.getTile().y === y) {
             alert("You are already there!");
         }
+        else if (lengthOfPath > maxTilesToMove) {
+            alert("you can't travel that distance at once!");
+
+        }
         else {
-            const playerTile = player.getTile();
             const timeout = (Math.abs(x-playerTile.x)*200+Math.abs(y-playerTile.y)*200);
-            const arrived = player.goToTile({x:x, y:y},updateMap);
+            const arrived = player.goToTile({x:x, y:y},updateMap,maxTilesToMove);
             if (arrived) {
                 console.log(timeout);
-                setTimeout(() => {
-                    updateMap();
-                },timeout+200);
-
-                //TODO:tile based timeout maybe?
-
+                updateMap();
             } else {
                 alert("You can't go there!")
             }
@@ -127,7 +128,7 @@ const tryToTakeOff = () => {
 
             const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
             const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
-            document.getElementById(`${x + '-' + y}`).style.animation = "takeOffAnimation 5s";
+            document.getElementById(`${x + '-' + y}`).style.animation = "takeOffAnimation 5s ease-in";
             setTimeout(() => {
                 updateMap();
             }, 5000);

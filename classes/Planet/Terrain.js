@@ -87,7 +87,9 @@ class Terrain {
             this.terrDescription = this.description;
             this.terrSize = this.width;
             this.terrColor = this.color;
-            this.color = "rgba(0,0,0,0)";
+            this.terrStyle = this.style;
+            this.style = "border-radius: 10px";
+            // // this.color = "rgba(0,0,0,0)";
             this.width = size;
             this.height = size;
             this.playerTransportPresent = true;
@@ -106,6 +108,7 @@ class Terrain {
             this.width = this.terrSize;
             this.height = this.terrSize;
             this.color = this.terrColor;
+            this.style = this.terrStyle;
             this.playerTransportPresent = false;
             this.playerPresent = false;
             console.log(`Took off from ${this.name} at ${this.x},${this.y}`);
