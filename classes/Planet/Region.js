@@ -1,5 +1,6 @@
 import Terrain from "./Terrain.js";
 import Planet from "./Planet.js";
+const landscapeContainer = document.getElementById('landscape-container');
 
 class Region {
     constructor(name,text, width, height, terrainElements, positiveAdjectives,negativeAdjectives,positiveEconomicAdjectives,negativeEconomicAdjectives,planetName) {
@@ -253,6 +254,11 @@ class Region {
                 </div>`).join('')}
          </div>`).join('');
     };
+
+    updateMap = () => {
+        landscapeContainer.innerHTML = this.getLandscape();
+        landscapeContainer.scrollIntoView();
+    }
 }
 
 

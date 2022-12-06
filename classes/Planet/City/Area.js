@@ -17,10 +17,28 @@ const cityElements = {
 };
 
 class Area {
-    constructor(name=new Date().getTime().toString(),description="no data",location="no data") {
+    constructor(name=new Date().getTime().toString(),description="no data",location="no data",size={x:24,y:12}) {
         this.name = name;
         this.description = description;
         this.location = location;
         this.factions = [];
+        this.size = size;
+    }
+    generateArea() {
+        if (!this.area){
+            this.area = [];
+            for (let y = 0; y < this.size.y; y++) {
+                this.area.push([]);
+                for (let x = 0; x < this.size.x; x++) {
+                    this.area[x].addElement(cityElements.cityBuilding, x, y);
+                }
+            }
+        }
+        else {
+            console.log("Area already generated");
+        }
+    }
+    addElement(element,x,y) {
+        this.area[x][y] = element;
     }
 }

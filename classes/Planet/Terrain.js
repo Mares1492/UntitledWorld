@@ -32,10 +32,11 @@ class Terrain {
     changeDescription(newDescription) {
         this.description = newDescription;
     }
-    destroy() {
-        this.symbol = ' ';
+    destroy(reason) {
+        this.name = `Destroyed ${this.name}`;
+        this.symbol = '...';
         this.img = '/img/fire.png';
-        this.description = 'This place was destroyed';
+        this.description ="This place was destroyed by" + reason? reason: "'Just Cause'";
     }
     handlePlayerPassing(counter) {
         if (this.isPassable) {
@@ -112,6 +113,9 @@ class Terrain {
             this.playerTransportPresent = false;
             this.playerPresent = false;
             console.log(`Took off from ${this.name} at ${this.x},${this.y}`);
+            if (this.name === "House") {
+                this.destroy("By the player taking off");
+            }
             return true;
         }
         return false;
