@@ -2,8 +2,9 @@ import Planet from "./classes/Planet/Planet.js";
 import Player from "./classes/Character/Player.js";
 import Region from "./classes/Planet/Region.js";
 import Rocket from "./classes/Vehicle/Rocket.js";
+import region from "./classes/Planet/Region.js";
 const submit = document.getElementById('generate');
-const landscapeContainer = document.getElementById('landscape-container');
+
 const landingBtn = document.getElementById('landing-button');
 const takeOffBtn = document.getElementById('take-off-button');
 const goToBtn = document.getElementById('go-to-button');
@@ -31,6 +32,9 @@ const player = new Player(
     new Rocket("Rocket",0,0,"./img/rocket-on-ground.png?",30));
 console.log(homePlanet);
 console.log(player);
+const updateMap = () => {
+    Planet.getPlanet(player.getPlanet()).getRegion(player.getRegion()).updateMap();
+}
 
 const terrainElements = {
     rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'./img/rocket.png?', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'Rocket'},
@@ -41,7 +45,7 @@ const terrainElements = {
     desert: {symbol:'*', color: '#909090',img:"./img/desert.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Desert"},
     plain: {symbol:',', color: '#B0B0B0',img:"./img/grass.png?",width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"Plains"},
     wildness: {symbol:',', color: '#B0B0B0',img:["./img/grass.png?","./img/forest.png","./img/rock.png",],width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"wildness",description:"A wild place, with a lot of different things"},
-    grass: {symbol:',', color: '#909090',img:"./img/grass.png?",width:"13",height:"13",style:"opacity: 0.7;background-repeat: space;",name:"Grass"},
+    grass: {symbol:',', color: '#909090',img:"./img/grass.png?",width:"13",height:"13",style:"opacity: 0.7;background-repeat: repeat;",name:"Grass"},
     trees: {symbol:'↑', color: '#909090',img:"./img/tree.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Trees"},
     town: {symbol:'|_|_|', color: '#606060',img:"./img/town.png?",width:"26",height:"26",style:"background-repeat: no-repeat;align-self:end;",name:"Town",isLandable:false,description:"Small and unimportant town"},
     palace: {symbol:'|^|^|^|', color: '#909090',img:"./img/palace.png?",width:"15",height:"15",name:"Palace"},
@@ -58,17 +62,17 @@ const terrainElements = {
     mine: {symbol:'()',color: '#B0B0B0',img:"./img/mine.png?",width:"15",height:"15",name:"Mine",description:"A mine. You can find minerals there. Hard labor is required."},
     farm: {symbol:'[=^=]',color: '#909090',img:"./img/farm.png?",width:"20",height:"20",name:"Farm"},
     village: {symbol:'|_|_|_|_|',color: '#909090',img:"./img/village.png?",width:"30",height:"30",name:"Village"},
-    sky: {symbol:'\n',color: '#E8E8E8',img:"./img/sky.png?",width:"30",height:"30",name:"Sky"},
+    //sky: {symbol:'\n',color: '#E8E8E8',img:"./img/sky.png?",width:"30",height:"30",name:"Sky"},
     colony: {symbol:'|-|(|)|_|',color: '#606060',img:"./img/colony.png?",width:"30",height:"30",name:"Colony",style:"align-self:end;",description: "A colony. Nice."},
     lumber: {symbol:'↑__|_|_↑',color: '#B0B0B0',img:"./img/lumbermill.png?",width:"15",height:"15",name:"Lumber-camp",description: "A lumber-camp. You can find wood there."},
     battle: {symbol:'X',color: '#606060',img:"./img/battle.png?",width:"20",height:"20",name:"Battle",isPassable:false,description: "Battlefield..."},
     ruin: {symbol:'/||\\',color: '#606060',img:"./img/ruin.png?",width:"20",height:"20",name:"Ruin"},
     fire: {symbol:'F',color: '#606060',img:"./img/fire.png?",width:"20",height:"20",name:"Fire",isPassable:false},
     volcano:{symbol:'V',color: '#606060',img:"./img/volcano.png?",width:"30",height:"30",name:"Volcano",isPassable:false},
-    hill:{symbol:'^#^',color: '#B0B0B0',img:"./img/hill.png?",width:"50",height:"50",name:"Hills"},
+    hill:{symbol:'^#^',color: '#B0B0B0',img:"./img/hill.png?",width:"35",height:"35",name:"Hills"},
     swamp:{symbol:'≈≈',color: '#606060',img:"./img/swamp.png?",width:"15",height:"15",name:"Swamp"},
     lake:{symbol:'≈≈≈',color: '#909090',img:"./img/lake.png?",width:"30",height:"30",name:"Lake",description:"A lake big enough to be mentioned of"},
-    field:{symbol:'___',color: '#B0B0B0',img:"./img/field.png?",width:"37",height:"37",name:"Field"},
+    field:{symbol:'___',color: '#B0B0B0',img:"./img/field.png?",width:"30",height:"30",name:"Field"},
 }
 
 const positiveAdjectives = ["lot","many","much"];
@@ -161,11 +165,8 @@ const tryToLand = async () => {
     }
 }
 
-const updateMap = (planet=homePlanet,regionName="Home") => {
-    const region = planet.getRegion(regionName)
-    landscapeContainer.innerHTML = region.getLandscape();
-    landscapeContainer.scrollIntoView();
-}
+
+
 
 const generatePlanet = ({props}) => { // creates a new planet by optional params
     new Planet(
@@ -202,7 +203,6 @@ const generatePic = () =>{
     planet.addRegion(region);
     updateMap();
 }
-
 
 addEventListener('error', updateMap);
 landingBtn.addEventListener('click', tryToLand);

@@ -85,10 +85,20 @@ class Player extends Character{
             this.inventory.delete(item);
         }
     addItem(item) {
-        if (this.inventory.has(item)) {
-            this.inventory.set(item,this.inventory.get(item) + 1);
+        if (this.inventory.has(item.name)) {
+            this.inventory.set(item,this.inventory.get(item.name) + 1);
         } else {
             this.inventory.set(item, 1);
+        }
+    }
+    getItem(item) {
+        if (this.inventory.has(item)) {
+            this.inventory.set(item,this.inventory.get(item) - 1);
+            if (this.inventory.get(item) === 0) {
+                this.inventory.delete(item);
+            }
+        } else {
+            console.log("Item does not exist");
         }
     }
     removeItem(item) {
@@ -130,81 +140,166 @@ class Player extends Character{
         let xNow = this.getTile().x;
         let yNow = this.getTile().y;
         const region = Planet.getPlanet(this.getPlanet()).getRegion(this.getRegion());
-        let timeout = 0;
         let loopCatcher = 0;
+        let timeout = 0;
         let passable = true;
-        let currentTile = region.getTile(xNow,yNow);
-        while ((xTo !== xNow || yTo !== yNow) && loopCatcher < maxTilesToMove) {
-            //TODO: get rid of this code duplication(separate method for this may be too complicated to even be worth it)
-            loopCatcher++;
-                if (xNow < xTo) {
-                    xNow++;
-                    timeout++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                    if (!passable) {
-                        xNow--;
-                        timeout--;
-                        if (yNow === yTo) {
-                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
-                                Math.floor(Math.random() * 2) === 0 ? yNow++ : yNow--;
-                                timeout++;
-                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                            }
-                        }
-                    }
+        let path = [];
+        let stuck = false;
+        let whereToGo;
+        const tryPush = (x,y) => {
+            console.log(`tryPush x:${x},y:${y}`);
+            if (region.getTile(x, y)?.isPassable) {
+                if(!path.length || (path.at(-1).x !== x || path.at(-1).y !== y)) {
+                    timeout++
+                    path.push({x:x, y:y, timeout:timeout});
+                    return true;
+                }else {
+                    stuck = true;
+                    console.log("stuck",stuck);
                 }
-                if (xNow > xTo) {
-                    xNow--;
-                    timeout++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                    if (!passable) {
-                        xNow++;
-                        timeout--;
-                        if (yNow === yTo) {
-                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
-                                Math.floor(Math.random() * 2) === 0 ? yNow++ : yNow--;
-                                timeout++;
-                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                            }
-                        }
-                    }
-                }
-                if (yNow < yTo) {
-                    yNow++;
-                    timeout++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                    if (!passable) {
-                        yNow--;
-                        timeout--;
-                        if (xNow === xTo) {
-                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
-                                Math.floor(Math.random() * 2) === 0 ? xNow++ : xNow--;
-                                timeout++;
-                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                            }
-                        }
-
-                    }
-                }
-                if (yNow > yTo) {
-                    yNow--;
-                    timeout++;
-                    passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                    if (!passable) {
-                        yNow++;
-                        timeout--;
-                        if (xNow === xTo) {
-                            for (let i = 0; i < Math.floor(Math.random() * 4)+1; i++) {
-                                Math.floor(Math.random() * 2) === 0 ? xNow++ : xNow--;
-                                timeout++;
-                                passable = region.getTile(xNow, yNow).handlePlayerPassing(timeout);
-                            }
-                        }
-                    }
-                }
+            }else{
+                return false;
             }
-            return {x:xNow,y:yNow};
         }
+        tryPush(xNow,yNow);
+        while ((xTo !== xNow || yTo !== yNow) && !stuck && loopCatcher < 1000) {
+            loopCatcher++;
+            whereToGo = Math.floor(Math.random()*2);
+                if(xNow<xTo && yNow<yTo) {
+                    if(tryPush(xNow+1,yNow+1)){
+                        xNow++;
+                        yNow++;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow+1,yNow)) {
+                                xNow++;
+                            }
+                        }else {
+                            if(tryPush(xNow,yNow+1)) {
+                                yNow++;
+                            }
+                        }
+                    }
+                }
+                else if(xNow>xTo && yNow>yTo){
+                    if(tryPush(xNow-1,yNow-1)){
+                        xNow--;
+                        yNow--;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow-1,yNow)) {
+                                xNow--;
+                            }
+                        }else {
+                            if(tryPush(xNow,yNow-1)) {
+                                yNow--;
+                            }
+                        }
+                    }
+                }
+                else if (xNow>xTo && yNow<yTo){
+                    if(tryPush(xNow-1,yNow+1)){
+                        xNow--;
+                        yNow++;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow-1,yNow)) {
+                                xNow--;
+                            }
+                        }else {
+                            if(tryPush(xNow,yNow+1)) {
+                                yNow++;
+                            }
+                        }
+                    }
+                }
+                else if (xNow<xTo && yNow>yTo){
+                    if(tryPush(xNow+1,yNow-1)){
+                        xNow++;
+                        yNow--;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow+1,yNow)) {
+                                xNow++;
+                            }
+                        }else {
+                            if(tryPush(xNow,yNow-1)) {
+                                yNow--;
+                            }
+                        }
+                    }
+                }
+                else if (xNow<xTo && yNow===yTo){
+                    if(tryPush(xNow+1,yNow)){
+                        xNow++;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow,yNow+1)) {
+                                yNow++;
+                            }
+                        }else {
+                            if(tryPush(xNow,yNow-1)) {
+                                yNow--;
+                            }
+                        }
+                    }
+                }
+                else if (xNow>xTo && yNow===yTo){
+                    if(tryPush(xNow-1,yNow)){
+                        xNow--;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow,yNow+1)) {
+                                yNow++;
+                            }
+                        }else {
+                            if(tryPush(xNow,yNow-1)) {
+                                yNow--;
+                            }
+                        }
+                    }
+                }
+                else if (yNow<yTo && xNow===xTo){
+                    if(tryPush(xNow,yNow+1)){
+                        yNow++;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow+1,yNow)) {
+                                xNow++;
+                            }
+                        }else {
+                            if(tryPush(xNow-1,yNow)) {
+                                xNow--;
+                            }
+                        }
+                    }
+                }
+                else if (yNow>yTo && xNow===xTo){
+                    if(tryPush(xNow,yNow-1)){
+                        yNow--;
+                    }else {
+                        if(whereToGo) {
+                            if(tryPush(xNow+1,yNow)) {
+                                xNow++;
+                            }
+                        }else {
+                            if(tryPush(xNow-1,yNow)) {
+                                xNow--;
+                            }
+                        }
+                    }
+                }
+        }
+
+        console.log(path);
+        for (let i = 0; i < path.length; i++) {
+            passable = region.getTile(path[i].x, path[i].y).handlePlayerPassing(path[i].timeout,this.getItem)
+            if (!passable) {
+                return {x:path[i].x,y:path[i].y};
+            }
+        }
+        return {x:xNow,y:yNow};
+    }
     goToTile(tile,updateMap,maxTilesToMove=50) {
         const handleArrival = (argX,argY) => {
             const arrived = region
@@ -226,6 +321,7 @@ class Player extends Character{
             updateMap();
             const location = this.handleMovingToTile(tile,maxTilesToMove);
             if (location.x !== tile.x || location.y !== tile.y) {
+                alert(`Cannot find the way, better head back to the ${this.transport.name}`);
                 return handleArrival(location.x,location.y);
             }
         }

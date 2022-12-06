@@ -12,6 +12,7 @@ class City {
         this.areas = new Map();
         this.generate();
         this.factions = new Map();
+        this.addCityToRegion();
     }
 
     generate() {
