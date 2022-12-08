@@ -124,6 +124,12 @@ class Player extends Character{
     getTile() {
         return this.location.tile;
     }
+    getCity() {
+        return this.location.city;
+    }
+    getArea() {
+        return this.location.area;
+    }
     getInventory() {
         return this.inventory;
     }
@@ -147,7 +153,6 @@ class Player extends Character{
         let stuck = false;
         let whereToGo;
         const tryPush = (x,y) => {
-            console.log(`tryPush x:${x},y:${y}`);
             if (region.getTile(x, y)?.isPassable) {
                 if(!path.length || (path.at(-1).x !== x || path.at(-1).y !== y)) {
                     timeout++
@@ -290,8 +295,6 @@ class Player extends Character{
                     }
                 }
         }
-
-        console.log(path);
         for (let i = 0; i < path.length; i++) {
             passable = region.getTile(path[i].x, path[i].y).handlePlayerPassing(path[i].timeout,this.getItem)
             if (!passable) {
@@ -300,7 +303,7 @@ class Player extends Character{
         }
         return {x:xNow,y:yNow};
     }
-    goToTile(tile,updateMap,maxTilesToMove=50) {
+    goToTile(tile,maxTilesToMove=50) {
         const handleArrival = (argX,argY) => {
             const arrived = region
                 .getTile(argX, argY)
@@ -318,7 +321,7 @@ class Player extends Character{
             region
                 .getTile(this.location.tile.x,this.location.tile.y)
                 .handlePlayerDeparture()
-            updateMap();
+            this.updateMap()
             const location = this.handleMovingToTile(tile,maxTilesToMove);
             if (location.x !== tile.x || location.y !== tile.y) {
                 alert(`Cannot find the way, better head back to the ${this.transport.name}`);
@@ -333,6 +336,44 @@ class Player extends Character{
     }
     goToLocation(location) {
         this.location = location;
+    }
+
+    handleEnterCity(city) {
+      const area = city.getRandomArea();
+      this.location = {...this.location, city: city.name};
+      this.handleEnterArea(area);
+    }
+    handleEnterArea(area) {
+      console.log('Entering area', area);
+      area.handlePlayerArrival();
+      this.location = {...this.location, area: area.name};
+      this.updateMap();
+    }
+    handleExitCity() {
+      this.location = {...this.location, city: null, area: null};
+      this.updateMap();
+    }
+
+    updateMap = ()=>{
+      if (this.location.area) {
+        return this.updateCityAreaMap();
+      }else if (this.location.region) {
+        return this.updateRegionMap();
+      }
+      console.log('No map to update');
+    }
+
+    updateRegionMap = () => {
+        Planet
+            .getPlanet(this.getPlanet())
+            .getRegion(this.getRegion())
+            .updateMap();
+    }
+    updateCityAreaMap = () =>{
+        Planet
+            .getPlanet(this.getPlanet())
+            .getRegion(this.getRegion()).getCity(this.getCity()).getArea(this.getArea())
+            .updateMap();
     }
 
 }
