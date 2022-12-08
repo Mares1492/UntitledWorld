@@ -18,7 +18,7 @@ const terrainElements = {
     palace: {symbol:'|^|^|^|', color: '#909090',img:"./img/palace.png?",width:"15",height:"15",name:"Palace"},
     forest: {symbol:'↑↑↑', color: '#585858',img:"./img/forest.png?",width:"30",height:"30",name:"Forest",style:"align-self:end;",isLandable:false},
     river: {symbol:'≈',color: '#F8F8F8',img:"./img/river.png?",width:"35",height:"35",style:"opacity: 0.5;background-repeat: space;",name:"River",description:"At this place, the river overflowed strongly. It is not possible to cross it.",isPassable:false,isLandable:false},
-    mountain: {symbol:'/\\\\',color: '#606060',img:["./img/mountain.png?","./img/mountains.png?"],style:"align-self:end;", width:"40",height:"40",name:"Mountains",isPassable:false},
+    mountain: {symbol:'/\\\\',color: '#606060',img:["./img/mountain.png?","./img/mountains.png?"],style:"align-self:end;", width:"40",height:"40",name:"Mountains",isPassable:false,isLandable:false},
     quest: {symbol:'+',color: '#A0A0A0',img:"./img/quest.png?",width:"30",height:"30",name:"Quest Marker",description: "A quest marker. You can may find something interesting there."},
     house: {symbol:'|^|',color: '#909090',img:"./img/house.png?",width:"15",height:"15",name:"House",description: "A lonely house in the centre of wildness."},
     castle: {symbol:'|_|',color: '#909090',img:"./img/castle.png?",width:"30",height:"30",name:"Castle"},

@@ -54,8 +54,7 @@ const updateMap = () => {
     Planet.getPlanet(player.getPlanet()).getRegion(player.getRegion()).updateMap();
 }
 
-const getStory = (type) => {
-
+const getStory = (type) => { //It is actually a part of the early version of the game, but I decided to keep it for now
     if (type === "Text") {
         return story.value;
     }

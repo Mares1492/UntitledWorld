@@ -38,7 +38,7 @@ class Player extends Character{
       if (this.isAbleToAct) {
         return true;
       }
-        alert(`You are not able to ${action} at the moment`);
+        alert(`You are unable to ${action} at the moment`);
         return false;
 
     }
