@@ -296,7 +296,7 @@ class Player extends Character{
                 }
         }
         for (let i = 0; i < path.length; i++) {
-            passable = region.getTile(path[i].x, path[i].y).handlePlayerPassing(path[i].timeout,this.getItem)
+            passable = region.getTile(path[i].x, path[i].y).handlePlayerBypassing(path[i].timeout,this.getItem)
             if (!passable) {
                 return {x:path[i].x,y:path[i].y};
             }
