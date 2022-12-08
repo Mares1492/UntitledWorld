@@ -2,6 +2,7 @@ import Terrain from "./Terrain.js";
 import Planet from "./Planet.js";
 import City from "./City/City.js";
 const landscapeContainer = document.getElementById('landscape-container');
+const landscapeDesc = document.getElementById('landscape-description')
 
 const terrainElements = {
     rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'./img/rocket.png?', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'Rocket'},
@@ -50,7 +51,7 @@ const positiveEconomicAdjectives = ["rich","wealthy","poverty","wealth","big","g
 const negativeEconomicAdjectives = ["poor","poverty","unwealthy","unwealth","bad","small","little","poorly"];
 
 class Region {
-    constructor(name,text, width, height,planetName) {
+    constructor(name,text, width, height,location) {
         this.name = name;
         this.text = this.initialFilter(text);
         console.log(this.text);
@@ -61,10 +62,10 @@ class Region {
         this.terrainElements = terrainElements;
         this.width = width;
         this.height = height;
-        this.planetName = planetName;
+        this.location = location;
         this.filteredText = this.filterText();
         this.cities = new Map();
-        if (text.split('').length > 20) {
+        if (text.split(".").length > 1 && text.split(".")[1].split(" ").length > 5) {
             this.basicTerrain = this.textBasedBasicTerrainGen();
         }
         else {
@@ -79,7 +80,7 @@ class Region {
         this.selectedTile = {name:"No Data",description:"No title provided",x:0,y:0};
     }
     planetBasedBasicTerrainGen() {
-        const planet = Planet.getPlanet(this.planetName)
+        const planet = Planet.getPlanet(this.location.planet)
         const terr =  planet.terrain.map(
                 el => this.isWordInElements(Object.keys(this.terrainElements), el))
             .filter(word=>word);
@@ -116,7 +117,7 @@ class Region {
         }
     }
     addCity(x,y) {
-        const city = new City(`City-${this.cities.size+1}`,{planet:this.planetName,region:this.name,tile:{x:x,y:y}});
+        const city = new City(`City-${this.cities.size+1}`,{planet:this.location.planet,region:this.name,tile:{x:x,y:y}});
         if (this.cities.has(city.name)) {
             console.log(`City ${city.name} already exists`);
             return false;
@@ -225,7 +226,7 @@ class Region {
             element?.description,
             element?.isLandable,
             element?.isPassable,
-            {planet:this.planetName,region:this.name}
+            {planet:this.location.planet,region:this.name}
         );
         if (element.name === "City") {
             const cityName = this.addCity(x,y);
@@ -309,6 +310,7 @@ class Region {
 
     updateMap = () => {
         console.log('Updating region map');
+        landscapeDesc.innerHTML = `${this.location.planet} || ${this.name}`;
         landscapeContainer.innerHTML = this.getLandscape();
         landscapeContainer.scrollIntoView();
     }

@@ -1,7 +1,7 @@
 import Planet from "./classes/Planet/Planet.js";
 import Player from "./classes/Character/Player.js";
 import Region from "./classes/Planet/Region.js";
-import Rocket from "./classes/Vehicle/Rocket.js";
+import Rocket from "./classes/Transport/Rocket.js";
 import handleAction from "./classes/Character/player-controller.js";
 import StarSystem from "./classes/StarSystem/StarSystem.js";
 const submit = document.getElementById('generate');
@@ -26,7 +26,7 @@ const homeSystem = new StarSystem({galaxy: 'Home galaxy',sector: 'Home sector',s
 
 const homePlanet = new Planet(
     {galaxy: 'Home galaxy',sector: 'Home sector',subSector: 'Home sub-sector',system: 'Home system'},
-    "Home Planet",
+    "New Hope",
     "Terrestrial",
     "Your home-planet",
     "Breathable",
@@ -45,7 +45,7 @@ const player = new Player(
     "Player1",
     {health:20, defense:0, attack:0, speed:1},
     {str:10,dex:10,int:10,agi:10,cha:10},
-    {planet:"Home Planet",region:"Home",tile:{x:0,y:0}},
+    {planet:"New Hope",region:"Home",tile:{x:0,y:0}},
     new Rocket("Rocket",0,0,"./img/rocket-on-ground.png?",30));
 
 
@@ -61,14 +61,14 @@ const getStory = (type) => { //It is actually a part of the early version of the
 }
 
 const generatePic = () =>{
-    const planet = Planet.getPlanet("Home Planet") //adjust to get planet from input
+    const planet = Planet.getPlanet("New Hope") //adjust to get planet from input
     const text = getStory("Text");
     const region = new Region(
-        "New Hope",
+        "Home",
         text,
         parent.innerWidth/120,
         parent.innerHeight/70,
-        planet.name
+        {planet:planet.name},
         );
     player.location = {planet:planet.name,region:region.name};
     console.log("Adding: ",region,"To: ",planet);

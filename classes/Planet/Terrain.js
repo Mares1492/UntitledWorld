@@ -80,7 +80,6 @@ class Terrain {
         this.width = this.terrSize;
         this.height = this.terrSize;
         }
-        console.log(`Departed from ${this.name} at ${this.x},${this.y}`);
     }
     handleLanding(shipType,size,shipImg) {
         console.log(`Trying to land on ${this.name}| Landing is possible: ${this.isLandable}`);

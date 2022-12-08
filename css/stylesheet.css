@@ -64,7 +64,7 @@
     font-size: 2em;
     letter-spacing: 1px;
     line-height: 1;
-    margin-left: 1em ;
+    margin-left: 1em;
 }
 
 .character-stats{
@@ -77,6 +77,9 @@
     margin: 1em;
 }
 
+#landscape-description{
+    text-underline: burlywood;
+}
 
 input[type="color"] {
     -webkit-appearance: none;

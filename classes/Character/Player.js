@@ -1,8 +1,5 @@
-
 import Character from "./Character.js";
 import Planet from "../Planet/Planet.js";
-import planet from "../Planet/Planet.js";
-import region from "../Planet/Region.js";
 class Player extends Character{
   constructor(
       name,
@@ -340,17 +337,23 @@ class Player extends Character{
 
     handleEnterCity(city) {
       const area = city.getRandomArea();
+      this.tileBackup = this.location.tile;
       this.location = {...this.location, city: city.name};
       this.handleEnterArea(area);
     }
     handleEnterArea(area) {
       console.log('Entering area', area);
-      area.handlePlayerArrival();
-      this.location = {...this.location, area: area.name};
-      this.updateMap();
+      const success = area.handlePlayerArrival();
+      if (success) {
+          this.location = {...this.location, area: area.name};
+          this.updateMap();
+      }
+      else {
+          alert('Cannot enter any area');
+      }
     }
     handleExitCity() {
-      this.location = {...this.location, city: null, area: null};
+      this.location = {...this.location, city: null, area: null, tile: this.tileBackup};
       this.updateMap();
     }
 
