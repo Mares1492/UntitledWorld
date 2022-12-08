@@ -20,7 +20,7 @@ class Rocket extends Vehicle {
             this.y = y;
             this.location = {planet:planet,region:region};
             this.hasLanded = true;
-            console.log(`Landed on ${planet} in ${region} region at cords:${this.x},${this.x}`);
+            console.log(`Landed on ${planet} in ${region} region`);
             return true;
         }
         return false;
@@ -32,7 +32,7 @@ class Rocket extends Vehicle {
             getRegion(this.location.region).
             getTile(this.x,this.y).handleTakeOff();
         if (tookOff) {
-            console.log(`Took off from ${this.location.planet} in ${this.location.region} region at cords:${this.x},${this.x}`);
+            console.log(`Took off from ${this.location.planet} in ${this.location.region} region`);
             this.x = null;
             this.y = null;
             this.location = null;

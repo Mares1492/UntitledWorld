@@ -10,38 +10,51 @@
     </script>
 </head>
 <body>
-<div id = "modal" onclick="closeModal()" class="modal-overlay">
-    <div class="modal-content">
-
-        <div id="tile-name" class="modal-header">
-            Tile description
-        </div>
-        <div class="cords-container">
-            <div class="cords"><label for="tile-x-cords">x:</label><div id="tile-x-cords"></div></div>
-            <div class="cords"><label for="tile-y-cords">y:</label><div id="tile-y-cords"></div></div>
-        </div>
-        <div class="modal-body">
-            <div id="modal-content" ></div>
-        </div>
-        <div class="modal-footer">
-            <img id="landing-button" src="img/landing.png" width="45" height="45" alt="landing">
-            <img id="take-off-button" src="img/take-off.png" width="45" height="45" alt="landing">
-            <img id="go-to-button" src="img/character/walk.png" width="45" height="45" alt="landing">
-<!--            <img id="closeBtn" onclick="closeModal()" class="close-modal" width="30" height="30" src="img/x.png" alt="X">-->
+<div class = "color-palette-container">
+    <input id="bg-color-input" type="color"><label for="bg-color-input">BG COLOR</label>
+</div>
+<div class="settings"><img src="./img/settings/settings-icon.png?" alt="Settings" width="50" height="50"></div>
+<div class = map-component>
+    <div id = "modal" onclick="closeModal()" class="modal-overlay">
+        <div class="modal-content">
+            <div id="tile-name" class="modal-header">
+                Tile description
+            </div>
+            <div class="cords-container">
+                <div class="cords"><label for="tile-x-cords">x:</label><div id="tile-x-cords"></div></div>
+                <div class="cords"><label for="tile-y-cords">y:</label><div id="tile-y-cords"></div></div>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content" ></div>
+            </div>
+            <div class="modal-footer">
+                <img id="landing-button" class="modal-btn" src="./img/landing.png" width="45" height="45" alt="landing">
+                <img id="take-off-button" class="modal-btn" src="./img/take-off.png" width="45" height="45" alt="take off">
+                <img id="go-to-button" class="modal-btn" src="./img/character/walk.png" width="45" height="45" alt="go to">
+                <img id="activity-button" class="modal-btn" src="./img/people.png" width="45" height="45" alt="activity">
+                <img id="enter-city-button" class="modal-btn" src="./img/enter-city.png" width="30" height="30" alt="enter">
+    <!--            <img id="closeBtn" onclick="closeModal()" class="close-modal" width="30" height="30" src="img/x.png" alt="X">-->
+            </div>
         </div>
     </div>
-</div>
-<div class="world-description">
-    <label class="beautiful-text" for="story">Your story:</label>
-    <textarea id="story" placeholder="Put your story here..." rows="5" cols="33">This is a green planet with a lot of grass and trees.
-There are some mountains and a big river. There are also some cities and towns.
-There are also some farms and mines. There are also some caves.
-There are also some camps and houses. There are also some quest points. There should also be a colony</textarea>
-    <button id="generate">Generate</button>
-</div>
-
-<div class="landscape-container" id="landscape-container">
-    <img src="img/world.png" alt="Some kind of planet">
+    <div class="world-description">
+        <label class="beautiful-text" for="region-name">Region name:</label>
+        <input id="region-name" type="text" disabled placeholder="Totally original name"/>
+        <label class="beautiful-text" for="story">Region description:</label>
+        <textarea id="story" placeholder="Put your story here..." rows="5" cols="33">This is a green planet with a lot of grass and trees.
+    There are some mountains and a big river. There are also some cities and towns.
+    There are also some farms and mines. There are also some caves.
+    There are also some camps and houses. There are also some quest points. There should also be a colony</textarea>
+        <button id="generate">Generate</button>
+    </div>
+    <div class="landscape-container" id="landscape-container">
+        <img src="img/world.png" alt="Some kind of planet">
+    </div>
+    <div class="next-area-container" id="next-area-container">
+        <img id="next-area-left" src="./img/nextArea.png" alt="next area left">
+        <img id="next-area-right " src="./img/nextArea.png" alt="next area right">
+    </div>
+    <img id="exit-city-button" class="modal-btn" src="./img/exit-city.png" width="100" height="100" alt="landing">
 </div>
 </body>
 </html>

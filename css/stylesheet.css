@@ -2,6 +2,44 @@
     font-family: "Fira Code Retina", monospace;
 }
 
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+}
+
+.color-palette-container{
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.settings {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    transition: all 200ms ease-in-out;
+    cursor: no-drop;
+}
+
+.settings:hover {
+    filter: opacity(0);
+}
+
+body {
+    overflow-y: hidden;
+}
+
 label,
 textarea {
     font-size: .8rem;
@@ -16,6 +54,7 @@ textarea {
     box-shadow: 1px 1px 1px #999;
     resize: none;
     transition: all .3s ease;
+    margin-bottom: 1em;
 }
 textarea:focus {
     transform: scale(2) translateY(6em);
@@ -29,7 +68,7 @@ textarea:focus {
     font-weight: 600;
     letter-spacing: 1px;
     line-height: 1.5;
-    margin-bottom: 10px;
+    margin-top: 0.5em;
 }
 #generate{
     background-color: rgba(57,51,72,0.6);
@@ -44,6 +83,7 @@ textarea:focus {
     transition: all 400ms ease;
     border-radius: 5px;
     box-shadow: dimgrey 1px 1px 1px;
+    margin-bottom: 1em;
 }
 #generate:hover{
     background-color: rgba(57,51,72,0.8);
@@ -67,6 +107,7 @@ textarea:focus {
     max-height: 30%;
     user-select: none;
     transition: all 400ms ease-in-out;
+    place-self: center center;
 
 }
 
@@ -162,20 +203,27 @@ img{
     text-align: center;
 }
 
-#closeBtn{
+.modal-footer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+    box-sizing: content-box;
+}
+
+.modal-btn:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: all 200ms ease-in-out;
+}
+
+#closeBtn {
     color: #aaaaaa;
     cursor: pointer;
 }
-#landing-button{
-    cursor: pointer;
-}
-#take-off-button{
-    cursor: pointer;
-}
-#go-to-button{
-    cursor: pointer;
-}
-
 .modal-header{
     text-decoration: underline #b4b1b8;
     padding: 15px;
@@ -205,6 +253,33 @@ img{
     align-items: center;
     align-content: center;
     padding: 10px;
+
+}
+
+#exit-city-button{
+    margin-top: 2em;
+}
+
+.next-area-container{
+    position: absolute;
+    top: 35%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+
+#next-area-left{
+    justify-self: start;
+    transform: scale(-1);
+    padding-left: 50%;
+
+
+}
+#next-area-right{
+    justify-self: end;
+    padding-right: 50%;
 
 }
 
@@ -297,6 +372,7 @@ img{
                 0 6px 7px  #FAC000;
     }
 }
+
 
 @keyframes takeOffAnimation {
     0%{
