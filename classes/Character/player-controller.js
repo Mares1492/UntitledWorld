@@ -65,7 +65,7 @@ const handleAction = (player,type) => {
                 //...
                 break
             case 'land':
-                const isLandable = region.getTile(x,y).isPassable
+                const isLandable = region.getTile(x,y).isLandable;
                 if (!isLandable){
                     alert("You can't land here!");
                     return;
