@@ -23,7 +23,7 @@ class City {
                 {planet:this.location.planet,region:this.location.region,city: this.name},
             ));
         }
-        console.log(`Detected: ${this.name} ----> ${this.areas.size} areas.`);
+        console.log(`Detected: ${this.name} ----> ${this.areas.size} ${this.areas.size===1?"area":"areas"} | cords ---> x:${this.location.tile.x} | y:${this.location.tile.y}`);
     }
     addArea(area) {
         if (this.areas.has(area.name)) {

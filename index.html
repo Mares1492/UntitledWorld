@@ -14,6 +14,7 @@
     <input id="bg-color-input" type="color"><label for="bg-color-input">BG COLOR</label>
 </div>
 <div class="settings"><img src="./img/settings/settings-icon.png?" alt="Settings" width="50" height="50"></div>
+<div class = "global-component">
 <div class = map-component>
     <div id = "modal" onclick="closeModal()" class="modal-overlay">
         <div class="modal-content">
@@ -55,6 +56,27 @@
         <img id="next-area-right " src="./img/nextArea.png" alt="next area right">
     </div>
     <img id="exit-city-button" class="modal-btn" src="./img/exit-city.png" width="100" height="100" alt="landing">
+</div>
+<div class="info-component">
+    <div class = "character-container">
+        <div class ="character-name">
+            <img src="./img/space-man.png" alt="god" width="50" height="50">
+            <label class="beautiful-text" for="character-name">Character name:</label>
+            <div id="character-name">Joe Doe</div>
+        </div>
+        <div class ="character-stats">
+            <div class="character-stat" id="hp">HP: 100</div>
+            <div class="character-stat" id="def">DEF: 100</div>
+            <div class="character-stat" id="atk">ATK: 100</div>
+            <div class="character-stat" id="spd">SPD: 100</div>
+        </div>
+
+    </div>
+    <div class = "console-container">
+        <h3>Console:</h3>
+        <p id="info">You code this section</p>
+    </div>
+</div>
 </div>
 </body>
 </html>

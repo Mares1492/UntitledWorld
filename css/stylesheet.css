@@ -2,6 +2,82 @@
     font-family: "Fira Code Retina", monospace;
 }
 
+.global-component{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.info-component{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: black solid 3px;
+    min-width: 30%;
+    margin: auto 0;
+}
+
+.landscape-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border: 10px solid #b4b1b8;
+    padding: 5px;
+    box-shadow: 3px 7px 3px 2px #999;
+    border-radius: 5px;
+    margin: 0 auto;
+    inline-size: fit-content;
+    background-color: #6f6d72;
+    user-select: none;
+    transition: all 400ms ease-in-out;
+    place-self: center center;
+}
+
+.console-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.character-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: black solid 3px;
+    margin: auto 0;
+}
+
+.character-name{
+    display: flex;
+    flex-direction: row;
+    min-width: 30%;
+    margin: 1em;
+}
+
+#character-name{
+    font-weight: bold;
+    color: rgba(32,32,32,0.8);
+    font-size: 2em;
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-left: 1em ;
+}
+
+.character-stats{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.character-stat{
+    margin: 1em;
+}
+
+
 input[type="color"] {
     -webkit-appearance: none;
     border: none;
@@ -92,24 +168,6 @@ textarea:focus {
     background-color: rgba(57,51,72,0.4);
 }
 
-.landscape-container{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    border: 10px solid #b4b1b8;
-    padding: 5px;
-    box-shadow: 3px 7px 3px 2px #999;
-    border-radius: 5px;
-    margin: 0 auto;
-    inline-size: fit-content;
-    background-color: #6f6d72;
-    max-width: 90%;
-    max-height: 30%;
-    user-select: none;
-    transition: all 400ms ease-in-out;
-    place-self: center center;
-
-}
 
 .tiles{
     display: flex;

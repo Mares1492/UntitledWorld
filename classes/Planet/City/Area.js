@@ -21,7 +21,7 @@ const cityElements = {
 };
 
 class Area {
-    constructor(name=new Date().getTime().toString(),location,description="no data",size={x:24,y:12}) {
+    constructor(name=new Date().getTime().toString(),location,description="no data",size={x:parent.innerWidth/70,y: parent.innerHeight/70}) {
         this.name = name;
         this.description = description;
         this.location = location;
