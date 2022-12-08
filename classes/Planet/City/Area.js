@@ -15,8 +15,8 @@ const cityElements = {
         name:"City Building",
         description:"Some kind of city building",isPassable:false},
     bridge: {symbol:'=',color: '#383838',img:"./../../../img/bridge.png?",width:"30",height:"30",name:"Bridge",isActivity:true,description:"A bridge"},
-    roadX: {symbol:'─',color: '#A0A0A0',img:"./../../../img/city/roads/road.png?",width:"30",height:"30",name:"Road"},
-    roadY: {symbol:'─',color: '#A0A0A0',img:"./../../../img/city/roads/road.png?",width:"30",height:"30",name:"Road",style: "transform: rotate(90deg);"},
+    roadX: {symbol:'|',color: '#A0A0A0',img:"./../../../img/city/roads/road.png?",width:"30",height:"30",name:"Road"},
+    roadY: {symbol:'|',color: '#A0A0A0',img:"./../../../img/city/roads/road.png?",width:"30",height:"30",name:"Road",style: "transform: rotate(90deg);"},
     water: {symbol:'~',color: '#F8F8F8',img:"./../../../img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"Water"},
 };
 
