@@ -35,10 +35,10 @@ class Terrain {
         this.description = newDescription;
     }
     destroy(reason) {
+        this.description = `This ${this.name} was destroyed by ${reason}`;
         this.name = `Destroyed ${this.name}`;
         this.symbol = '...';
         this.img = '/img/fire.png';
-        this.description ="This place was destroyed by" + reason? reason: "'Just Cause'";
     }
     handlePlayerPassing(counter) {
         if (this.isPassable) {
@@ -59,6 +59,8 @@ class Terrain {
                 this.terrImg = this.img;
                 this.terrDescription = this.description;
                 this.terrSize = this.width;
+                this.terrColor = this.color;
+                this.color = "#F3EFE0";
                 this.description = "You are here";
                 this.img = './img/character/location.png?';
                 this.width = 40;
@@ -73,6 +75,7 @@ class Terrain {
         this.playerPresent = false;
         if (!this.playerTransportPresent) {
         this.description = this.terrDescription;
+        this.color = this.terrColor;
         this.img = this.terrImg;
         this.width = this.terrSize;
         this.height = this.terrSize;
@@ -92,7 +95,7 @@ class Terrain {
             this.terrColor = this.color;
             this.terrStyle = this.style;
             this.style = "border-radius: 10px";
-            // // this.color = "rgba(0,0,0,0)";
+            this.color = "rgba(0,0,0,0.3)";
             this.width = size;
             this.height = size;
             this.playerTransportPresent = true;
@@ -116,7 +119,7 @@ class Terrain {
             this.playerPresent = false;
             console.log(`Took off from ${this.name} at ${this.x},${this.y}`);
             if (this.name === "House") {
-                this.destroy("By the player taking off");
+                this.destroy(" the player taking off");
             }
             return true;
         }
