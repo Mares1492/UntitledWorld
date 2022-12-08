@@ -11,9 +11,8 @@ class City {
         this.ownedBy = ownedBy;
         this.areas = new Map();
         this.generate();
-        this.factions = new Map();
+        this.factions = new Map(); //TODO: add factions :)
     }
-
 
     generate() {
         const numberOfAreas = Math.floor(Math.random() * 5) + 1;
