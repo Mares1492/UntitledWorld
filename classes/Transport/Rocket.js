@@ -1,11 +1,10 @@
-import Vehicle from "./Vehicle.js";
+import Transport from "./Transport.js";
 import Planet from "../Planet/Planet.js";
 
-class Rocket extends Vehicle {
+class Rocket extends Transport {
     hasLanded = false;
     constructor(name, x, y,img,size,owner=null) {
         super(name, 10, [owner], null, null, owner, x, y,img,size,size);
-        console.log("Rocket is ready");
         this.type = "Rocket"
     }
     landAt(planet,region,x,y) {
