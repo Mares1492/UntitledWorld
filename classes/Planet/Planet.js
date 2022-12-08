@@ -1,7 +1,9 @@
 
+
 class Planet {
     static planets = new Map();
     constructor(
+        location,
         name= new Date().getTime().toString(),
         type="no data",
         description="no data",
@@ -16,6 +18,7 @@ class Planet {
         status="no data",
         system="no data"
     ) {
+        this.location = location;
         this.name = name;
         this.type = type;
         this.description = description;
@@ -61,7 +64,6 @@ class Planet {
         }
         else {
             Planet.planets.set(this.name, this);
-            console.log(`Planet '${this.name}' created`);
         }
     }
 

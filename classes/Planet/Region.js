@@ -1,9 +1,56 @@
 import Terrain from "./Terrain.js";
 import Planet from "./Planet.js";
+import City from "./City/City.js";
 const landscapeContainer = document.getElementById('landscape-container');
 
+const terrainElements = {
+    rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'./img/rocket.png?', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'Rocket'},
+    ocean: {symbol:'~',color: '#F8F8F8',img:"./img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"An Ocean",passable:false,description:"A large body of water"},
+    sea: {symbol:'~',color: '#F8F8F8',img:"./img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"A sea",passable:false,description:"A large body of water, not as large as an ocean though"},
+    sand: {symbol:'.', color: '#909090',img:"./img/sand.png?",width:"8",height:"8",style:"opacity: 0.7;background-repeat: repeat;",name:"Sand"},
+    rock: {symbol:':', color: '#909090',img:"./img/rock.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Rock"},
+    desert: {symbol:'*', color: '#909090',img:"./img/desert.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: repeat;",name:"Desert"},
+    plain: {symbol:',', color: '#B0B0B0',img:"./img/grass.png?",width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"Plains"},
+    wildness: {symbol:',', color: '#B0B0B0',img:["./img/grass.png?","./img/forest.png","./img/rock.png",],width:"10",height:"10",style:"opacity: 0.7;background-repeat: repeat;",name:"wildness",description:"A wild place, with a lot of different things"},
+    grass: {symbol:',', color: '#909090',img:"./img/grass.png?",width:"13",height:"13",style:"opacity: 0.7;background-repeat: repeat;",name:"Grass"},
+    trees: {symbol:'↑', color: '#909090',img:"./img/tree.png?",width:"20",height:"20",style:"opacity: 0.7;background-repeat: space;",name:"Trees"},
+    town: {symbol:'|_|_|', color: '#606060',img:"./img/town.png?",width:"26",height:"26",style:"background-repeat: no-repeat;align-self:end;",name:"Town",isLandable:false,description:"Small and unimportant town"},
+    palace: {symbol:'|^|^|^|', color: '#909090',img:"./img/palace.png?",width:"15",height:"15",name:"Palace"},
+    forest: {symbol:'↑↑↑', color: '#585858',img:"./img/forest.png?",width:"30",height:"30",name:"Forest",style:"align-self:end;",isLandable:false},
+    river: {symbol:'≈',color: '#F8F8F8',img:"./img/river.png?",width:"35",height:"35",style:"opacity: 0.5;background-repeat: space;",name:"River",description:"At this place, the river overflowed strongly. It is not possible to cross it.",isPassable:false,isLandable:false},
+    mountain: {symbol:'/\\\\',color: '#606060',img:["./img/mountain.png?","./img/mountains.png?"],style:"align-self:end;", width:"40",height:"40",name:"Mountains",isPassable:false},
+    quest: {symbol:'+',color: '#A0A0A0',img:"./img/quest.png?",width:"30",height:"30",name:"Quest Marker",description: "A quest marker. You can may find something interesting there."},
+    house: {symbol:'|^|',color: '#909090',img:"./img/house.png?",width:"15",height:"15",name:"House",description: "A lonely house in the centre of wildness."},
+    castle: {symbol:'|_|',color: '#909090',img:"./img/castle.png?",width:"30",height:"30",name:"Castle"},
+    city: {symbol:'|_|_|_|',color: '#909090',img:"./img/city.png?",width:"37",height:"37",name:"City",isLandable:false},
+    camp: {symbol:'(^)',color: '#606060',img:"./img/camp.png?",width:"25",height:"25",name:"Camp"},
+    //bridge: {symbol:'=',color: '#383838',img:"./img/bridge.png",width:"30",height:"30",name:"Bridge"},
+    cave: {symbol:'()',color: '#606060',img:"./img/cave.png?",width:"20",height:"20",name:"Cave",description: "Dark and dusty cave. You can find something interesting there(or not).",isLandable:false},
+    mine: {symbol:'()',color: '#B0B0B0',img:"./img/mine.png?",width:"15",height:"15",name:"Mine",description:"A mine. You can find minerals there. Hard labor is required."},
+    farm: {symbol:'[=^=]',color: '#909090',img:"./img/farm.png?",width:"20",height:"20",name:"Farm"},
+    village: {symbol:'|_|_|_|_|',color: '#909090',img:"./img/village.png?",width:"30",height:"30",name:"Village"},
+    //sky: {symbol:'\n',color: '#E8E8E8',img:"./img/sky.png?",width:"30",height:"30",name:"Sky"},
+    colony: {symbol:'|-|(|)|_|',color: '#606060',img:"./img/colony.png?",width:"30",height:"30",name:"Colony",style:"align-self:end;",description: "A colony. Nice."},
+    lumber: {symbol:'↑__|_|_↑',color: '#B0B0B0',img:"./img/lumbermill.png?",width:"15",height:"15",name:"Lumber-camp",description: "A lumber-camp. You can find wood there."},
+    battle: {symbol:'X',color: '#606060',img:"./img/battle.png?",width:"20",height:"20",name:"Battle",isPassable:false,description: "Battlefield..."},
+    ruin: {symbol:'/||\\',color: '#606060',img:"./img/ruin.png?",width:"20",height:"20",name:"Ruin"},
+    fire: {symbol:'F',color: '#606060',img:"./img/fire.png?",width:"20",height:"20",name:"Fire",isPassable:false},
+    volcano:{symbol:'V',color: '#606060',img:"./img/volcano.png?",width:"30",height:"30",name:"Volcano",isPassable:false},
+    hill:{symbol:'^#^',color: '#B0B0B0',img:"./img/hill.png?",width:"35",height:"35",name:"Hills"},
+    swamp:{symbol:'≈≈',color: '#606060',img:"./img/swamp.png?",width:"15",height:"15",name:"Swamp"},
+    lake:{symbol:'≈≈≈',color: '#909090',img:"./img/lake.png?",width:"30",height:"30",name:"Lake",description:"A lake big enough to be mentioned of"},
+    field:{symbol:'___',color: '#B0B0B0',img:"./img/field.png?",width:"30",height:"30",name:"Field"},
+    spaceStation:{symbol:'|_|_<|>_|_|',color: 'rgba(0,0,0,0)',img:"./img/space-station.png?",width:"40",height:"40",name:"Space Station",style:"box-shadow:inset 0 -1em 1em #000000;opacity:0.7;",description:"Somewhere in space."},
+    //alien:{symbol:'X',color: '#F3EFE0',img:["./img/alien.png?","./img/alien2.png?"],width:"20",height:"20",name:"x-x-x-x-x-x-x-x",description:"Alien activity detected.",isPassable:false,isLandable:false},
+}
+
+const positiveAdjectives = ["lot","many","much"];
+const negativeAdjectives = ["few"]
+const positiveEconomicAdjectives = ["rich","wealthy","poverty","wealth","big","good","huge","gigantic","vast","great"];
+const negativeEconomicAdjectives = ["poor","poverty","unwealthy","unwealth","bad","small","little","poorly"];
+
 class Region {
-    constructor(name,text, width, height, terrainElements, positiveAdjectives,negativeAdjectives,positiveEconomicAdjectives,negativeEconomicAdjectives,planetName) {
+    constructor(name,text, width, height,planetName) {
         this.name = name;
         this.text = this.initialFilter(text);
         console.log(this.text);
@@ -45,6 +92,7 @@ class Region {
         return this.text
             .split('.')[0]
             .split(' ')
+            .filter(word=>word.length>2)
             .map(word => this.isWordInElements(Object.keys(this.terrainElements), word)).filter(word=>word);
 
     }
@@ -63,16 +111,18 @@ class Region {
                 }
             }
         } else {
-            return [[this.terrainElements.rocket]];
+            this.landscape = [[]];
+            this.addElement(this.terrainElements.spaceStation, 0, 0);
         }
     }
-    addCity(city) {
+    addCity(x,y) {
+        const city = new City(`City-${this.cities.size+1}`,{planet:this.planetName,region:this.name,tile:{x:x,y:y}});
         if (this.cities.has(city.name)) {
             console.log(`City ${city.name} already exists`);
             return false;
         }
         this.cities.set(city.name, city);
-        return true;
+        return city.name;
     }
     getCities() {
         return this.cities;
@@ -97,9 +147,7 @@ class Region {
         return numberOfElements;
     }
     getLandmarkSpawnMultiplier(key) {
-        console.log(`Getting landmark spawn multiplier for ${key}`);
         const index = this.filteredText.indexOf(key);
-        console.log(`Checking for pre ${key} word... It is ${this.filteredText.at(index-1)}`);
         let positive = this.isWordInElements(this.positiveAdjectives, this.filteredText.at(index-1));
         if (positive) {
             return 25;
@@ -126,20 +174,16 @@ class Region {
         if (index < 0) {
             return false;
         }
-        console.log(`index of ${element} is ${index}`);
         let cluster = [];
-        console.log(`checking for pre ${element} word... It is ${this.filteredText.at(index-1)}`);
         let negative = this.isWordInElements(this.negativeEconomicAdjectives, this.filteredText.at(index-1));
         if (negative) {
-            console.log(`negative adjective found`);
             return false;
         }
         let positive = this.isWordInElements(this.positiveEconomicAdjectives, this.filteredText.at(index-1));
         if (positive) {
-            console.log(`positive adjective found`);
+            console.log(`dev: Cluster needs to be generated for ${element}`); //TODO: finish generate cluster handler
             return true;
         }
-        console.log(`no adjective found`);
         return false;
     }
 
@@ -183,12 +227,18 @@ class Region {
             element?.isPassable,
             {planet:this.planetName,region:this.name}
         );
+        if (element.name === "City") {
+            const cityName = this.addCity(x,y);
+            if (cityName) {
+                this.landscape[y][x].name = cityName;
+                this.landscape[y][x].type = "city";
+            }
+        }
 
     }
 
     addElements() {
         const terrainElementKeys = Object.keys(this.terrainElements);
-        console.log(this.filteredText);
         for (const [key, value] of this.numberOfElements.entries()) {
             let element = this.isWordInElements(terrainElementKeys, key);
             const cluster = this.checkForCluster(element)
@@ -197,11 +247,9 @@ class Region {
             }
             if (element) {
                 let spawnMultiplier = this.getLandmarkSpawnMultiplier(element);
-                console.log(`spawn multiplier for ${element} is ${spawnMultiplier}`);
                 for (let i = 0; i<(value+Math.floor(Math.random() * spawnMultiplier)); i++) { //10 is default but it is based on adjectives
                     let x = Math.floor(Math.random() * this.width);
                     let y = Math.floor(Math.random() * this.height);
-                    console.log(`adding element ${element} to ${x} : ${y}`);
                     this.addElement(this.terrainElements[element], x, y);
                 }
             }
@@ -237,7 +285,11 @@ class Region {
                     }else {
                         document.getElementById('take-off-button').style.display = 'none';
                     }
-                    
+                    if ('${el.name.startsWith('City')}'==='true' && '${el.playerPresent}'==='true') {
+                        document.getElementById('enter-city-button').style.display = 'block';
+                    }else {
+                        document.getElementById('enter-city-button').style.display = 'none';
+                    }
                 }
                 openModal()"
                 "
@@ -256,6 +308,7 @@ class Region {
     };
 
     updateMap = () => {
+        console.log('Updating region map');
         landscapeContainer.innerHTML = this.getLandscape();
         landscapeContainer.scrollIntoView();
     }

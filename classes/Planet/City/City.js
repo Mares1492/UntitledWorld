@@ -1,10 +1,10 @@
-import Region from "../Region.js";
-import Planet from "../Planet";
+import Planet from "../Planet.js";
+import Area from "./Area.js";
 
 
 
 class City {
-    constructor(name=new Date().getTime().toString(),description="No data",location={planet:"no data",region:"no data",cords:{}},ownedBy=null) {
+    constructor(name=new Date().getTime().toString(),location,description="No data",ownedBy=null) {
         this.name = name;
         this.description = description;
         this.location = location;
@@ -12,32 +12,39 @@ class City {
         this.areas = new Map();
         this.generate();
         this.factions = new Map();
-        this.addCityToRegion();
     }
+
 
     generate() {
         const numberOfAreas = Math.floor(Math.random() * 5) + 1;
         for (let i = 0; i < numberOfAreas; i++) {
-            this.addArea(new Area());
+            this.addArea(new Area(
+                `Area-${i+1}`,
+                {planet:this.location.planet,region:this.location.region,city: this.name},
+            ));
         }
-    }
-    addCityToRegion() {
-        Planet.getPlanet(this.location.planet).getRegion(this.location.region).addCity(this);
+        console.log(`Detected: ${this.name} ----> ${this.areas.size} areas.`);
     }
     addArea(area) {
         if (this.areas.has(area.name)) {
-            console.log(`Area '${area.name}' already exists`);
-            alert(`Area '${area.name}' already exists`);
-            return false;
+            console.log(`Area '${area.name}' in ${this.name} already exists`);
+            throw new Error(`Area '${area.name}' already exists`);
         }
         this.areas.set(area.name, area);
-        console.log(`Area '${area.name}' is added to '${this.name}'`);
-        return true;
     }
     getArea(areaName) {
         if (this.areas.has(areaName)) {
             return this.areas.get(areaName);
         }
+        console.log(`Area '${areaName}' in ${this.name} does not exist`);
         return false;
     }
+
+    getRandomArea() {
+        const areas = Array.from(this.areas.values());
+        return areas[Math.floor(Math.random() * areas.length)];
+    }
 }
+
+export default City;
+

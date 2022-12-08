@@ -3,7 +3,7 @@ import Planet from "./Planet.js";
 
 
 class Terrain {
-    constructor(name,symbol, x, y, color,img,width,height,style="",description="No data",isLandable=true,isPassable=true,location=null,) {
+    constructor(name,symbol, x, y, color,img,width,height,style="",description="No data",isLandable=true,isPassable=true,location=null,isActivity=false) {
         this.color = color;
         this.symbol = symbol;
         this.x = x;
@@ -17,6 +17,8 @@ class Terrain {
         this.isLandable = isLandable;
         this.location = location;
         this.isPassable = isPassable;
+        this.playerPresent = false;
+        this.playerTransportPresent = false;
     }
     modifyTerrain(newTerrain) {
         this.symbol = newTerrain?.symbol;
@@ -43,7 +45,7 @@ class Terrain {
             console.log(`Passed through ${this.name} at ${this.x},${this.y}`);
             setTimeout(() => {
                 const el = document.getElementById(`${this.x + '-' + this.y}`)
-                el.style.animation = "playerPassing 600ms";
+                el.style.animation = "playerPassing 200ms";
             }, counter * 200);
             return true;
         }
