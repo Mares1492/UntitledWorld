@@ -67,7 +67,7 @@ const generatePic = () =>{
     const region = new Region(
         "New Hope",
         text,
-        parent.innerWidth/70,
+        parent.innerWidth/120,
         parent.innerHeight/70,
         planet.name
         );

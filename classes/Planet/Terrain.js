@@ -40,7 +40,7 @@ class Terrain {
         this.symbol = '...';
         this.img = '/img/fire.png';
     }
-    handlePlayerPassing(counter) {
+    handlePlayerBypassing(counter) {
         if (this.isPassable) {
             console.log(`Passed through ${this.name} at ${this.x},${this.y}`);
             setTimeout(() => {
