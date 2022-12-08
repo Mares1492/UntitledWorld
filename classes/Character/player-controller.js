@@ -6,10 +6,10 @@ const handleAction = (player,type) => {
         const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
         const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
         const region = Planet.getPlanet(player.getPlanet()).getRegion(player.getRegion());
+        let tile = player.getTile();
         switch (type) {
             case 'enter city':
                 player.setIsUnableToAct(5000)
-                const tile = player.getTile();
                 if (tile.x === x && tile.y === y) {
                     let city = region.getTile(x,y);
                     console.log(city);
@@ -57,6 +57,10 @@ const handleAction = (player,type) => {
             case 'exit city':
                 player.setIsUnableToAct(1000)
                 player.handleExitCity();
+                region.getTile(tile.x,tile.y).handlePlayerDeparture();
+                tile = player.getTile();
+                region.getTile(tile.x,tile.y).handlePlayerArrival();
+                player.updateMap();
                 break
             case 'talk':
                 //...

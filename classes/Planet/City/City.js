@@ -1,8 +1,6 @@
 import Planet from "../Planet.js";
 import Area from "./Area.js";
 
-
-
 class City {
     constructor(name=new Date().getTime().toString(),location,description="No data",ownedBy=null) {
         this.name = name;
