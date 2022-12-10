@@ -12,9 +12,8 @@ const goToBtn = document.getElementById('go-to-button');
 const enterCityBtn = document.getElementById('enter-city-button');
 const story = document.getElementById('story');
 const exitCityBtn = document.getElementById('exit-city-button');
-const nextAreaContainer = document.getElementById('next-area-container');
-exitCityBtn.style.display = 'none';
-nextAreaContainer.style.display = 'none';
+const nextAreaLeftBtn = document.getElementById('next-area-left');
+const nextAreaRightBtn = document.getElementById('next-area-right');
 takeOffBtn.style.display = 'none';
 goToBtn.style.display = 'none';
 enterCityBtn.style.display = 'none';
@@ -102,11 +101,18 @@ const handleExitCityBtnClick = () => {
     const result = handleAction(player,"exit city");
     if (result){
         exitCityBtn.style.display = 'none';
-        nextAreaContainer.style.display = 'none';
     }
 }
-//---------------------------EVENT LISTENERS---------------------------\\
 
+const handleGoToNextArea = () => {
+    handleAction(player,"next area");
+}
+const handleGoToPrevArea = () => {
+    handleAction(player,"prev area");
+}
+//---------------------------EVENT LISTENERS---------------------------\\
+nextAreaLeftBtn.addEventListener('click',handleGoToPrevArea);
+nextAreaRightBtn.addEventListener('click',handleGoToNextArea);
 enterCityBtn.addEventListener('click',handleEnterCityBtnClick);
 landingBtn.addEventListener('click', handleLanding);
 takeOffBtn.addEventListener('click', handleTakeOff);

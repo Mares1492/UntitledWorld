@@ -3,6 +3,8 @@ import Planet from "./Planet.js";
 import City from "./City/City.js";
 const landscapeContainer = document.getElementById('landscape-container');
 const landscapeDesc = document.getElementById('landscape-description')
+const nextAreaLeft = document.getElementById('next-area-left');
+const nextAreaRight = document.getElementById('next-area-right');
 
 const terrainElements = {
     rocket:{symbol:'R', color:'rgba(0,0,0,0)', img:'./img/rocket.png?', width:50, height:50,style:"box-shadow:inset 0 -1em 1em #f8bc04;",name:'Rocket'},
@@ -23,9 +25,8 @@ const terrainElements = {
     quest: {symbol:'+',color: '#A0A0A0',img:"./img/quest.png?",width:"30",height:"30",name:"Quest Marker",description: "A quest marker. You can may find something interesting there."},
     house: {symbol:'|^|',color: '#909090',img:"./img/house.png?",width:"15",height:"15",name:"House",description: "A lonely house in the centre of wildness."},
     castle: {symbol:'|_|',color: '#909090',img:"./img/castle.png?",width:"30",height:"30",name:"Castle"},
-    city: {symbol:'|_|_|_|',color: '#909090',img:"./img/city.png?",width:"37",height:"37",name:"City",isLandable:false},
+    city: {symbol:'|_|_|_|',color: '#909090',img:["./img/city.png?","./img/city2.png?","./img/city3.png?","./img/city4.png?"],width:"37",height:"37",name:"City",isLandable:false},
     camp: {symbol:'(^)',color: '#606060',img:"./img/camp.png?",width:"25",height:"25",name:"Camp"},
-    //bridge: {symbol:'=',color: '#383838',img:"./img/bridge.png",width:"30",height:"30",name:"Bridge"},
     cave: {symbol:'()',color: '#606060',img:"./img/cave.png?",width:"20",height:"20",name:"Cave",description: "Dark and dusty cave. You can find something interesting there(or not).",isLandable:false},
     mine: {symbol:'()',color: '#B0B0B0',img:"./img/mine.png?",width:"15",height:"15",name:"Mine",description:"A mine. You can find minerals there. Hard labor is required."},
     farm: {symbol:'[=^=]',color: '#909090',img:"./img/farm.png?",width:"20",height:"20",name:"Farm"},
@@ -42,7 +43,7 @@ const terrainElements = {
     lake:{symbol:'≈≈≈',color: '#909090',img:"./img/lake.png?",width:"30",height:"30",name:"Lake",description:"A lake big enough to be mentioned of"},
     field:{symbol:'___',color: '#B0B0B0',img:"./img/field.png?",width:"30",height:"30",name:"Field"},
     spaceStation:{symbol:'|_|_<|>_|_|',color: 'rgba(0,0,0,0)',img:"./img/space-station.png?",width:"40",height:"40",name:"Space Station",style:"box-shadow:inset 0 -1em 1em #000000;opacity:0.7;",description:"Somewhere in space."},
-    //alien:{symbol:'X',color: '#F3EFE0',img:["./img/alien.png?","./img/alien2.png?"],width:"20",height:"20",name:"x-x-x-x-x-x-x-x",description:"Alien activity detected.",isPassable:false,isLandable:false},
+    aliens:{symbol:'X',color: '#b71c1c',img:["./img/aliens.png?","./img/aliens2.png?","./img/aliens3.png?"],width:"20",height:"20",name:"x-x-x-x-x-x-x-x",description:"Alien activity detected.",isPassable:false,isLandable:false},
 }
 
 const positiveAdjectives = ["lot","many","much"];
@@ -232,6 +233,7 @@ class Region {
             const cityName = this.addCity(x,y);
             if (cityName) {
                 this.landscape[y][x].name = cityName;
+                this.landscape[y][x].description =  this.getCity(cityName).getAreasSpecialities()
                 this.landscape[y][x].type = "city";
             }
         }
@@ -310,7 +312,10 @@ class Region {
 
     updateMap = () => {
         console.log('Updating region map');
-        landscapeDesc.innerHTML = `${this.location.planet} || ${this.name}`;
+        landscapeDesc.innerHTML = `Planet: ${this.location.planet} || Region: ${this.name}`;
+        nextAreaLeft.style.display = 'none';
+        nextAreaRight.style.display = 'none';
+        landscapeDesc.style.marginLeft = null;
         landscapeContainer.innerHTML = this.getLandscape();
         landscapeContainer.scrollIntoView();
     }

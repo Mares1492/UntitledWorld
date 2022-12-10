@@ -6,16 +6,16 @@ const handleAction = (player,type) => {
         const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
         const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
         const region = Planet.getPlanet(player.getPlanet()).getRegion(player.getRegion());
-        let tile = player.getTile();
+        let playerTile = player.getTile();
         switch (type) {
             case 'enter city':
-                player.setIsUnableToAct(5000)
-                if (tile.x === x && tile.y === y) {
-                    let city = region.getTile(x,y);
-                    console.log(city);
-                    if (city.type === 'city') {
-                        city = region.getCity(city.name);
-                        player.handleEnterCity(city);//TODO: add city enter handler
+                player.setIsUnableToAct(1000)
+                if (playerTile.x === x && playerTile.y === y) {
+                    const cityTile = region.getTile(x,y);
+                    console.log(cityTile);
+                    if (cityTile.type === 'city') {
+                        cityTile.handlePlayerDeparture();
+                        player.handleEnterCity(region.getCity(cityTile.name));
                         player.updateMap();
                     } else {
                         alert("There is no city here!");
@@ -26,41 +26,47 @@ const handleAction = (player,type) => {
                 break
             case 'walk':
                 const maxTilesToMove = 50;
-                const isPassable = region.getTile(x,y).isPassable
-                if (!isPassable) {
-                    alert("You can't go there!");
-                    return;
-                }
-                if (player.getIsPlayerAbleToAct("go to new tile")) {
-                    const playerTile = player.getTile();
-                    const lengthOfPath = Math.abs(playerTile.x - x) + Math.abs(playerTile.y - y);
-                    if (player.getTile().x === x && player.getTile().y === y) {
-                        alert("You are already there!");
-                    }
-                    else if (lengthOfPath > maxTilesToMove) {
-                        alert("you can't travel that distance at once!");
-
-                    }
-                    else {
-                        const timeout = (Math.abs(x-playerTile.x)*200+Math.abs(y-playerTile.y)*200);
-                        player.setIsUnableToAct(timeout)
-                        const arrived = player.goToTile({x:x, y:y},maxTilesToMove);
-                        if (arrived) {
-                            console.log(`This path took ${player.location.area?Math.floor(timeout / 150)+ " minutes":Math.floor(timeout / 120)+" hours"}`);
-                            player.updateMap();
+                if (!player.location.area){
+                const tileTo = region.getTile(x,y)
+                    if (!tileTo.isPassable) {
+                        if (tileTo.name === "x-x-x-x-x-x-x-x") {
+                            alert("There is no way for you to deal with them right now!");
                         } else {
-                            alert("You can't go there!")
+                            alert("You can't go there!");
                         }
+                        return;
+                    }
+                }
+                const lengthOfPath = Math.abs(playerTile.x - x) + Math.abs(playerTile.y - y);
+                if (playerTile.x === x && playerTile.y === y) {
+                    alert("You are already there!");
+                }
+                else if (lengthOfPath > maxTilesToMove) {
+                    alert("you can't travel that distance at once!");
+
+                }
+                else {
+                    const timeout = (Math.abs(x-playerTile.x)*200+Math.abs(y-playerTile.y)*200);
+                    player.setIsUnableToAct(timeout)
+                    const arrived = player.goToTile({x:x, y:y},maxTilesToMove);
+                    if (arrived) {
+                        console.log(`This path took ${player.location.area?Math.floor(timeout / 150)+ " minutes":Math.floor(timeout / 120)+" hours"}`);
+                        player.updateMap();
+                    } else {
+                        alert("You can't go there!")
                     }
                 }
                 break
             case 'exit city':
                 player.setIsUnableToAct(1000)
-                player.handleExitCity();
-                region.getTile(tile.x,tile.y).handlePlayerDeparture();
-                tile = player.getTile();
-                region.getTile(tile.x,tile.y).handlePlayerArrival();
-                player.updateMap();
+                const exited = player.handleExitCity();
+                if (exited){
+                    playerTile = player.getTile();
+                    region.getTile(playerTile.x,playerTile.y).handlePlayerArrival();
+                    player.updateMap();
+                }else {
+                    alert("You can't exit the city right now!");
+                }
                 break
             case 'talk':
                 //...
@@ -105,6 +111,24 @@ const handleAction = (player,type) => {
                     }, 5000);
                 } else {
                     alert("You can't take off from here!");
+                }
+                break
+            case 'next area':
+                player.setIsUnableToAct(1000)
+                const nextArea = player.handleGoToOtherArea("next");
+                if (nextArea) {
+                    player.updateMap();
+                } else {
+                    alert("Can't go to next area!");
+                }
+                break
+            case 'prev area':
+                player.setIsUnableToAct(1000)
+                const prevArea = player.handleGoToOtherArea("prev");
+                if (prevArea) {
+                    player.updateMap();
+                } else {
+                    alert("Can't go to previous area!");
                 }
                 break
             default:

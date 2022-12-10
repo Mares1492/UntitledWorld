@@ -1,6 +1,8 @@
 import Terrain from "../Terrain.js";
 const landscapeContainer = document.getElementById('landscape-container');
 const landscapeDesc = document.getElementById('landscape-description');
+const nextAreaLeft = document.getElementById('next-area-left');
+const nextAreaRight = document.getElementById('next-area-right');
 
 const cityElements = {
     cityBuilding: {
@@ -8,34 +10,38 @@ const cityElements = {
         width:"23",
         height:"23",
         color: '#606060',
-        img:["./../../../img/city/buildings/background.png?","./../../../img/city/buildings/background2.png?","./../../../img/city/buildings/background3.png?",
-            "./../../../img/city/buildings/background4.png?","./../../../img/city/buildings/background5.png?","./../../../img/city/buildings/background6.png?",
-            "./../../../img/city/buildings/background7.png?"
+        img:["./../../../img/city/background.png?","./../../../img/city/background2.png?","./../../../img/city/background3.png?",
+            "./../../../img/city/background4.png?","./../../../img/city/background5.png?","./../../../img/city/background6.png?",
+            "./../../../img/city/background7.png?"
         ],
         name:"City Building",
         description:"Some kind of city building",isPassable:true},
-    bridge: {symbol:'=',color: '#383838',img:"./../../../img/bridge.png?",width:"30",height:"30",name:"Bridge",isActivity:true,description:"A bridge"},
-    roadY: {symbol:'|',color: '#A0A0A0',img:"./../../../img/city/roads/road1.png?",width:"30",height:"30",name:"Road"},
-    roadX: {symbol:'-',color: '#A0A0A0',img:"./../../../img/city/roads/road2.png?",width:"30",height:"30",name:"Road"},
+    bridge: {symbol:'=',color: '#383838',img:"./../../../img/bridge.png?",width:"30",height:"30",name:"Bridge",description:"A bridge"},
+    roadY: {symbol:'|',color: '#A0A0A0',img:"./../../../img/city/road1.png?",width:"30",height:"30",name:"Road"},
+    roadX: {symbol:'-',color: '#A0A0A0',img:"./../../../img/city/road2.png?",width:"30",height:"30",name:"Road"},
     water: {symbol:'~',color: '#F8F8F8',img:"./../../../img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"Water"},
-    Commercial: {symbol:'C',color: '#e3c4a8',img:["./../../../img/city/buildings/big-store.png?","./../../../img/city/buildings/small-store.png?"],
+    Commercial: {symbol:'C',color: '#f2d871',img:["./../../../img/city/big-store.png?","./../../../img/city/small-store.png?"],
         width:"30",height:"30",name:"Commercial Building",isActivity:true,description:"Like a shop or something"},
-    Support: {symbol:'S',color: '#909090',img:"./../../../img/city/buildings/city-support.png?",
+    Support: {symbol:'S',color: '#B0B0B0',img:["./../../../img/city/city-support.png?","./../../../img/city/police-station.png?"],
         width:"30",height:"30",name:"City Support",description:"A city support building, like a police station or fire station"},
-    Social: {symbol:'S',color: '#909090',img:"./../../../img/city/buildings/social.png?",
+    Social: {symbol:'S',color: '#B0B0B0',img:["./../../../img/city/social.png?","./../../../img/city/hospital.png?","./../../../img/city/clinic.png?"],
         width:"30",height:"30",name:"Social Building",description:"A social building, like a school or hospital"},
-    Cosmic: {symbol:'S',color: '#e3c4a8',img:"./../../../img/city/buildings/spaceport.png?",
+    Cosmic: {symbol:'S',color: '#e3c4a8',img:"./../../../img/city/spaceport.png?",isActivity:true,
         width:"30",height:"30",name:"DocDor Corp Branch",description:"They can pay for your space missions"},
-    Residential: {symbol:'H',color: '#909090',img:["./../../../img/city/buildings/ncp-house.png?","./../../../img/city/buildings/ncp-house2.png?","./../../../img/city/buildings/ncp-house3.png?"],
+    Residential: {symbol:'H',color: '#909090',img:["./../../../img/city/ncp-house.png?","./../../../img/city/ncp-house2.png?","./../../../img/city/ncp-house3.png?"],
         width:"30",height:"30",name:"Important House",description:"A house of some important person in the city"},
-    Research: {symbol:'S',color: '#e3c4a8',img:["./../../../img/city/buildings/special.png?","./../../../img/city/buildings/special2.png?","./../../../img/city/buildings/special3.png?"],
+    Research: {symbol:'S',color: '#909090',img:["./../../../img/city/special.png?","./../../../img/city/special2.png?","./../../../img/city/special3.png?"],
         width:"35",height:"35",name:"Special Building",description:"A special building, like a museum, library, university or laboratory"},
-    Military: {symbol:'KILL',color: '#909090',img:["./../../../img/city/buildings/military.png?","./../../../img/city/buildings/military.png?","./../../../img/city/buildings/military.png?"],
+    Military: {symbol:'KILL',color: '#909090',img:["./../../../img/city/military.png?","./../../../img/city/military2.png?","./../../../img/city/military3.png?","./../../../img/city/military4.png?"],
         width:"30",height:"30",name:"Military Building",description:"A military building, like a post, military base or station"},
-
+    Industrial: {symbol:'I',color: '#909090',img:["./../../../img/city/industrial.png?","./../../../img/city/power-plant.png?","./../../../img/city/factory.png?","./../../../img/city/factory2.png?",
+            "./../../../img/city/geothermal.png?","./../../../img/city/wind-turbines.png?","./../../../img/city/solar-panel.png?","./../../../img/city/chemical-plant.png?"],
+        width:"30",height:"30",name:"Industrial Building",description:"An industrial building, like a factory or power plant"},
+    Agricultural: {symbol:'A',color: '#909090',img:"./../../../img/city/dome.png?",
+        width:"30",height:"30",name:"Agricultural Building",description:"Dome based agricultural building, ideal for growing crops in harsh environments like city jungle"},
 };
 
-const areas = ["Industrial", "Residential", "Commercial", "Agricultural", "Research", "Cosmic", "Military", "Social", "Support"];
+const areas = ["Industrial", "Residential", "Commercial", "Agricultural", "Research", "Military"];
 
 class Area {
     constructor(name=new Date().getTime().toString(),location,description="no data",size={x:parent.innerWidth/120,y: parent.innerHeight/70}) {
@@ -65,23 +71,32 @@ class Area {
         }
     }
     addSpecializedBuildings(){
-        for (let i = 0; i < Math.floor(Math.random()*this.size.x*2 + 5); i++) {
+        const building = cityElements[this.speciality];
+        if (building) {
+        for (let i = 0; i < Math.floor(Math.random()*this.size.x*6 + this.size.x*2); i++) {
             const x = Math.floor(Math.random()*this.size.x);
             const y = Math.floor(Math.random()*this.size.y);
-            const building = cityElements[this.speciality];
-            if (building) {
-                this.addElement(building, x, y);
+            this.addElement(building, x, y);
             }
         }
 
     }
     addSupportingBuildings(){
-        for (let i = 0; i < Math.floor(Math.random()* 5 + 1); i++) {
+        for (let i = 0; i < Math.floor(Math.random()* this.size.x + 3); i++) {
             const x = Math.floor(Math.random()*this.size.x);
             const y = Math.floor(Math.random()*this.size.y);
-            const building = Math.random()>0.5?cityElements.Support:cityElements.Social;
-            if (building){
-                this.addElement(building,x,y);
+            const randomCategory = Math.floor(Math.random()*4 + 1)
+            if (randomCategory=== 1) {
+                this.addElement(cityElements.Support, x, y);
+            }
+            else if (randomCategory === 2) {
+                this.addElement(cityElements.Social, x, y);
+            }
+            else if (randomCategory === 3) {
+                this.addElement(cityElements.Cosmic, x, y);
+            }
+            else if (randomCategory === 4) {
+                this.addElement(cityElements.Commercial, x, y);
             }
         }
     }
@@ -123,15 +138,27 @@ class Area {
             element?.isActivity
         );
     }
+    getTile(x,y) {
+        return this.landscape[y][x];
+    }
 
     handlePlayerArrival() {
-        console.log(`Player arrived to ${this.name} at ${this.location.city}...`);
-        return true;
+        const randY = Math.floor(Math.random()*this.size.y);
+        const randX = Math.floor(Math.random()*this.size.x);
+        const arrived = this.getTile(randX,randY).handlePlayerArrival();
+        if (arrived){
+            console.log(`Player arrived to ${this.name} at ${this.location.city}...`);
+            return {x:randX,y:randY};
+        }
+        else {
+            console.error("Player tried to arrive to an empty area(WHAT???)");
+            return false;
+        }
     }
     getLandscape() {
-        return this.landscape.map(line =>
+    return this.landscape.map(line =>
             `<div class="tiles">
-            ${line.map(el =>
+                ${line.map(el =>
                 `
                 <div 
                 class="tile" 
@@ -143,7 +170,7 @@ class Area {
                     document.getElementById('tile-y-cords').innerHTML = '${el.y}';
                     document.getElementById('tile-x-cords').innerHTML = '${el.x}';
                     document.getElementById('modal').style.display = 'block';
-                    if (${el.isActivity}) {
+                    if ('${el.isActivity}'==='true' && '${el.playerPresent}'==='true') {
                         document.getElementById('activity-button').style.display = 'block';
                     }
                     else {
@@ -168,11 +195,17 @@ class Area {
     };
 
     updateMap = () => {
-        landscapeDesc.innerHTML = `${this.location.city} || ${this.name} || ${this.speciality}`;
+        landscapeDesc.innerHTML = `City: ${this.location.city} || Area: ${this.name} || Spec: ${this.speciality}`;
+        nextAreaLeft.style.display = 'block';
+        nextAreaRight.style.display = 'block';
+        landscapeDesc.style.marginLeft = 'calc(5% + 2em)';
         landscapeContainer.innerHTML = this.getLandscape();
         landscapeContainer.scrollIntoView();
         console.log("Changed map to area");
     }
 }
+
+
+
 
 export default Area;
