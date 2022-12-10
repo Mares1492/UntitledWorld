@@ -1,5 +1,8 @@
 import Character from "./Character.js";
 import Planet from "../Planet/Planet.js";
+const charName = document.getElementById("character-name")
+const charParams = document.getElementById("character-params")
+const charStats = document.getElementById("character-stats")
 class Player extends Character{
   constructor(
       name,
@@ -23,7 +26,30 @@ class Player extends Character{
     this.abilities = abilities;
     this.transport = transport;
     this.isAbleToAct = true;
+    charName.innerHTML = this.name;
+    this.updateParams();
+    this.updateStats();
   }
+
+    updateParams(){
+        charStats.innerHTML =
+            `
+                <div class="character-stat" id="str">STR: ${this.stats.strength}</div>
+                <div class="character-stat" id="dex">DEX: ${this.stats.dexterity}</div>
+                <div class="character-stat" id="int">INT: ${this.stats.intellect}</div>
+                <div class="character-stat" id="agi">AGI: ${this.stats.agility}</div>
+                <div class="character-stat" id="cha">CHA: ${this.stats.charisma}</div>
+            `
+    }
+    updateStats(){
+        charParams.innerHTML =
+            `
+                <div class="character-stat" id="hp">HP: ${this.params.health}</div>
+                <div class="character-stat" id="def">DEF: ${this.params.defense}</div>
+                <div class="character-stat" id="atk">ATK: ${this.params.attack}</div>
+                <div class="character-stat" id="spd">SPD: ${this.params.speed}</div>
+            `
+    }
 
     setIsUnableToAct(time) {
         this.isAbleToAct = false;
@@ -65,6 +91,7 @@ class Player extends Character{
         this.params.attack += 1;
         this.params.defense += 1;
         this.params.speed += 1;
+        this.updateStats();
     }
     addExperience(exp) {
         this.experience += exp;
@@ -108,6 +135,7 @@ class Player extends Character{
     }
     setTransport(transport) {
         this.transport = transport;
+        transport.setOwner(this.name);
     }
     getTransport() {
         return this.transport;
