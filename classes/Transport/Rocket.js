@@ -3,10 +3,11 @@ import Planet from "../Planet/Planet.js";
 
 class Rocket extends Transport {
     hasLanded = false;
-    constructor(name, x, y,img,size,owner=null) {
-        super(name, 10, [owner], null, null, owner, x, y,img,size,size);
+    constructor(name, img,size, owner=null) {
+        super(name,null, owner, img, size);
         this.type = "Rocket"
     }
+
     landAt(planet,region,x,y) {
         if (this.hasLanded) {
             alert("Rocket is already landed");
