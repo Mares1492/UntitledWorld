@@ -71,7 +71,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    
+
 }
 
 .character-stats-n-params{
@@ -85,7 +85,7 @@
 }
 
 #landscape-description{
-    text-underline: burlywood;
+    font-size: 1.25em;
 }
 
 input[type="color"] {
@@ -328,27 +328,25 @@ img{
     margin-top: 2em;
 }
 
-.next-area-container{
-    position: absolute;
-    top: 35%;
+.over-landscape-n-next-area-container{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     width: 100%;
     align-items: center;
+    justify-content: space-between;
+}
+
+.next-area{
+    margin: 1em;
+    cursor: pointer;
 }
 
 #next-area-left{
-    justify-self: start;
-    transform: scale(-1);
-    padding-left: 50%;
-
+    place-self: center start;
 
 }
 #next-area-right{
-    justify-self: end;
-    padding-right: 50%;
-
+    place-self: center end;
 }
 
 @keyframes modalsAnimation{

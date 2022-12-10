@@ -13,7 +13,7 @@ class City {
     }
 
     generate() {
-        const numberOfAreas = Math.floor(Math.random() * 5) + 1;
+        const numberOfAreas = Math.floor(Math.random() * 7) + 2;
         for (let i = 0; i < numberOfAreas; i++) {
             this.addArea(new Area(
                 `Area-${i+1}`,
@@ -34,6 +34,26 @@ class City {
             return this.areas.get(areaName);
         }
         console.log(`Area '${areaName}' in ${this.name} does not exist`);
+        return false;
+    }
+    getOtherArea(type,currentArea) {
+        const areas = Array.from(this.areas.keys());
+        if (areas){
+            if (type==="next"){
+                const nextAreaIndex = areas.indexOf(currentArea)+1;
+                if (!areas[nextAreaIndex]){
+                    return this.getArea(areas[0]);
+                }
+                return this.getArea(areas[nextAreaIndex]);
+            }
+            if (type==="prev"){
+                const prevAreaIndex = areas.indexOf(currentArea)-1;
+                if (prevAreaIndex<0){
+                    return this.getArea(areas[areas.length-1]);
+                }
+                return this.getArea(areas[prevAreaIndex]);
+            }
+        }
         return false;
     }
 

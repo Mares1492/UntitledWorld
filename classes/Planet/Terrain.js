@@ -74,11 +74,11 @@ class Terrain {
     handlePlayerDeparture() {
         this.playerPresent = false;
         if (!this.playerTransportPresent) {
-        this.description = this.terrDescription;
-        this.color = this.terrColor;
-        this.img = this.terrImg;
-        this.width = this.terrSize;
-        this.height = this.terrSize;
+            this.description = this.terrDescription;
+            this.color = this.terrColor;
+            this.img = this.terrImg;
+            this.width = this.terrSize;
+            this.height = this.terrSize;
         }
     }
     handleLanding(shipType,size,shipImg) {
