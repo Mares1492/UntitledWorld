@@ -42,12 +42,12 @@ console.log(homeSystem);
 console.log(homePlanet);
 
 const player = new Player(
-    "Player1",
+    "Ben Grylls",
     {health:20, defense:0, attack:0, speed:1},
-    {str:10,dex:10,int:10,agi:10,cha:10},
-    {planet:"New Hope",region:"Home",tile:{x:0,y:0}},
-    new Rocket("Rocket",0,0,"./img/rocket-on-ground.png?",30));
-
+    {strength:5,dexterity:4,intellect:6,agility:3,charisma:7},
+    {planet:"New Hope",region:"Home",tile:{x:0,y:0}}
+);
+player.setTransport(new Rocket("Rocket","./img/rocket-on-ground.png?",30))
 
 console.log(player);
 const updateMap = () => {
