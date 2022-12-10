@@ -233,6 +233,7 @@ class Region {
             const cityName = this.addCity(x,y);
             if (cityName) {
                 this.landscape[y][x].name = cityName;
+                this.landscape[y][x].description =  this.getCity(cityName).getAreasSpecialities()
                 this.landscape[y][x].type = "city";
             }
         }

@@ -1,5 +1,6 @@
 import Planet from "../Planet.js";
 import Area from "./Area.js";
+import area from "./Area.js";
 
 class City {
     constructor(name=new Date().getTime().toString(),location,description="No data",ownedBy=null) {
@@ -8,19 +9,29 @@ class City {
         this.location = location;
         this.ownedBy = ownedBy;
         this.areas = new Map();
+        this.numberOfAreas = Math.floor(Math.random() * 7) + 2;
         this.generate();
         this.factions = new Map(); //TODO: add factions :)
     }
 
     generate() {
-        const numberOfAreas = Math.floor(Math.random() * 7) + 2;
-        for (let i = 0; i < numberOfAreas; i++) {
+        for (let i = 0; i < this.numberOfAreas; i++) {
             this.addArea(new Area(
                 `Area-${i+1}`,
                 {planet:this.location.planet,region:this.location.region,city: this.name},
             ));
         }
         console.log(`Detected: ${this.name} ----> ${this.areas.size} ${this.areas.size===1?"area":"areas"} | cords ---> x:${this.location.tile.x} | y:${this.location.tile.y}`);
+    }
+
+    getAreasSpecialities() {
+        let specialities = [];
+        this.areas.forEach(area => {
+            if(!specialities.includes(area.speciality)) {
+                specialities.push(area.speciality);
+            }
+        })
+        return "Located: " + specialities.join(", ")+ " areas";
     }
     addArea(area) {
         if (this.areas.has(area.name)) {

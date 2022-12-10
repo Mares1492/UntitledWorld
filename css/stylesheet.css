@@ -250,6 +250,7 @@ img{
     border: 3px solid #6f6d72;
     background-color: #b4b1b8;
     border-radius: 5px;
+    flex-wrap: wrap;
     margin: 20% auto;
     max-width: 15%;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
