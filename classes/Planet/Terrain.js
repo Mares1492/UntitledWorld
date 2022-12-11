@@ -117,7 +117,7 @@ class Terrain {
             this.playerTransportPresent = false;
             this.playerPresent = false;
             console.log(`Took off from ${this.name} at ${this.x},${this.y}`);
-            if (this.name === "House") {
+            if (this.name === "House" || this.name === "Farm" || this.name === "Camp") {
                 this.destroy(" the player taking off");
             }
             return true;

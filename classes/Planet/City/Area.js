@@ -32,8 +32,9 @@ const cityElements = {
         width:"30",height:"30",name:"Important House",description:"A house of some important person in the city"},
     Research: {symbol:'S',color: '#909090',img:["./img/city/special.png?","./img/city/special2.png?","./img/city/special3.png?"],
         width:"35",height:"35",name:"Special Building",description:"A special building, like a museum, library, university or laboratory"},
-    Military: {symbol:'KILL',color: '#909090',img:["./img/city/military.png?","./img/city/military2.png?","./img/city/military3.png?","./img/city/military4.png?"],
-        width:"30",height:"30",name:"Military Building",description:"A military building, like a post, military base or station"},
+    Military: {symbol:'KILL',color: '#909090',img:["./img/city/military.png?","./img/city/military2.png?","./img/city/military3.png?",
+            "./img/city/warehouse.png?","./img/city/warehouse2.png?","./img/city/warehouse3.png?"],
+        width:"30",height:"30",name:"Military Building",description:"A military base, post or warehouse"},
     Industrial: {symbol:'I',color: '#909090',img:["./img/city/industrial.png?","./img/city/power-plant.png?","./img/city/factory.png?","./img/city/factory2.png?",
             "./img/city/geothermal.png?","./img/city/wind-turbines.png?","./img/city/solar-panel.png?","./img/city/chemical-plant.png?"],
         width:"30",height:"30",name:"Industrial Building",description:"An industrial building, like a factory or power plant"},
@@ -147,7 +148,7 @@ class Area {
         const randX = Math.floor(Math.random()*this.size.x);
         const arrived = this.getTile(randX,randY).handlePlayerArrival();
         if (arrived){
-            console.log(`Player arrived to ${this.name} at ${this.location.city}...`);
+            console.log(`Player arrived to ${this.name} at ${this.location.colony?this.location.colony:this.location.city}...`);
             return {x:randX,y:randY};
         }
         else {
@@ -195,10 +196,15 @@ class Area {
     };
 
     updateMap = () => {
-        landscapeDesc.innerHTML = `City: ${this.location.city} || Area: ${this.name} || Spec: ${this.speciality}`;
-        nextAreaLeft.style.display = 'block';
-        nextAreaRight.style.display = 'block';
-        landscapeDesc.style.marginLeft = 'calc(5% + 2em)';
+        if (this.location.colony) {
+            landscapeDesc.innerHTML = ` ${this.name} || Spec: ${this.speciality}`;
+        }
+        if (this.location.city) {
+            landscapeDesc.innerHTML = `City: ${this.location.city} || Area: ${this.name} || Spec: ${this.speciality}`;
+            nextAreaLeft.style.display = 'block';
+            nextAreaRight.style.display = 'block';
+            landscapeDesc.style.marginLeft = 'calc(5% + 2em)';
+        }
         landscapeContainer.innerHTML = this.getLandscape();
         landscapeContainer.scrollIntoView();
         console.log("Changed map to area");

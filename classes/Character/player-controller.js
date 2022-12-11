@@ -11,13 +11,17 @@ const handleAction = (player,type) => {
             case 'enter city':
                 player.setIsUnableToAct(1000)
                 if (playerTile.x === x && playerTile.y === y) {
-                    const cityTile = region.getTile(x,y);
-                    console.log(cityTile);
-                    if (cityTile.type === 'city') {
-                        cityTile.handlePlayerDeparture();
-                        player.handleEnterCity(region.getCity(cityTile.name));
+                    const thisTile = region.getTile(x,y);
+                    console.log(thisTile);
+                    if (thisTile.type === 'city') {
+                        thisTile.handlePlayerDeparture();
+                        player.handleEnterCity(region.getCity(thisTile.name),thisTile.type);
                         player.updateMap();
-                    } else {
+                    } else if (thisTile.type === 'colony') {
+                        thisTile.handlePlayerDeparture();
+                        player.handleEnterCity(region.getColony(thisTile.name),thisTile.type);
+                        player.updateMap();
+                    }else {
                         alert("There is no city here!");
                     }
                 } else {
@@ -31,7 +35,9 @@ const handleAction = (player,type) => {
                     if (!tileTo.isPassable) {
                         if (tileTo.name === "x-x-x-x-x-x-x-x") {
                             alert("There is no way for you to deal with them right now!");
-                        } else {
+                        } else if (tileTo.name === "Military deployment area"){
+                            alert("Suicide will be available in future dlc")
+                        }else {
                             alert("You can't go there!");
                         }
                         return;
@@ -114,7 +120,7 @@ const handleAction = (player,type) => {
                 }
                 break
             case 'next area':
-                player.setIsUnableToAct(1000)
+                player.setIsUnableToAct(500)
                 const nextArea = player.handleGoToOtherArea("next");
                 if (nextArea) {
                     player.updateMap();
@@ -123,7 +129,7 @@ const handleAction = (player,type) => {
                 }
                 break
             case 'prev area':
-                player.setIsUnableToAct(1000)
+                player.setIsUnableToAct(500)
                 const prevArea = player.handleGoToOtherArea("prev");
                 if (prevArea) {
                     player.updateMap();
