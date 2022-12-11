@@ -152,6 +152,9 @@ class Player extends Character{
     getCity() {
         return this.location.city;
     }
+    getColony() {
+        return this.location.colony;
+    }
     getArea() {
         return this.location.area;
     }
@@ -329,11 +332,18 @@ class Player extends Character{
     }
     goToTile(tile,maxTilesToMove=50) {
       const location = this.location.area
-          ?Planet
-              .getPlanet(this.getPlanet())
-              .getRegion(this.getRegion())
-              .getCity(this.getCity())
-              .getArea(this.getArea())
+          ?this.location.city?
+              Planet
+                  .getPlanet(this.getPlanet())
+                  .getRegion(this.getRegion())
+                  .getCity(this.getCity())
+                  .getArea(this.getArea())
+              :
+              Planet
+                  .getPlanet(this.getPlanet())
+                  .getRegion(this.getRegion())
+                  .getColony(this.getColony())
+                  .getArea()
           :Planet
               .getPlanet(this.getPlanet())
               .getRegion(this.getRegion())
@@ -369,11 +379,15 @@ class Player extends Character{
         this.location = location;
     }
 
-    handleEnterCity(city) {
-      const area = city.getRandomArea();
+    handleEnterCity(settlement,type) {
       this.tileBackup = this.location.tile;
-      this.location = {...this.location, city: city.name};
-      this.handleEnterArea(area);
+      if (type=== 'city') {
+        this.location = {...this.location, city: settlement.name};
+        this.handleEnterArea(settlement.getRandomArea());
+      }if (type === 'colony'){
+        this.location = {...this.location, colony: settlement.name};
+        this.handleEnterArea(settlement.getArea());
+      }
     }
     handleGoToOtherArea(type) {
       const nextArea = Planet
@@ -402,14 +416,20 @@ class Player extends Character{
       return false;
     }
     handleExitArea(){
-        const area = Planet
-            .getPlanet(this.getPlanet())
-            .getRegion(this.getRegion())
-            .getCity(this.getCity())
-            .getArea(this.getArea());
-        if (area) {
+        const location = this.location.city
+            ?Planet
+                .getPlanet(this.getPlanet())
+                .getRegion(this.getRegion())
+                .getCity(this.getCity())
+                .getArea(this.getArea())
+            :Planet
+                .getPlanet(this.getPlanet())
+                .getRegion(this.getRegion())
+                .getColony(this.getColony())
+                .getArea()
+        if (location) {
             const tile = this.getTile()
-            area.getTile(tile.x,tile.y).handlePlayerDeparture();
+            location.getTile(tile.x,tile.y).handlePlayerDeparture();
             return true;
         }
         return false;
@@ -417,16 +437,18 @@ class Player extends Character{
     handleExitCity() {
       const exited = this.handleExitArea();
       if (exited) {
-          this.location = {...this.location, city: null, area: null, tile: this.tileBackup};
+          this.location = {...this.location, city: null, colony:null, area: null, tile: this.tileBackup};
           return true;
       }
        return false;
     }
 
     updateMap = ()=>{
-      if (this.location.area) {
+      if (this.location.city) {
         return this.updateCityAreaMap();
-      }else if (this.location.region) {
+      } else if(this.location.colony) {
+          return this.updateColonyAreaMap();
+      } else if (this.location.region) {
         return this.updateRegionMap();
       }
       console.log('No map to update');
@@ -441,7 +463,17 @@ class Player extends Character{
     updateCityAreaMap = () =>{
         Planet
             .getPlanet(this.getPlanet())
-            .getRegion(this.getRegion()).getCity(this.getCity()).getArea(this.getArea())
+            .getRegion(this.getRegion())
+            .getCity(this.getCity())
+            .getArea(this.getArea())
+            .updateMap();
+    }
+    updateColonyAreaMap = () =>{
+        Planet
+            .getPlanet(this.getPlanet())
+            .getRegion(this.getRegion())
+            .getColony(this.getColony())
+            .getArea()
             .updateMap();
     }
 
