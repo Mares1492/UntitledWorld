@@ -38,7 +38,7 @@ class Terrain {
         this.description = `This ${this.name} was destroyed by ${reason}`;
         this.name = `Destroyed ${this.name}`;
         this.symbol = '...';
-        this.img = '/img/fire.png';
+        this.img = './img/fire.png?';
     }
     handlePlayerBypassing(counter) {
         if (this.isPassable) {
