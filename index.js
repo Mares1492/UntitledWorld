@@ -4,6 +4,8 @@ import Region from "./classes/Planet/Region.js";
 import Rocket from "./classes/Transport/Rocket.js";
 import handleAction from "./classes/Character/player-controller.js";
 import StarSystem from "./classes/StarSystem/StarSystem.js";
+import startGame from "./classes/Text/PassageLogic.js";
+import Appearance from "./classes/Character/Appearance.js";
 const submit = document.getElementById('generate');
 const bgColorInput = document.getElementById('bg-color-input');
 const landingBtn = document.getElementById('landing-button');
@@ -14,6 +16,12 @@ const story = document.getElementById('story');
 const exitCityBtn = document.getElementById('exit-city-button');
 const nextAreaLeftBtn = document.getElementById('next-area-left');
 const nextAreaRightBtn = document.getElementById('next-area-right');
+// Kristo osa
+const confirmName = document.getElementById('character-name-button');
+const sexBtn = document.getElementById('sex-button');
+const jobBtn = document.getElementById('job-button');
+const gameBtn = document.getElementById('start-game-button');
+// Kristo osa lõpp
 takeOffBtn.style.display = 'none';
 goToBtn.style.display = 'none';
 enterCityBtn.style.display = 'none';
@@ -110,6 +118,28 @@ const handleGoToNextArea = () => {
 const handleGoToPrevArea = () => {
     handleAction(player,"prev area");
 }
+
+// Kristo osa
+
+const updatePlayerName = () =>{
+    player.name = document.getElementById('character-name-input').value;
+    document.getElementById('character-name').innerHTML = player.name;
+    console.log("Player name is", '"',player.name,'"');
+}
+
+const startingGame = () =>{
+    var startingScreen = document.getElementById('starting-screen');
+    startingScreen.parentNode.removeChild(startingScreen);
+    startGame();
+    document.getElementById('modal-passage').style.display = 'block';
+}
+
+const appearance = new Appearance(
+    "male","blue","brown", "short", "muscled"
+);
+
+// Kristo osa lõpp
+
 //---------------------------EVENT LISTENERS---------------------------\\
 nextAreaLeftBtn.addEventListener('click',handleGoToPrevArea);
 nextAreaRightBtn.addEventListener('click',handleGoToNextArea);
@@ -122,3 +152,8 @@ submit.addEventListener('click', generatePic);
 bgColorInput.addEventListener('change', (e) => {
     document.body.style.backgroundColor = e.target.value;
 });
+// Kristo osa
+confirmName.addEventListener('click', updatePlayerName);
+gameBtn.addEventListener('click', startingGame);
+
+// Kristo osa lõpp

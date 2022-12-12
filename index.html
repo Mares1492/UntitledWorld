@@ -81,10 +81,28 @@
         </div>
 
     </div>
-    <div class = "console-container">
+    <div class = "console-container" id="console-container">
         <h3>Console:</h3>
-        <p id="info">You code this section</p>
+        <div class = "starting-screen" id="starting-screen">
+            <h2>Character Background:</h2>
+            <p>Name: <input id="character-name-input"></input><button id="character-name-button">Confirm</button></p>
+            <p>Sex: <button id="sex-button">Male</button><button>Female</button></p>
+            <div id="chosen-sex"></div>
+            <p>Job: <button id="job-button">Miner</button><button>Think Tank</button><button>PMC</button></p>
+            <div id="chosen-job"></div>
+            <button id="start-game-button">Start Game</button>
+        </div>
+        <div class="passage-component">
+            <div id = "modal-passage" onclick="closeModal()" class="modal-overlay">
+                <div class="modal-content-text">
+                    <div id="console-text"></div>
+                    <div id="option-buttons"></div>
+                </div>
+            </div>    
+        </div>
     </div>
+</div>
+
 </div>
 </div>
 </body>
