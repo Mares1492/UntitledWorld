@@ -86,11 +86,12 @@
         <div class = "starting-screen" id="starting-screen">
             <h2>Character Background:</h2>
             <p>Name: <input id="character-name-input"></input><button id="character-name-button">Confirm</button></p>
-            <p>Sex: <button id="sex-button">Male</button><button>Female</button></p>
-            <div id="chosen-sex"></div>
-            <p>Job: <button id="job-button">Miner</button><button>Think Tank</button><button>PMC</button></p>
-            <div id="chosen-job"></div>
+            <p>Sex: <button id="sex-button-male">male</button><button id="sex-button-female">female</button></p>
+            <div id="chosen-sex">Unassigned</div>
+            <p>Job: <button id="job-button-miner">Miner</button><button id="job-button-think-tank">Think Tank</button><button id="job-button-PMC">PMC</button></p>
+            <div id="chosen-job">Unassigned</div>
             <button id="start-game-button">Start Game</button>
+            <div id="start-game-error"></div>
         </div>
         <div class="passage-component">
             <div id = "modal-passage" onclick="closeModal()" class="modal-overlay">

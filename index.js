@@ -18,8 +18,11 @@ const nextAreaLeftBtn = document.getElementById('next-area-left');
 const nextAreaRightBtn = document.getElementById('next-area-right');
 // Kristo osa
 const confirmName = document.getElementById('character-name-button');
-const sexBtn = document.getElementById('sex-button');
-const jobBtn = document.getElementById('job-button');
+const sexMaleBtn = document.getElementById('sex-button-male');
+const sexFemaleBtn = document.getElementById('sex-button-female');
+const jobMinerBtn = document.getElementById('job-button-miner');
+const jobThinkTankBtn = document.getElementById('job-button-think-tank');
+const jobPMCBtn = document.getElementById('job-button-PMC');
 const gameBtn = document.getElementById('start-game-button');
 // Kristo osa lõpp
 takeOffBtn.style.display = 'none';
@@ -121,6 +124,12 @@ const handleGoToPrevArea = () => {
 
 // Kristo osa
 
+const playerAppearance = new Appearance(
+    "unassigned","blue","brown", "short", "muscled", "unassigned"
+);
+
+//Ma armastan nuppe!!!!!
+
 const updatePlayerName = () =>{
     player.name = document.getElementById('character-name-input').value;
     document.getElementById('character-name').innerHTML = player.name;
@@ -128,15 +137,51 @@ const updatePlayerName = () =>{
 }
 
 const startingGame = () =>{
-    var startingScreen = document.getElementById('starting-screen');
-    startingScreen.parentNode.removeChild(startingScreen);
-    startGame();
-    document.getElementById('modal-passage').style.display = 'block';
+    if (playerAppearance.sex === "unassigned"){
+        document.getElementById('start-game-error').innerHTML = "Character Background incomplete";
+        console.log("No sex selected")
+    }
+    else if (playerAppearance.job === "unassigned"){
+        document.getElementById('start-game-error').innerHTML = "Character Background incomplete";
+        console.log("No job selected")
+    }
+    else {
+        var startingScreen = document.getElementById('starting-screen');
+        startingScreen.parentNode.removeChild(startingScreen);
+        startGame();
+        document.getElementById('modal-passage').style.display = 'block';
+    }
 }
 
-const appearance = new Appearance(
-    "male","blue","brown", "short", "muscled"
-);
+const updatePlayerSexMale = () =>{
+    playerAppearance.sex = document.getElementById('sex-button-male').innerHTML;
+    document.getElementById('chosen-sex').innerHTML = playerAppearance.sex;
+    console.log(playerAppearance.sex);
+}
+
+const updatePlayerSexFemale = () =>{
+    playerAppearance.sex = document.getElementById('sex-button-female').innerHTML;
+    document.getElementById('chosen-sex').innerHTML = playerAppearance.sex;
+    console.log(playerAppearance.sex);
+}
+
+const updatePlayerJobMiner = () =>{
+    playerAppearance.job = document.getElementById('job-button-miner').innerHTML;
+    document.getElementById('chosen-job').innerHTML = playerAppearance.job;
+    console.log(playerAppearance.job);
+}
+
+const updatePlayerJobThinkTank = () =>{
+    playerAppearance.job = document.getElementById('job-button-think-tank').innerHTML;
+    document.getElementById('chosen-job').innerHTML = playerAppearance.job;
+    console.log(playerAppearance.job);
+}
+
+const updatePlayerJobPMC = () =>{
+    playerAppearance.job = document.getElementById('job-button-PMC').innerHTML;
+    document.getElementById('chosen-job').innerHTML = playerAppearance.job
+    console.log(playerAppearance.job);
+}
 
 // Kristo osa lõpp
 
@@ -155,5 +200,9 @@ bgColorInput.addEventListener('change', (e) => {
 // Kristo osa
 confirmName.addEventListener('click', updatePlayerName);
 gameBtn.addEventListener('click', startingGame);
-
+sexMaleBtn.addEventListener('click', updatePlayerSexMale);
+sexFemaleBtn.addEventListener('click', updatePlayerSexFemale);
+jobMinerBtn.addEventListener('click', updatePlayerJobMiner);
+jobThinkTankBtn.addEventListener('click', updatePlayerJobThinkTank);
+jobPMCBtn.addEventListener('click', updatePlayerJobPMC);
 // Kristo osa lõpp
