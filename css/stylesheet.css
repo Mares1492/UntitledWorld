@@ -286,6 +286,7 @@ img{
     box-sizing: content-box;
     z-index: auto;
     animation: ease-in 0.5s modalsAnimation;
+    overflow-y: scroll;
 }
 
 .modal-header h2, .modal-footer h3{
