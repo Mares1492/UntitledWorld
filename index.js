@@ -4,6 +4,8 @@ import Region from "./classes/Planet/Region.js";
 import Rocket from "./classes/Transport/Rocket.js";
 import handleAction from "./classes/Character/player-controller.js";
 import StarSystem from "./classes/StarSystem/StarSystem.js";
+import startGame from "./classes/Text/PassageLogic.js";
+import Appearance from "./classes/Character/Appearance.js";
 const submit = document.getElementById('generate');
 const bgColorInput = document.getElementById('bg-color-input');
 const landingBtn = document.getElementById('landing-button');
@@ -14,6 +16,15 @@ const story = document.getElementById('story');
 const exitCityBtn = document.getElementById('exit-city-button');
 const nextAreaLeftBtn = document.getElementById('next-area-left');
 const nextAreaRightBtn = document.getElementById('next-area-right');
+// Kristo osa
+const confirmName = document.getElementById('character-name-button');
+const sexMaleBtn = document.getElementById('sex-button-male');
+const sexFemaleBtn = document.getElementById('sex-button-female');
+const jobMinerBtn = document.getElementById('job-button-miner');
+const jobThinkTankBtn = document.getElementById('job-button-think-tank');
+const jobPMCBtn = document.getElementById('job-button-PMC');
+const gameBtn = document.getElementById('start-game-button');
+// Kristo osa lõpp
 takeOffBtn.style.display = 'none';
 goToBtn.style.display = 'none';
 enterCityBtn.style.display = 'none';
@@ -110,6 +121,70 @@ const handleGoToNextArea = () => {
 const handleGoToPrevArea = () => {
     handleAction(player,"prev area");
 }
+
+// Kristo osa
+
+const playerAppearance = new Appearance(
+    "unassigned","blue","brown", "short", "muscled", "unassigned"
+);
+
+//Ma armastan nuppe!!!!!
+
+const updatePlayerName = () =>{
+    player.name = document.getElementById('character-name-input').value;
+    document.getElementById('character-name').innerHTML = player.name;
+    console.log("Player name is", '"',player.name,'"');
+}
+
+const startingGame = () =>{
+    if (playerAppearance.sex === "unassigned"){
+        document.getElementById('start-game-error').innerHTML = "Character Background incomplete";
+        console.log("No sex selected")
+    }
+    else if (playerAppearance.job === "unassigned"){
+        document.getElementById('start-game-error').innerHTML = "Character Background incomplete";
+        console.log("No job selected")
+    }
+    else {
+        var startingScreen = document.getElementById('starting-screen');
+        startingScreen.parentNode.removeChild(startingScreen);
+        startGame();
+        document.getElementById('modal-passage').style.display = 'block';
+    }
+}
+
+const updatePlayerSexMale = () =>{
+    playerAppearance.sex = document.getElementById('sex-button-male').innerHTML;
+    document.getElementById('chosen-sex').innerHTML = playerAppearance.sex;
+    console.log(playerAppearance.sex);
+}
+
+const updatePlayerSexFemale = () =>{
+    playerAppearance.sex = document.getElementById('sex-button-female').innerHTML;
+    document.getElementById('chosen-sex').innerHTML = playerAppearance.sex;
+    console.log(playerAppearance.sex);
+}
+
+const updatePlayerJobMiner = () =>{
+    playerAppearance.job = document.getElementById('job-button-miner').innerHTML;
+    document.getElementById('chosen-job').innerHTML = playerAppearance.job;
+    console.log(playerAppearance.job);
+}
+
+const updatePlayerJobThinkTank = () =>{
+    playerAppearance.job = document.getElementById('job-button-think-tank').innerHTML;
+    document.getElementById('chosen-job').innerHTML = playerAppearance.job;
+    console.log(playerAppearance.job);
+}
+
+const updatePlayerJobPMC = () =>{
+    playerAppearance.job = document.getElementById('job-button-PMC').innerHTML;
+    document.getElementById('chosen-job').innerHTML = playerAppearance.job
+    console.log(playerAppearance.job);
+}
+
+// Kristo osa lõpp
+
 //---------------------------EVENT LISTENERS---------------------------\\
 nextAreaLeftBtn.addEventListener('click',handleGoToPrevArea);
 nextAreaRightBtn.addEventListener('click',handleGoToNextArea);
@@ -122,3 +197,12 @@ submit.addEventListener('click', generatePic);
 bgColorInput.addEventListener('change', (e) => {
     document.body.style.backgroundColor = e.target.value;
 });
+// Kristo osa
+confirmName.addEventListener('click', updatePlayerName);
+gameBtn.addEventListener('click', startingGame);
+sexMaleBtn.addEventListener('click', updatePlayerSexMale);
+sexFemaleBtn.addEventListener('click', updatePlayerSexFemale);
+jobMinerBtn.addEventListener('click', updatePlayerJobMiner);
+jobThinkTankBtn.addEventListener('click', updatePlayerJobThinkTank);
+jobPMCBtn.addEventListener('click', updatePlayerJobPMC);
+// Kristo osa lõpp
