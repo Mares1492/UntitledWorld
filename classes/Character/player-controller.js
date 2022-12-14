@@ -137,6 +137,14 @@ const handleAction = (player,type) => {
                     alert("Can't go to previous area!");
                 }
                 break
+            case 'update inventory':
+                console.log("Updating inventory");
+                player.updateInventoryDisplay();
+                break
+            case 'update journal':
+                console.log("Updating journal");
+                player.updateJournalDisplay();
+                break
             default:
                 console.log('No right action found')
                 return false
