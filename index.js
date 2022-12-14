@@ -14,6 +14,8 @@ const story = document.getElementById('story');
 const exitCityBtn = document.getElementById('exit-city-button');
 const nextAreaLeftBtn = document.getElementById('next-area-left');
 const nextAreaRightBtn = document.getElementById('next-area-right');
+const journalBtn = document.getElementById('journal');
+const inventoryBtn = document.getElementById('inventory');
 takeOffBtn.style.display = 'none';
 goToBtn.style.display = 'none';
 enterCityBtn.style.display = 'none';
@@ -103,6 +105,12 @@ const handleExitCityBtnClick = () => {
         exitCityBtn.style.display = 'none';
     }
 }
+const handleJournalClick = () => {
+    handleAction(player,"update journal");
+}
+const handleInventoryClick = () => {
+   handleAction(player,"update inventory");
+}
 
 const handleGoToNextArea = () => {
     handleAction(player,"next area");
@@ -119,6 +127,8 @@ takeOffBtn.addEventListener('click', handleTakeOff);
 exitCityBtn.addEventListener('click',handleExitCityBtnClick);
 goToBtn.addEventListener('click', walkToTile);
 submit.addEventListener('click', generatePic);
+journalBtn.addEventListener('click',handleJournalClick);
+inventoryBtn.addEventListener('click',handleInventoryClick);
 bgColorInput.addEventListener('change', (e) => {
     document.body.style.backgroundColor = e.target.value;
 });

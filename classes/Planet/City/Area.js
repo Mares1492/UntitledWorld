@@ -20,6 +20,7 @@ const cityElements = {
     roadY: {symbol:'|',color: '#A0A0A0',img:"./img/city/road1.png?",width:"30",height:"30",name:"Road"},
     roadX: {symbol:'-',color: '#A0A0A0',img:"./img/city/road2.png?",width:"30",height:"30",name:"Road"},
     water: {symbol:'~',color: '#F8F8F8',img:"./img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"Water"},
+    Criminal: {symbol:'C',color: '#F8F8F8',img:"./img/gang.png?",width:"35",height:"35",name:"Gangsters",description:"Doing gangster things"},
     Commercial: {symbol:'C',color: '#f2d871',img:["./img/city/big-store.png?","./img/city/small-store.png?"],
         width:"30",height:"30",name:"Commercial Building",isActivity:true,description:"Like a shop or something"},
     Support: {symbol:'S',color: '#B0B0B0',img:["./img/city/city-support.png?","./img/city/police-station.png?"],

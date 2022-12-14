@@ -1,5 +1,6 @@
 import Character from "./Character.js";
-import Planet from "../Planet/Planet.js";
+import Planet from "./../Planet/Planet.js";
+import Journal from "./../Journal/Journal.js";
 const charName = document.getElementById("character-name")
 const charParams = document.getElementById("character-params")
 const charStats = document.getElementById("character-stats")
@@ -17,6 +18,7 @@ class Player extends Character{
       equipped=new Map(),
       abilities=new Map(),
       inventory=new Map()
+
   ) {
   super(name, params, level, status, location,stats);
     this.experience = experience;
@@ -29,6 +31,7 @@ class Player extends Character{
     charName.innerHTML = this.name;
     this.updateParams();
     this.updateStats();
+    this.journal = new Journal(this.name)
   }
 
     updateParams(){
@@ -453,6 +456,46 @@ class Player extends Character{
       }
       console.log('No map to update');
     }
+
+    updateInventoryDisplay(){
+        const inventory = document.getElementById('ji-container');
+        if (this.inventory.size) {
+            inventory.innerHTML = Array.from(this.inventory).map((name, amount) =>
+                `<div class="inventory-container">
+                    <div class="inventory-item is-pointable">
+                        <span class="inventory-amount">${name}</span>
+                        <span class="inventory-name">${amount}</span>
+                    </div>
+                </div>`
+            ).join('');
+        } else {
+            inventory.innerHTML = `<div class="inventory-container">
+                    <div class="inventory-item">
+                        <span class="inventory-amount">Empty</span>
+                    </div>
+                </div>`;
+        }
+        inventory.style.animation = 'pixalate 0.5s ease-out;';
+    }
+    updateJournalDisplay() {
+        const journal = document.getElementById('ji-container');
+        const entries = this.journal.getEntries();
+        if (entries.size) {
+            journal.innerHTML = Array.from(entries).map((name, data) =>
+                `<div class="inventory-container">
+                    <span class="journal-entry-title">#${data.id}. ${name}</span>
+                    <div class="inventory-item is-pointable">
+                        <p class="inventory-name">${data.description}</p>
+                    </div>
+                 </div>`
+            ).join('');
+        }else {
+            journal.innerHTML = `<div class="inventory-container" >
+                <span class="journal-entry-title">No Entries found</span>
+            </div>`
+        }
+    }
+
 
     updateRegionMap = () => {
         Planet
