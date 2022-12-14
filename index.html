@@ -80,11 +80,35 @@
             </div>
         </div>
     </div>
+
     <div class="button-container">
         <button class="ji-buttons" id="journal">Journal</button>
         <button class="ji-buttons" id="inventory">Inventory</button>
+
+    <div class = "console-container" id="console-container">
+        <h3>Console:</h3>
+        <div class = "starting-screen" id="starting-screen">
+            <h2>Character Background:</h2>
+            <p>Name: <input id="character-name-input"></input><button id="character-name-button" class="starting-button">Confirm</button></p>
+            <p>Sex: <button id="sex-button-male">male</button><button id="sex-button-female">female</button></p>
+            <div id="chosen-sex">Unassigned</div>
+            <p>Job: <button id="job-button-miner">Miner</button><button id="job-button-think-tank">Think Tank</button><button id="job-button-PMC">PMC</button></p>
+            <div id="chosen-job">Unassigned</div>
+            <button id="start-game-button">Start Game</button>
+            <div id="start-game-error"></div>
+        </div>
+        <div class="passage-component">
+            <div id = "modal-passage" class="modal-overlay">
+                <div class="modal-content-text">
+                    <div id="modal-text"></div>
+                    <div id="option-buttons" class="option-buttons"></div>
+                </div>
+            </div>    
+        </div>
     </div>
     <div id = "ji-container" class = "journal-inventory-container"></div>
+</div>
+
 </div>
 </div>
 <footer class="footer"><div class="beautiful-text">Powered by <a href="https://icons8.com/">Icons8</a></div></footer>
