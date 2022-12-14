@@ -3,6 +3,7 @@ const optionButtonsElement = document.getElementById('option-buttons');
 
 let state = {}
 // Varastatud kood, lel, vajab cleanupi, praegu tho don't care, it works tekstidega
+
 function startGame() {
     state = {}
     showPassage(1)

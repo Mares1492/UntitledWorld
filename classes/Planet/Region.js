@@ -2,6 +2,7 @@ import Terrain from "./Terrain.js";
 import Planet from "./Planet.js";
 import City from "./City/City.js";
 import Colony from "./City/Colony.js";
+
 const landscapeContainer = document.getElementById('landscape-container');
 const landscapeDesc = document.getElementById('landscape-description')
 const nextAreaLeft = document.getElementById('next-area-left');
@@ -56,6 +57,7 @@ const negativeEconomicAdjectives = ["poor","poverty","unwealthy","unwealth","bad
 
 class Region {
     constructor(name,text, width, height,location) {
+        console.log(text,location);
         this.name = name;
         this.text = this.initialFilter(text);
         console.log(this.text);
@@ -158,6 +160,10 @@ class Region {
         }
         console.log(`City ${name} not found`);
         return false;
+    }
+    getRandomCity() {
+        const cities = Array.from(this.cities.values());
+        return cities[Math.floor(Math.random() * cities.length)];
     }
 
     getNumberOfElements(text) {

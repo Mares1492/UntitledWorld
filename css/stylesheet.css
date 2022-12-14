@@ -26,8 +26,12 @@ footer{
     cursor: pointer;
 }
 
+.map-component{
+    display:none;
+}
+
 .info-component{
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -125,12 +129,11 @@ footer{
 .console-container{
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     justify-content: space-around;
     align-items: center;
 }
 
-.starting-screen{
+.create-char-container{
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -254,7 +257,44 @@ textarea:focus {
     line-height: 1.5;
     margin-top: 0.5em;
 }
-#generate{
+
+.start-game-btn{
+    font-size: 2.5rem;
+    margin-top: 3rem;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #eeeeee;
+    border-bottom: 10px solid #cccccc;
+    transition: all 400ms;
+
+}
+
+.char-creation-text{
+    font-size:1.8rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.char-creation-containers{
+    margin: 1em;
+}
+
+.char-creation-labels{
+    font-size: 1em;
+}
+
+.start-game-btn:hover{
+    cursor: pointer;
+    filter: contrast(50%);
+}
+.start-game-btn:active {
+    transform: translate(0,0.5rem);
+    border-bottom: 5px solid #cccccc;
+}
+
+.big-beautiful-button{
     background-color: rgba(57,51,72,0.6);
     border: none;
     color: white;
@@ -269,10 +309,10 @@ textarea:focus {
     box-shadow: dimgrey 1px 1px 1px;
     margin-bottom: 1em;
 }
-#generate:hover{
+.big-beautiful-button:hover{
     background-color: rgba(57,51,72,0.8);
 }
-#generate:active{
+.big-beautiful-button:active{
     background-color: rgba(57,51,72,0.4);
 }
 
@@ -342,7 +382,6 @@ img{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    size: auto;
     justify-content: center;
     align-items: center;
 }
@@ -489,6 +528,7 @@ img{
         filter: pixelate(0);
         transform: translateX(0);
     }
+}
 
 .option-buttons{
     display: flex;

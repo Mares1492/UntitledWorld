@@ -7,6 +7,7 @@ const charStats = document.getElementById("character-stats")
 class Player extends Character{
   constructor(
       name,
+      appearance,
       params={health:20, defense:0, attack:0, speed:1},
       stats={},
       location=null,
@@ -17,7 +18,7 @@ class Player extends Character{
       gold=0,
       equipped=new Map(),
       abilities=new Map(),
-      inventory=new Map()
+      inventory=new Map(),
 
   ) {
   super(name, params, level, status, location,stats);
