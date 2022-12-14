@@ -18,14 +18,10 @@ const nextAreaLeftBtn = document.getElementById('next-area-left');
 const nextAreaRightBtn = document.getElementById('next-area-right');
 const journalBtn = document.getElementById('journal');
 const inventoryBtn = document.getElementById('inventory');
+const regionNameGlobal = document.getElementById('region-name');
 
 // Kristo osa
-const confirmName = document.getElementById('character-name-button');
-const sexMaleBtn = document.getElementById('sex-button-male');
-const sexFemaleBtn = document.getElementById('sex-button-female');
-const jobMinerBtn = document.getElementById('job-button-miner');
-const jobThinkTankBtn = document.getElementById('job-button-think-tank');
-const jobPMCBtn = document.getElementById('job-button-PMC');
+
 const gameBtn = document.getElementById('start-game-button');
 // Kristo osa lõpp
 
@@ -57,9 +53,10 @@ console.log(homePlanet);
 
 const player = new Player(
     "Ben Grylls",
+    new Appearance(),
     {health:20, defense:0, attack:0, speed:1},
     {strength:5,dexterity:4,intellect:6,agility:3,charisma:7},
-    {planet:"New Hope",region:"Home",tile:{x:0,y:0}}
+    {planet:"New Hope",region:"Home"}
 );
 player.setTransport(new Rocket("Rocket","./img/rocket-on-ground.png?",30))
 
@@ -68,28 +65,29 @@ const updateMap = () => {
     Planet.getPlanet(player.getPlanet()).getRegion(player.getRegion()).updateMap();
 }
 
-const getStory = (type) => { //It is actually a part of the early version of the game, but I decided to keep it for now
-    if (type === "Text") {
-        return story.value;
-    }
-}
+const textTemplate = "This is a green planet with a lot of grass and trees. " +
+    "There is a big river. There are a lot of cities and towns. " +
+    "There are also some farms and mines. There are also some caves. " +
+    "There are also some camps and houses. There are also some quest points. There should also be some colonies."
 
-const generatePic = () =>{
-    const planet = Planet.getPlanet("New Hope") //adjust to get planet from input
-    const text = getStory("Text");
-    const region = new Region(
-        "Home",
-        text,
-        parent.innerWidth/120,
-        parent.innerHeight/70,
-        {planet:planet.name},
-        );
-    player.location = {planet:planet.name,region:region.name};
-    console.log("Adding: ",region,"To: ",planet);
-    planet.addRegion(region);
-    submit.style.display = 'none';
-    document.getElementById('region-name').value = region.name;
-    updateMap();
+const generatePic = (text=story.value,regionName = regionNameGlobal.value) =>{
+    if (!player.location.city && !player.location.colony && !player.location.tile){
+        const planet = Planet.getPlanet("New Hope") //adjust to get planet from input
+        const region = new Region(
+            regionName,
+            text,
+            parent.innerWidth/120,
+            parent.innerHeight/70,
+            {planet:planet.name},
+            );
+        player.location = {planet:planet.name,region:region.name};
+        console.log("Adding: ",region,"To: ",planet);
+        planet.addRegion(region);
+        document.getElementById('region-name').value = region.name;
+        updateMap();
+        return region;
+    }
+    alert("Player should not be on surface");
 }
 
 //Prototype section end ↑
@@ -110,7 +108,11 @@ const handleTakeOff = () => {
     handleAction(player,"take off");
 }
 const handleLanding = () => {
-    handleAction(player,"land");
+    if (!player.location.city && !player.location.colony){
+        handleAction(player,"land");
+    }else {
+        alert(`Your ${player.transport.name} cannot land in the middle of the city`);
+    }
 }
 const handleExitCityBtnClick = () => {
     const result = handleAction(player,"exit city");
@@ -132,6 +134,11 @@ const handleGoToPrevArea = () => {
     handleAction(player,"prev area");
 }
 
+const handleShowInterface = () => {
+    document.getElementById('info-component').style.display = 'flex';
+    document.getElementById('map-component').style.display = 'block';
+}
+
 // Kristo osa
 
 const playerAppearance = new Appearance(
@@ -140,57 +147,36 @@ const playerAppearance = new Appearance(
 
 //Ma armastan nuppe!!!!!
 
-const updatePlayerName = () =>{
-    player.name = document.getElementById('character-name-input').value;
-    document.getElementById('character-name').innerHTML = player.name;
-    console.log("Player name is", '"',player.name,'"');
-}
 
 const startingGame = () =>{
-    if (playerAppearance.sex === "unassigned"){
-        document.getElementById('start-game-error').innerHTML = "Character Background incomplete";
-        console.log("No sex selected")
+    console.log("Starting game");
+    const name = document.getElementById('character-name-input').value;
+    if (name === ""){
+        alert("Please enter a name");
+        return;
     }
-    else if (playerAppearance.job === "unassigned"){
-        document.getElementById('start-game-error').innerHTML = "Character Background incomplete";
-        console.log("No job selected")
+    const gender = document.querySelector('input[name="gender"]:checked')?.value;
+    if (!gender){
+        alert("Please select characters gender");
     }
-    else {
-        var startingScreen = document.getElementById('starting-screen');
-        startingScreen.parentNode.removeChild(startingScreen);
-        startGame();
-        document.getElementById('modal-passage').style.display = 'block';
+    const job = document.querySelector('input[name="job"]:checked')?.value;
+    if (!job){
+        alert("Please select a job");
+        return;
     }
-}
 
-const updatePlayerSexMale = () =>{
-    playerAppearance.sex = document.getElementById('sex-button-male').innerHTML;
-    document.getElementById('chosen-sex').innerHTML = playerAppearance.sex;
-    console.log(playerAppearance.sex);
-}
+    player.name = name;
+    document.getElementById('create-char-container').style.display = 'none';
+    document.getElementById('modal-passage').style.display = 'block';
+    handleShowInterface()
+    startGame();
+    const region = generatePic(textTemplate,"Home");
+    const city = region.getCity("City-1")
+    player.location = {planet:homePlanet.name,region:region.name,city:city.name,tile:{x:city.location.tile.x,y:city.location.tile.y}};
+    player.transport.landAt(player.location.planet,player.location.region,player.location.tile.x,player.location.tile.y);
+    player.handleEnterCity(city,"city");
+    document.getElementById('exit-city-button').style.display = 'block';
 
-const updatePlayerSexFemale = () =>{
-    playerAppearance.sex = document.getElementById('sex-button-female').innerHTML;
-    document.getElementById('chosen-sex').innerHTML = playerAppearance.sex;
-    console.log(playerAppearance.sex);
-}
-
-const updatePlayerJobMiner = () =>{
-    playerAppearance.job = document.getElementById('job-button-miner').innerHTML;
-    document.getElementById('chosen-job').innerHTML = playerAppearance.job;
-    console.log(playerAppearance.job);
-}
-
-const updatePlayerJobThinkTank = () =>{
-    playerAppearance.job = document.getElementById('job-button-think-tank').innerHTML;
-    document.getElementById('chosen-job').innerHTML = playerAppearance.job;
-    console.log(playerAppearance.job);
-}
-
-const updatePlayerJobPMC = () =>{
-    playerAppearance.job = document.getElementById('job-button-PMC').innerHTML;
-    document.getElementById('chosen-job').innerHTML = playerAppearance.job
-    console.log(playerAppearance.job);
 }
 
 // Kristo osa lõpp
@@ -203,18 +189,12 @@ landingBtn.addEventListener('click', handleLanding);
 takeOffBtn.addEventListener('click', handleTakeOff);
 exitCityBtn.addEventListener('click',handleExitCityBtnClick);
 goToBtn.addEventListener('click', walkToTile);
-submit.addEventListener('click', generatePic);
+submit.addEventListener('click', ()=>generatePic());
 journalBtn.addEventListener('click',handleJournalClick);
 inventoryBtn.addEventListener('click',handleInventoryClick);
 bgColorInput.addEventListener('change', (e) => {
     document.body.style.backgroundColor = e.target.value;
 });
 // Kristo osa
-confirmName.addEventListener('click', updatePlayerName);
 gameBtn.addEventListener('click', startingGame);
-sexMaleBtn.addEventListener('click', updatePlayerSexMale);
-sexFemaleBtn.addEventListener('click', updatePlayerSexFemale);
-jobMinerBtn.addEventListener('click', updatePlayerJobMiner);
-jobThinkTankBtn.addEventListener('click', updatePlayerJobThinkTank);
-jobPMCBtn.addEventListener('click', updatePlayerJobPMC);
 // Kristo osa lõpp
