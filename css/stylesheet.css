@@ -420,7 +420,6 @@ img{
     border-radius: 5px;
     flex-wrap: wrap;
     margin: 20% auto;
-    max-width: 45%;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
     display: flex;
     flex-direction: column;
@@ -529,10 +528,22 @@ img{
         transform: translateX(0);
     }
 }
+.big-text{
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: black;
+    padding: 5em;
+    margin:5em;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px #000000;
+    animation: ease-in 0.5s pixalate;
+}
 
 .option-buttons{
     display: flex;
     flex-direction: column;
+    padding: 1em;
+    margin: 1em;
 }
 
 .starting-button{
