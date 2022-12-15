@@ -165,7 +165,7 @@ const startingGame = () =>{
         return;
     }
 
-    player.name = name;
+    player.updateName(name);
     document.getElementById('create-char-container').style.display = 'none';
     document.getElementById('modal-passage').style.display = 'block';
     handleShowInterface()
