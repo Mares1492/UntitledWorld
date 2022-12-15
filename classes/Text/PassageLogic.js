@@ -21,6 +21,8 @@ function showPassage(PassageIndex) {
         if (showOption(option)) {
             const button = document.createElement('button')
             button.innerText = option.text
+            button.style.width = "15rem"
+            button.style.height = "10rem"
             button.classList.add('btn')
             button.addEventListener('click', () => selectOption(option))
             optionButtonsElement.appendChild(button)
