@@ -35,6 +35,11 @@ class Player extends Character{
     this.journal = new Journal(this.name)
   }
 
+    updateName(name){
+      this.name = name;
+      charName.innerHTML = this.name;
+    }
+
     updateParams(){
         charStats.innerHTML =
             `
