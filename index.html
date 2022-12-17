@@ -14,12 +14,18 @@
     <input id="bg-color-input" type="color"><label for="bg-color-input">BG COLOR</label>
 </div>
 <div class="settings"><img src="./img/settings/settings-icon.png?" alt="Settings" width="50" height="50"></div>
-
+<!--<div id="modal-passage" class="modal-overlay">
+    <div class="modal-content-text">
+        <div id="modal-text" class="big-text"></div>
+        <div id="option-ButtonState" class="option-ButtonState"></div>
+    </div>
+</div>-->
 <div class = "global-component">
     <div class = "console-container char-creation-text" id="console-container">
         <div class="create-char-container" id="create-char-container">
             <h1>Untitled World DEMO</h1>
             <h3>Character Creation:</h3>
+            <span id="error"></span>
             <label class="char-creation-labels"  for="character-name-input">Name:</label>
             <input class="char-creation-labels" type="text" id="character-name-input">
             <fieldset class="char-creation-containers" >
@@ -36,7 +42,7 @@
             <fieldset class="char-creation-containers" >
                 <legend >Choose your characters job:</legend>
                 <div>
-                    <input type="radio" id="private-military-contractor" name="job" value="private-military-contractor"
+                    <input type="radio" id="private-military-contractor" name="job" value="privateMilitaryContractor"
                            >
                     <label for="private-military-contractor">Private Military Contractor</label>
                 </div>
@@ -45,20 +51,12 @@
                     <label for="miner">Miner</label>
                 </div>
                 <div>
-                    <input type="radio" id="think-tank-assistant" name="job" value="think-tank-assistant">
+                    <input type="radio" id="think-tank-assistant" name="job" value="thinkTankAssistant">
                     <label for="think-tank-assistant">Think Tank Assistant</label>
                 </div>
             </fieldset>
             <button id="start-game-button" class = "start-game-btn">Start Game</button>
             <div id="start-game-error"></div>
-        </div>
-        <div class="passage-component">
-            <div id="modal-passage" class="modal-overlay">
-                <div class="modal-content-text">
-                    <div id="modal-text" class="big-text"></div>
-                    <div id="option-buttons" class="option-buttons"></div>
-                </div>
-            </div>
         </div>
     </div>
     <div class = "map-component" id="map-component">
