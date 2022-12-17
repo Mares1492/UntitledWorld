@@ -1,11 +1,10 @@
 class Appearance {
-    constructor(sex, eyes, hair, height, build, job) {
-        this.sex = sex;
+    constructor(gender,eyes="blue", hair="dark", height="medium", build="medium", ) {
+        this.gender = gender;
         this.eyes = eyes;
         this.hair = hair;
         this.height = height;
         this.build = build;
-        this.job = job;
     }
   }
 

@@ -172,6 +172,7 @@ class Area {
                     document.getElementById('tile-y-cords').innerHTML = '${el.y}';
                     document.getElementById('tile-x-cords').innerHTML = '${el.x}';
                     document.getElementById('modal').style.display = 'block';
+                    
                     if ('${el.isActivity}'==='true' && '${el.playerPresent}'==='true') {
                         document.getElementById('activity-button').style.display = 'block';
                     }

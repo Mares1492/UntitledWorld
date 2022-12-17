@@ -1,3 +1,6 @@
+import Quest from "./Quest.js";
+import Note from "./Note.js";
+
 class Journal{
     constructor(owner){
         this.owner = owner;

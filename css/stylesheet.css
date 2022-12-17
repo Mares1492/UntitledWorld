@@ -50,11 +50,11 @@ footer{
 }
 
 .ji-buttons{
+    font-size: 1.2em;
     width: 7em;
     height: 5em;
     background-color: black;
     color: white;
-    font-size: medium;
     letter-spacing: 0.1em;
     border-radius: 5%;
     cursor: pointer;
@@ -379,7 +379,7 @@ img{
 }
 
 .world-description{
-    display: flex;
+    display: none;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
@@ -400,8 +400,7 @@ img{
 .modal-content{
     border: 3px solid #6f6d72;
     background-color: #b4b1b8;
-    border-radius: 5px;
-    flex-wrap: wrap;
+    border-radius: 15px;
     margin: 20% auto;
     max-width: 15%;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
@@ -415,10 +414,9 @@ img{
 }
 
 .modal-content-text{
+    width: calc(80% - 2em);
+    height: calc(50% - 2em);
     border: 3px solid #6f6d72;
-    background-color: #ffffff;
-    border-radius: 5px;
-    flex-wrap: wrap;
     margin: 20% auto;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
     display: flex;
@@ -426,10 +424,32 @@ img{
     justify-content: center;
     align-items: center;
     box-sizing: content-box;
-    z-index: auto;
     animation: ease-in 0.5s modalsAnimation;
     overflow-y: scroll;
 }
+
+.big-text{
+    width: calc(70% - 2em);
+    font-size: 2em;
+    font-weight: bold;
+    background-color: #ffffff;
+    padding: 0.5em;
+    margin:0.5em;
+    color: #000000;
+    text-shadow: 1px 1px 1px #000000;
+    animation: ease-in 0.5s pixalate;
+}
+
+.option-buttons{
+    width: 3em;
+    height: 2em;
+    display: flex;
+    flex-direction: row;
+    padding: 1em 2em 1em 2em;
+    border-radius: 15px;
+    margin: 3em;
+}
+
 
 .modal-header h2, .modal-footer h3{
     margin: 0;
@@ -450,6 +470,7 @@ img{
     padding: 10px;
     box-sizing: content-box;
 }
+
 
 .modal-btn:hover{
     cursor: pointer;
@@ -503,6 +524,7 @@ img{
     width: 100%;
     align-items: center;
     justify-content: space-between;
+    place-self: center center;
 }
 
 .next-area{
@@ -528,23 +550,8 @@ img{
         transform: translateX(0);
     }
 }
-.big-text{
-    font-size: 1.5em;
-    font-weight: bold;
-    background-color: black;
-    padding: 5em;
-    margin:5em;
-    color: #ffffff;
-    text-shadow: 1px 1px 1px #000000;
-    animation: ease-in 0.5s pixalate;
-}
 
-.option-buttons{
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
-    margin: 1em;
-}
+
 
 .starting-button{
     background-color: rgba(57,51,72,0.6);
@@ -560,7 +567,13 @@ img{
     border-radius: 5px;
     box-shadow: dimgrey 1px 1px 1px;
     margin-bottom: 1em;
+}
 
+#error{
+    color: red;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #000000;
 }
 
 @keyframes modalsAnimation{

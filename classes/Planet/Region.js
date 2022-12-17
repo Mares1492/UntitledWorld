@@ -57,10 +57,8 @@ const negativeEconomicAdjectives = ["poor","poverty","unwealthy","unwealth","bad
 
 class Region {
     constructor(name,text, width, height,location) {
-        console.log(text,location);
         this.name = name;
         this.text = this.initialFilter(text);
-        console.log(this.text);
         this.positiveAdjectives = positiveAdjectives;
         this.negativeAdjectives = negativeAdjectives;
         this.positiveEconomicAdjectives = positiveEconomicAdjectives;
