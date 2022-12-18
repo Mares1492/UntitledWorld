@@ -1,5 +1,5 @@
 class Appearance {
-    constructor(gender,eyes="blue", hair="dark", height="medium", build="medium", ) {
+    constructor(gender="gender-free",eyes="blue", hair="dark", height="medium", build="medium", ) {
         this.gender = gender;
         this.eyes = eyes;
         this.hair = hair;

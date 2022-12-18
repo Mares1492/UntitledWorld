@@ -3,6 +3,7 @@ const landscapeContainer = document.getElementById('landscape-container');
 const landscapeDesc = document.getElementById('landscape-description');
 const nextAreaLeft = document.getElementById('next-area-left');
 const nextAreaRight = document.getElementById('next-area-right');
+const shopBtn = document.getElementById('shop-button');
 
 const cityElements = {
     cityBuilding: {
@@ -22,7 +23,7 @@ const cityElements = {
     water: {symbol:'~',color: '#F8F8F8',img:"./img/water.png?",width:"35",height:"35",style:"opacity: 0.5;",name:"Water"},
     Criminal: {symbol:'C',color: '#F8F8F8',img:"./img/gang.png?",width:"35",height:"35",name:"Gangsters",description:"Doing gangster things"},
     Commercial: {symbol:'C',color: '#f2d871',img:["./img/city/big-store.png?","./img/city/small-store.png?"],
-        width:"30",height:"30",name:"Commercial Building",isActivity:true,description:"Like a shop or something"},
+        width:"30",height:"30",name:"Commercial Building",isActivity:true,isShop:true,description:"Like a shop or something"},
     Support: {symbol:'S',color: '#B0B0B0',img:["./img/city/city-support.png?","./img/city/police-station.png?"],
         width:"30",height:"30",name:"City Support",description:"A city support building, like a police station or fire station"},
     Social: {symbol:'S',color: '#B0B0B0',img:["./img/city/social.png?","./img/city/hospital.png?","./img/city/clinic.png?"],
@@ -172,7 +173,13 @@ class Area {
                     document.getElementById('tile-y-cords').innerHTML = '${el.y}';
                     document.getElementById('tile-x-cords').innerHTML = '${el.x}';
                     document.getElementById('modal').style.display = 'block';
-                    
+                    if ('${el.isShop}'==='true' && '${el.playerPresent}'==='true'){
+                        shopBtn.style.display = 'block';
+                    }
+                    else {
+                        shopBtn.style.display = 'none';
+                    }
+                
                     if ('${el.isActivity}'==='true' && '${el.playerPresent}'==='true') {
                         document.getElementById('activity-button').style.display = 'block';
                     }
