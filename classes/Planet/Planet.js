@@ -71,7 +71,6 @@ class Planet {
 
     static getPlanet(planetName) {
         if (Planet.planets.has(planetName)) {
-            console.log(`Planet ${planetName} is found`);
             return Planet.planets.get(planetName);
         }
         else {
