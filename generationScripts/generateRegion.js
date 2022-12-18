@@ -11,8 +11,8 @@ const generateRegion = (text=story.value,regionName = regionNameGlobal.value) =>
             const region = new Region(
                 regionName,
                 text,
-                parent.innerWidth/120,
-                parent.innerHeight/70,
+                parent.innerWidth/100,
+                parent.innerHeight/80,
                 {planet:planet.name},
             );
             Session.currentPlayer.location = {planet:planet.name,region:region.name};
