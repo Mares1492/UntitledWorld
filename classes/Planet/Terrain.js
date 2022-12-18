@@ -3,7 +3,7 @@ import Planet from "./Planet.js";
 
 
 class Terrain {
-    constructor(name,symbol, x, y, color,img,width,height,style="",description="No data",isLandable=true,isPassable=true,location=null,isActivity=false) {
+    constructor(name,symbol, x, y, color,img,width,height,style="",description="No data",isLandable=true,isPassable=true,location=null,isActivity=false,isShop=false) {
         this.color = color;
         this.symbol = symbol;
         this.x = x;
@@ -19,6 +19,8 @@ class Terrain {
         this.isPassable = isPassable;
         this.playerPresent = false;
         this.playerTransportPresent = false;
+        this.isActivity = isActivity;
+        this.isShop = isShop;
     }
     modifyTerrain(newTerrain) {
         this.symbol = newTerrain?.symbol;
