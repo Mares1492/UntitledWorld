@@ -28,7 +28,7 @@ const cityElements = {
     Social: {symbol:'S',color: '#B0B0B0',img:["./img/city/social.png?","./img/city/hospital.png?","./img/city/clinic.png?"],
         width:"30",height:"30",name:"Social Building",description:"A social building, like a school or hospital"},
     Cosmic: {symbol:'S',color: '#e3c4a8',img:"./img/city/spaceport.png?",isActivity:true,
-        width:"30",height:"30",name:"DocDor Corp Branch",description:"They can pay for your space missions"},
+        width:"30",height:"30",name:"Rush Administration",description:"They can pay for your space missions"},
     Residential: {symbol:'H',color: '#909090',img:["./img/city/ncp-house.png?","./img/city/ncp-house2.png?","./img/city/ncp-house3.png?"],
         width:"30",height:"30",name:"Important House",description:"A house of some important person in the city"},
     Research: {symbol:'S',color: '#909090',img:["./img/city/special.png?","./img/city/special2.png?","./img/city/special3.png?"],
@@ -167,7 +167,12 @@ class Area {
                 class="tile" 
                 style="background-color: ${el.color}" 
                 onmousedown="function openModal() {
-                    this.selectedTile = {name: '${el.name}',description:'${el.description}', x: ${el.x}, y: ${el.y},planet:'${el.location.planet}',region:'${el.location.region}'};
+                    this.selectedTile = {name: '${el.name}',
+                    description:'${el.description}', 
+                    x: ${el.x}, 
+                    y: ${el.y},
+                    planet:'${el.location.planet}',
+                    region:'${el.location.region}'};
                     document.getElementById('tile-name').innerHTML = '${el.name}';
                     document.getElementById('modal-content').innerHTML = '${el.description}';
                     document.getElementById('tile-y-cords').innerHTML = '${el.y}';

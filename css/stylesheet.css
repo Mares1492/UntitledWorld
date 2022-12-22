@@ -40,6 +40,74 @@ footer{
     transition: all 400ms;
 }
 
+#shop-component{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: calc(30% - 2em);
+    min-width: 300px;
+    flex-wrap: wrap;
+    top: 0;
+    right: 0;
+    margin: 4em 6em 0 0;
+    background-color: white;
+    border-radius: 25px;
+    padding: 1em;
+    border: #6f6d72 3px solid;
+    box-shadow: #999999 0 0 10px;
+}
+
+.shop-container{
+    width: 100%;
+
+}
+
+.shop-name{
+    font-size: 2em;
+    font-weight: bolder;
+    margin: 0;
+}
+
+.shop-button{
+    background-color: #6f6d72;
+    box-shadow: #999999;
+    border-radius: 25px;
+    border: none;
+    padding: 0.2em 0.5em;
+    margin-left: 2em;
+    cursor: pointer;
+    font-size: 0.7em;
+    transition: all 200ms ease-out;
+}
+.shop-button:hover{
+    color: white;
+    border: black 3px solid;
+}
+.shop-button:active{
+    background-color: #999999;
+}
+
+.shop-item-container{
+    width: calc(100% - 2em);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.shop-item{
+   font-weight: bold;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.left{
+    justify-self: start;
+}
+.rigth{
+    justify-self: end;
+}
+
 .button-container{
     display: flex;
     flex-direction: row;
