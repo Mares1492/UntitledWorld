@@ -11,7 +11,7 @@ const shopTemplates = [ //TODO: Add more shops
         ]
     },
     {
-        name: "Food Shop",
+        name: "Food store",
         items: [
             { name: "Bread", type:"food", price: 10, amount: 10 },
             { name:"Water", type:"food", price: 20, amount: 10 },
@@ -35,7 +35,7 @@ const shopTemplates = [ //TODO: Add more shops
         ]
     },
     {
-        name: "Vehicle Shop",
+        name: "Auto shop",
         items: [
             { name: "Car", price: 10000, amount: 1 },
             { name: "Motorcycle", price: 5000, amount: 1 },

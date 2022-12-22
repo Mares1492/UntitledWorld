@@ -1,7 +1,7 @@
 import handleStartGame from "./scenarios/gameStart.js";
 import generateRegion from "./generationScripts/generateRegion.js";
 import Session from "./classes/Game/Session.js";
-import handleAction from "./classes/Character/player-controller.js";
+import handleAction from "./controllers/player-controller.js";
 const bgColorInput = document.getElementById('bg-color-input');
 const landingBtn = document.getElementById('landing-button');
 const takeOffBtn = document.getElementById('take-off-button');
@@ -14,6 +14,7 @@ const journalBtn = document.getElementById('journal');
 const inventoryBtn = document.getElementById('inventory');
 const gameBtn = document.getElementById('start-game-button');
 const generateBtn = document.getElementById('generate');
+const shopBtn = document.getElementById('shop-button');
 
 
 //Prototype section start ↓
@@ -73,4 +74,7 @@ inventoryBtn.addEventListener('click',() =>
 bgColorInput.addEventListener('change', (e) => {
     document.body.style.backgroundColor = e.target.value;
 });
+
+shopBtn.addEventListener('click',() =>
+    handleAction(Session.currentPlayer,"shop"));
 

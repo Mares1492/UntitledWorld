@@ -1,7 +1,8 @@
-import Planet from "../Planet/Planet.js";
+import Planet from "../classes/Planet/Planet.js";
 
 
 const handleAction = (player,type) => {
+    document.getElementById("shop-component").style.display = "none";//TODO: find a better place for this
     if (player.getIsPlayerAbleToAct(type)) {
         const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
         const y = parseInt(document.getElementById('tile-y-cords').innerHTML);
@@ -73,6 +74,14 @@ const handleAction = (player,type) => {
                 }else {
                     alert("You can't exit the city right now!");
                 }
+                break
+            case 'shop':
+                player.setIsUnableToAct(500)
+                region
+                    .getCity(player.getCity())
+                    .getArea(player.getArea())
+                    .getTile(x,y)
+                    .handleShowShop();
                 break
             case 'talk':
                 //...

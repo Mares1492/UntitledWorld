@@ -352,6 +352,13 @@ class Region {
                     }else {
                         document.getElementById('enter-city-button').style.display = 'none';
                     }
+                    if ('${el.isActivity}'==='true' && '${el.playerPresent}'==='true') {
+                        document.getElementById('activity-button').style.display = 'block';
+                    }
+                    else {
+                        document.getElementById('activity-button').style.display = 'none';
+                    }
+                    document.getElementById('shop-button').style.display = 'none';
                 }
                 openModal()"
                 "

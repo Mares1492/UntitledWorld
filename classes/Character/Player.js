@@ -125,6 +125,18 @@ class Player extends Character{
             this.inventory.set(item, 1);
         }
     }
+    addGold(gold) {
+        this.gold += gold;
+    }
+    removeGold(gold) {
+      if (this.gold -= gold>=0) {
+        this.gold -= gold;
+        return true;
+      } else {
+        alert("Not enough gold");
+        return false;
+      }
+    }
     getItem(item) {
         if (this.inventory.has(item)) {
             this.inventory.set(item,this.inventory.get(item) - 1);

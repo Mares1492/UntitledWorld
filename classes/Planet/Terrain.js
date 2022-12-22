@@ -1,5 +1,6 @@
-import Region from "./Region.js";
-import Planet from "./Planet.js";
+import Shop from "./City/AreaBuildings/Shop.js";
+
+
 
 
 class Terrain {
@@ -20,7 +21,11 @@ class Terrain {
         this.playerPresent = false;
         this.playerTransportPresent = false;
         this.isActivity = isActivity;
-        this.isShop = isShop;
+        if (isShop) {
+            this.isShop = true;
+            this.shop = new Shop();
+            this.name = this.shop.name;
+        }
     }
     modifyTerrain(newTerrain) {
         this.symbol = newTerrain?.symbol;
@@ -125,6 +130,30 @@ class Terrain {
             return true;
         }
         return false;
+    }
+    handleShowShop(){
+        if (this.isShop){
+            const showcase = this.shop.showShop();
+            if (showcase) {//TODO: fix shop or find alternative
+                document.getElementById("shop-component").innerHTML =
+                    `<div class="shop-name">${this.name}</div>
+                    <div class="shop-container">
+                    ${showcase.items.map(item =>
+                        `<div class="shop-item-container">
+                            <div class="shop-item left">${item.name} - ${item.price}$ </div> 
+                            <div class="shop-item right">${item.amount}It available 
+                            <button onclick="${()=>showcase.handleItemAction(item,'buy')}"
+                            class="shop-button">Buy</button></div> 
+                        </div>`).join("")}
+                    </div>
+                    `;
+                document.getElementById("shop-component").style.display = "flex";
+            } else {
+                alert("This shop is closed :(");
+            }
+        }else {
+            alert(`This is not a shop x:${this.x} y:${this.y} name:${this.name} ${this.isShop}`);
+        }
     }
 }
 
