@@ -4,6 +4,7 @@ import Journal from "./../Journal/Journal.js";
 const charName = document.getElementById("character-name")
 const charParams = document.getElementById("character-params")
 const charStats = document.getElementById("character-stats")
+const charCredit = document.getElementById("credit")
 class Player extends Character{
   constructor(
       name,
@@ -16,7 +17,7 @@ class Player extends Character{
       status="alive",
       level=1,
       experience=0,
-      gold=0,
+      credit=100,
       equipped=new Map(),
       abilities=new Map(),
       inventory=new Map(),
@@ -24,8 +25,9 @@ class Player extends Character{
   ) {
   super(name, params, level, status, location,stats);
     this.experience = experience;
-    this.gold = gold;
     this.inventory = inventory;
+    this.credit = credit;
+    charCredit.innerHTML = this.credit + " credits";
     this.equipped = equipped;
     this.abilities = abilities;
     this.transport = transport;
@@ -118,22 +120,25 @@ class Player extends Character{
             }
             this.inventory.delete(item);
         }
-    addItem(item) {
-        if (this.inventory.has(item.name)) {
-            this.inventory.set(item,this.inventory.get(item.name) + 1);
+    addItem(name) {
+        if (this.inventory.has(name)) {
+            this.inventory.set(name,this.inventory.get(name) + 1);
         } else {
-            this.inventory.set(item, 1);
+            this.inventory.set(name, 1);
         }
     }
-    addGold(gold) {
-        this.gold += gold;
+    addCredit(credit) {
+        this.credit += credit;
+        charCredit.innerHTML = this.credit + " credits";
     }
-    removeGold(gold) {
-      if (this.gold -= gold>=0) {
-        this.gold -= gold;
+    removeCredit(price) {
+        price = parseInt(price)
+      if (this.credit - price>=0) {
+        this.credit -= price;
+        charCredit.innerHTML = this.credit + " credits";
         return true;
       } else {
-        alert("Not enough gold");
+        alert("Not enough credits");
         return false;
       }
     }
@@ -479,11 +484,11 @@ class Player extends Character{
     updateInventoryDisplay(){
         const inventory = document.getElementById('ji-container');
         if (this.inventory.size) {
-            inventory.innerHTML = Array.from(this.inventory).map((name, amount) =>
+            inventory.innerHTML = Array.from(this.inventory).map(item =>
                 `<div class="inventory-container">
-                    <div class="inventory-item is-pointable">
-                        <span class="inventory-amount">${name}</span>
-                        <span class="inventory-name">${amount}</span>
+                    <div class="inventory-item is-pointable" onclick="alert('Effect is work in progress')">
+                        <span class="inventory-amount">${item[0]}</span>
+                        <span class="inventory-name">x${item[1]}</span>
                     </div>
                 </div>`
             ).join('');

@@ -137,11 +137,12 @@ footer{
 .journal-inventory-container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
+    overflow-y: auto;
     height: 100%;
-    margin: 1em 5em 1em 5em;
+    max-height: 30vh;
+    margin: 2em 5em 1em 5em;
 }
 
 .inventory-container{
@@ -218,6 +219,17 @@ footer{
     margin: auto 0;
     border-radius: 15px;
 }
+
+#credit{
+    margin-right: 2em;
+    margin-top: 0.5em;
+    font-size: 1em;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    font-family: cursive;
+}
+
 
 .character-name{
     display: flex;

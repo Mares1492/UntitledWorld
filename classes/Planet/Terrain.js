@@ -1,4 +1,5 @@
 import Shop from "./City/AreaBuildings/Shop.js";
+import handleItemAction from "../../controllers/items-controller.js";
 
 
 
@@ -139,14 +140,24 @@ class Terrain {
                     `<div class="shop-name">${this.name}</div>
                     <div class="shop-container">
                     ${showcase.items.map(item =>
-                        `<div class="shop-item-container">
+                    `<div class="shop-item-container">
                             <div class="shop-item left">${item.name} - ${item.price}$ </div> 
                             <div class="shop-item right">${item.amount}It available 
-                            <button onclick="${()=>showcase.handleItemAction(item,'buy')}"
-                            class="shop-button">Buy</button></div> 
+                            <button
+                            type="button"           
+                            class="shop-button"
+                            data-name="${item.name}"
+                            data-action="buy"
+                            data-price="${item.price}"
+                            >Buy</button></div> 
                         </div>`).join("")}
                     </div>
                     `;
+
+                const list = document.querySelectorAll("button[data-action='buy']");
+                list.forEach(item => {
+                    item.addEventListener("click", handleItemAction);
+                })
                 document.getElementById("shop-component").style.display = "flex";
             } else {
                 alert("This shop is closed :(");
