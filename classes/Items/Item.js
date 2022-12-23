@@ -12,4 +12,13 @@ class Item{
             Item.allItems.set(this.name, this);
         }
     }
+    static getItem(name){
+        if (Item.allItems.has(name)){
+            return Item.allItems.get(name);
+        }
+        console.error("Item not found");
+        alert("Item is not available in this version of the game");
+        return null;
+    }
 }
+export default Item;

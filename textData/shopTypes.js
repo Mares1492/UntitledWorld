@@ -21,17 +21,18 @@ const shopTemplates = [ //TODO: Add more shops
     {
         name: "Clothing Shop",
         items: [
-            { name: "T-Shirt", price: 10, amount: 10 },
-            { name: "Pants", price: 20, amount: 10 },
-            { name: "Hat", price: 30, amount: 10 }
+            { name: "T-Shirt",type:'cloth', price: 10, amount: 10 },
+            { name: "Pants", type:'cloth',price: 20, amount: 10 },
+            { name: "Hat", type:'cloth',price: 30, amount: 10 }
         ]
     },
     {
         name: "Misc Shop",
         items: [
-            { name: "Bandage", price: 10, amount: 10 },
-            { name: "Painkiller", price: 20, amount: 10 },
-            { name: "Lockpick", price: 30, amount: 10 }
+            { name: "Bandage", type:'medicine', price: 10, amount: 10 },
+            { name: "Painkiller", type:'medicine', price: 20, amount: 10 },
+            { name: "Lockpick", type:'misc', price: 30, amount: 10 },
+            { name: "Flashlight", type:'misc', price: 30, amount: 10 },
         ]
     },
     {
