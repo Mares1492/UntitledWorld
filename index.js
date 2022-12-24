@@ -15,6 +15,7 @@ const inventoryBtn = document.getElementById('inventory');
 const gameBtn = document.getElementById('start-game-button');
 const generateBtn = document.getElementById('generate');
 const shopBtn = document.getElementById('shop-button');
+const activityBtn = document.getElementById('activity-button');
 
 
 //Prototype section start ↓
@@ -78,3 +79,5 @@ bgColorInput.addEventListener('change', (e) => {
 shopBtn.addEventListener('click',() =>
     handleAction(Session.currentPlayer,"shop"));
 
+activityBtn.addEventListener('click',() =>
+    handleAction(Session.currentPlayer,"activity"));
