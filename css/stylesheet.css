@@ -221,8 +221,7 @@ footer{
 }
 
 #credit{
-    margin-right: 2em;
-    margin-top: 0.5em;
+    margin: 0.5em 2em 0 0.5em;
     font-size: 1em;
     font-style: italic;
     letter-spacing: 0.1em;
@@ -236,6 +235,8 @@ footer{
     flex-direction: row;
     min-width: 30%;
     margin: 1em 2em 1em 0;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 
 #character-name{
