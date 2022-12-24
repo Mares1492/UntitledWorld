@@ -1,6 +1,7 @@
 import Character from "./Character.js";
 import Planet from "./../Planet/Planet.js";
 import Journal from "./../Journal/Journal.js";
+import GameEvent from "../Events/GameEvent.js";
 const charName = document.getElementById("character-name")
 const charParams = document.getElementById("character-params")
 const charStats = document.getElementById("character-stats")
@@ -10,7 +11,7 @@ class Player extends Character{
       name,
       appearance,
       params={health:20, defense:0, attack:0, speed:1},
-      stats={},
+      stats={strength:3,dexterity:3,intellect:3,agility:3,charisma:3},
       location={},
       backstory="nobody",
       transport=null,
@@ -21,21 +22,20 @@ class Player extends Character{
       equipped=new Map(),
       abilities=new Map(),
       inventory=new Map(),
-
   ) {
   super(name, params, level, status, location,stats);
-    this.experience = experience;
-    this.inventory = inventory;
-    this.credit = credit;
-    charCredit.innerHTML = this.credit + " credits";
-    this.equipped = equipped;
-    this.abilities = abilities;
-    this.transport = transport;
-    this.isAbleToAct = true;
-    charName.innerHTML = this.name;
-    this.updateParams();
-    this.updateStats();
-    this.journal = new Journal(this.name)
+        this.experience = experience;
+        this.inventory = inventory;
+        this.credit = credit;
+        charCredit.innerHTML = this.credit;
+        this.equipped = equipped;
+        this.abilities = abilities;
+        this.transport = transport;
+        this.isAbleToAct = true;
+        charName.innerHTML = this.name;
+        this.updateParams();
+        this.updateStats();this.journal = new Journal(this.name)
+        this.tilesPassed = 0;
   }
 
     updateName(name){
@@ -129,13 +129,13 @@ class Player extends Character{
     }
     addCredit(credit) {
         this.credit += credit;
-        charCredit.innerHTML = this.credit + " credits";
+        charCredit.innerHTML = this.credit;
     }
     removeCredit(price) {
         price = parseInt(price)
       if (this.credit - price>=0) {
         this.credit -= price;
-        charCredit.innerHTML = this.credit + " credits";
+        charCredit.innerHTML = this.credit;
         return true;
       } else {
         alert("Not enough credits");
@@ -352,6 +352,11 @@ class Player extends Character{
         for (let i = 0; i < path.length; i++) {
             passable = location.getTile(path[i].x, path[i].y).handlePlayerBypassing(path[i].timeout,this.getItem)
             if (!passable) {
+                return {x:path[i].x,y:path[i].y};
+            }
+            this.tilesPassed++;
+            if(this.tilesPassed===3){
+                GameEvent.getEvent()
                 return {x:path[i].x,y:path[i].y};
             }
         }
