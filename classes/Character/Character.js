@@ -6,11 +6,17 @@ class Character {
       this.status = status;
       this.location = location;
       this.stats = stats;
-
   }
 
-    handleAttack() {
-        console.log(`${this.name} attacks! ${this.params.attack} damage!`);
+    getStatus() {
+      return this.status;
+    }
+
+    handleAttack() { //TODO: add attack logic(buffs, items, etc)
+        return this.params.attack;
+    }
+    handleDefense(dmg) {
+        this.loseHealth(dmg-this.params.defense);
     }
     die() {
         console.log(`${this.name} dies!`);
@@ -18,8 +24,9 @@ class Character {
     }
     loseHealth(dmg) {
         console.log(`${this.name} loses health!`);
-        this.health -= dmg;
-        if (this.health <= 0) {
+        this.params.health -= dmg;
+        if (this.params.health <= 0) {
+            this.params.health = 0
             this.die();
         }
     }

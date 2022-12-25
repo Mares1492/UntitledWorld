@@ -2,6 +2,7 @@ import Character from "./Character.js";
 import Planet from "./../Planet/Planet.js";
 import Journal from "./../Journal/Journal.js";
 import GameEvent from "../Events/GameEvent.js";
+import {showPassage} from "../Text/PassageLogic.js";
 const charName = document.getElementById("character-name")
 const charParams = document.getElementById("character-params")
 const charStats = document.getElementById("character-stats")
@@ -34,7 +35,8 @@ class Player extends Character{
         this.isAbleToAct = true;
         charName.innerHTML = this.name;
         this.updateParams();
-        this.updateStats();this.journal = new Journal(this.name)
+        this.updateStats();
+        this.journal = new Journal(this.name)
         this.tilesPassed = 0;
   }
 
@@ -43,7 +45,7 @@ class Player extends Character{
       charName.innerHTML = this.name;
     }
 
-    updateParams(){
+    updateStats(){
         charStats.innerHTML =
             `
                 <div class="character-stat" id="str">STR: ${this.stats.strength}</div>
@@ -53,7 +55,7 @@ class Player extends Character{
                 <div class="character-stat" id="cha">CHA: ${this.stats.charisma}</div>
             `
     }
-    updateStats(){
+    updateParams(){
         charParams.innerHTML =
             `
                 <div class="character-stat" id="hp">HP: ${this.params.health}</div>
@@ -123,6 +125,7 @@ class Player extends Character{
     addItem(name) {
         if (this.inventory.has(name)) {
             this.inventory.set(name,this.inventory.get(name) + 1);
+            this.updateInventoryDisplay();
         } else {
             this.inventory.set(name, 1);
         }
@@ -131,16 +134,30 @@ class Player extends Character{
         this.credit += credit;
         charCredit.innerHTML = this.credit;
     }
-    removeCredit(price) {
-        price = parseInt(price)
-      if (this.credit - price>=0) {
-        this.credit -= price;
-        charCredit.innerHTML = this.credit;
-        return true;
-      } else {
-        alert("Not enough credits");
-        return false;
-      }
+    removeCredit(amount,event) {
+        amount = parseInt(amount)
+        switch (event){
+            case 'shop':
+                if (this.credit - amount>=0) {
+                    this.credit -= amount;
+                    charCredit.innerHTML = this.credit;
+                    return true;
+                } else {
+                    alert("Not enough credits");
+                    return false;
+                }
+            case 'remove':
+                if(this.credit - amount>=0){
+                    this.credit -= amount;
+                    charCredit.innerHTML = this.credit;
+                    return true;
+                } else {
+                    this.credit = 0;
+                    charCredit.innerHTML = this.credit;
+                    return true
+                }
+        }
+
     }
     getItem(item) {
         if (this.inventory.has(item)) {
@@ -356,7 +373,8 @@ class Player extends Character{
             }
             this.tilesPassed++;
             if(this.tilesPassed===3){
-                GameEvent.getEvent()
+                //GameEvent.getEvent(10).trigger() TODO: add event handling through GameEvent class
+                showPassage(10);
                 return {x:path[i].x,y:path[i].y};
             }
         }
@@ -397,7 +415,9 @@ class Player extends Character{
             this.updateMap()
             const newLocation = this.handleMovingToTile(tile,maxTilesToMove,location)
             if (newLocation.x !== tile.x || newLocation.y !== tile.y) {
-                alert(`Cannot find the way, better head back to the ${this.transport.name}`);
+                if (this.transport?.name){
+                    alert(`Cannot find the way, better head back to the ${this.transport.name}`);
+                }
                 return handleArrival(newLocation.x,newLocation.y);
             }
         }
@@ -492,8 +512,8 @@ class Player extends Character{
             inventory.innerHTML = Array.from(this.inventory).map(item =>
                 `<div class="inventory-container">
                     <div class="inventory-item is-pointable" onclick="alert('Effect is work in progress')">
-                        <span class="inventory-amount">${item[0]}</span>
-                        <span class="inventory-name">x${item[1]}</span>
+                        <span class="inventory-name left">${item[0]}</span>
+                        <span class="inventory-amount right">x${item[1]}</span>
                     </div>
                 </div>`
             ).join('');
@@ -508,13 +528,12 @@ class Player extends Character{
     }
     updateJournalDisplay() {
         const journal = document.getElementById('ji-container');
-        const entries = this.journal.getEntries();
-        if (entries.size) {
-            journal.innerHTML = Array.from(entries).map((name, data) =>
+        if (this.journal.entries.size) {
+            journal.innerHTML = Array.from(this.journal.entries.values()).map(entry =>
                 `<div class="inventory-container">
-                    <span class="journal-entry-title">#${data.id}. ${name}</span>
-                    <div class="inventory-item is-pointable">
-                        <p class="inventory-name">${data.description}</p>
+                    <span class="journal-entry-title">#${entry.id}. ${entry.name}</span>
+                    <div class="inventory-item journal-entry is-pointable">
+                        ${entry.description}
                     </div>
                  </div>`
             ).join('');
@@ -547,6 +566,15 @@ class Player extends Character{
             .getColony(this.getColony())
             .getArea()
             .updateMap();
+    }
+    die(){
+      document.getElementById('global-component').innerHTML =
+          `
+            <div class="game-over">
+            <h1>Game Over</h1>
+            <p>You died</p>
+            <button onclick="window.location.reload()">Restart</button>
+          `;
     }
 
 }

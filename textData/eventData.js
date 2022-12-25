@@ -1,3 +1,6 @@
+import handleStartBattle from "../scenarios/battleStart.js";
+import Session from "../classes/Game/Session.js";
+
 export const events = [{
     id: 1,
     text: `"One Way Ticket" - Dream" \n
@@ -14,10 +17,16 @@ export const events = [{
     options: [
         {
             text: 'Read now',
+            eventEffect() {
+
+            },
             nextText: 2
         },
         {
             text: 'Read it later',
+            eventEffect() {
+
+            },
             nextText: 5
         }
     ]
@@ -40,14 +49,23 @@ export const events = [{
         options: [
             {
                 text: "Yeah, seems legit",
+                eventEffect() {
+
+                },
                 nextText: 3
             },
             {
                 text: "Breakfast first, business later",
+                eventEffect() {
+
+                },
                 nextText: 6
             },
             {
                 text: "It's obviously a scam, better get ready for work",
+                eventEffect() {
+
+                },
                 nextText: 7
             }
         ]
@@ -64,6 +82,9 @@ export const events = [{
         options: [
             {
                 text: "OH, SHIT I'M LATE FOR WORK",
+                eventEffect() {
+
+                },
                 nextText: 4 //Meie praegune Character Creator placeholder ID
             },
         ]
@@ -78,6 +99,9 @@ export const events = [{
         `,
         options: [{
             text: "Gonna look good at least for myself",
+            eventEffect() {
+
+            },
             nextText: 4
         },
         ]
@@ -95,6 +119,9 @@ export const events = [{
         options: [
             {
                 text: "Oh, for fucks sake, Im late again!(Rush to the bathroom)",
+                eventEffect() {
+
+                },
                 nextText: 4
             },
         ]
@@ -103,11 +130,14 @@ export const events = [{
     {
         id: 7,
         text: `“It's obviously a scam, better get ready for work” \n
-        You trip and knock yourself out on the coffee table. Noone comes to help you and you soon bleed out. (read: route not implemented yet)
+        You trip and knock yourself out on the coffee table. No one comes to help you and you soon bleed out. (read: route not implemented yet)
         `,
         options: [
             {
                 text: "Go back",
+                eventEffect() {
+
+                },
                 nextText: 2
             },
         ]
@@ -121,6 +151,9 @@ export const events = [{
         options: [
             {
                 text: "Look away from mirror(leave character creation)",
+                eventEffect() {
+
+                },
                 nextText: 8
             },
         ]
@@ -139,6 +172,16 @@ export const events = [{
         options: [
             {
                 text: "Give them your name",
+                eventEffect() {
+                    const player = Session.currentPlayer;
+                    player.addCredit(2000);
+                    player.addItem("DocDor Corp Scourge Mug");
+                    player.addItem("Metal baton");
+                    player.addItem("Pistol");
+                    player.addItem("Personal jump pack");
+                    player.addItem("Personal rookie suit");
+                    player.updateInventoryDisplay()
+                },
                 nextText: 9
             },
         ]
@@ -157,6 +200,57 @@ export const events = [{
         options: [
             {
                 text: "Well, that was strange",
+                eventEffect() {
+                    const player = Session.currentPlayer;
+                    player.journal.addEntry("Journey begins!","You are set up and ready to begin your journey.","note")
+                    player.updateJournalDisplay()
+                },
+                nextText: 0
+            },
+        ]
+    },
+    {
+        id: 10,
+        text: `“Approached by some weird guys” \n
+        -Hey brother, I see you’re a new addition to the rusher community. Wanna go hang out with some of the old school rushers and hear their wisdom? - Just as suddenly, as he approached you he pulled a gun out, and pointed it at you.
+        -Not like you have a chance to say no, but I guess we'll see how dumb are ya.
+        `,
+        options: [
+            {
+                text: "Fight him",
+                eventEffect() {
+                    handleStartBattle("bandit",1,1);
+                },
+                nextText: 0
+            },
+            {
+                text: "Comply",
+                eventEffect() {
+                    const player = Session.currentPlayer
+                    player.inventory = new Map()
+                    player.updateInventoryDisplay()
+                    player.params.health = 5
+                    player.updateStats()
+                    player.stats.charisma = 1
+                    player.updateStats()
+                    player.removeCredit(2050,'remove')
+                    player.journal.addEntry("Rape","You were robed and raped...","note")
+                    player.updateJournalDisplay()
+                },
+                nextText: 11
+            },
+        ]
+    },
+    {
+        id: 11,
+        text: `As they drag you away from main traffic areas, they drug and rape you senseless and take all your belongings(Read: Route not implemented yet)
+        `,
+        options: [
+            {
+                text: "Well that sucks",
+                eventEffect(){
+
+                },
                 nextText: 0
             },
         ]

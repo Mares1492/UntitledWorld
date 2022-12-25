@@ -2,7 +2,6 @@ import Terrain from "./Terrain.js";
 import Planet from "./Planet.js";
 import City from "./City/City.js";
 import Colony from "./City/Colony.js";
-
 const landscapeContainer = document.getElementById('landscape-container');
 const landscapeDesc = document.getElementById('landscape-description')
 const nextAreaLeft = document.getElementById('next-area-left');

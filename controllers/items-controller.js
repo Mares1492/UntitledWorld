@@ -14,11 +14,10 @@ const handleItemAction = (event,name=null,action=null) => {
                 //const buy = prompt('What would you like to buy?','Nothing!');
                 // TODO: Maybe add a prompt to ask the user what they would like to buy  :P
                 const price = event.target.getAttribute('data-price')
-                const buy = player.removeCredit(price);
+                const buy = player.removeCredit(price,'shop');
                 if (buy) {
                     player.addItem(name);
                     console.log(`You bought the ${name} for ${price}!`);
-                    player.updateInventoryDisplay();
                 }
                 break
             case 'sell':

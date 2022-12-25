@@ -1,8 +1,17 @@
 import Character from "./Character.js";
 
 class NPC extends Character {
-    constructor(name="Anon", params={health : 10,defense:0, attack : 0, speed : 0}, stats={},level=1,defense=0,status="alive", location=null, relationship=0, dialogue= new Map(),faction=null) {
-        super(name, level, status, location,stats);
+    constructor(
+        name="Anon",
+        params={health : 10,defense:0, attack : 0, speed : 0},
+        stats={strength:1,dexterity:1,intellect:1,agility:1,charisma:1},
+        level=1,
+        status="alive",
+        location=null,
+        faction=null,
+        relationship=0,
+        dialogue= new Map()) {
+        super(name, params,level, status, location,stats);
         this.relationship = relationship;
         this.dialogue = dialogue;
         this.faction = faction;
@@ -25,6 +34,6 @@ class NPC extends Character {
     getFaction() {
         return this.faction;
     }
-
-
 }
+export default NPC;
+
