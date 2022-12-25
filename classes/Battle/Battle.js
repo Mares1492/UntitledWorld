@@ -6,10 +6,11 @@ class Battle{
         this.enemy = enemy;
         this.turn = "Player Turn";
         this.event = "Battle Starts";
-        this.startBattle();
         this.counter = 10;
+        this.startBattle();
     }
     startBattle(){
+        document.getElementById('exit-city-button').style.display = 'none';
         this.handleUpdateBattleScreen();
         return this.nextRound()
     }
@@ -19,6 +20,7 @@ class Battle{
         setTimeout(() => {
             Session.currentPlayer.journal.addEntry("Battle",`You have defeated a ${this.enemy[0].name}`,"note")
             Session.currentPlayer.updateJournalDisplay();
+            document.getElementById('exit-city-button').style.display = 'block';
             return Session.currentPlayer.updateMap();
         }, 3000);
     }
