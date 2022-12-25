@@ -1,5 +1,6 @@
 import handleStartBattle from "../scenarios/battleStart.js";
 import Session from "../classes/Game/Session.js";
+import {showPassage} from "../classes/Text/PassageLogic.js";
 
 export const events = [{
     id: 1,
@@ -202,7 +203,7 @@ export const events = [{
                 text: "Well, that was strange",
                 eventEffect() {
                     const player = Session.currentPlayer;
-                    player.journal.addEntry("Journey begins!","You are set up and ready to begin your journey.","note")
+                    player.journal.addEntry("Journey begins!","Set up and ready to begin the journey!","note")
                     player.updateJournalDisplay()
                 },
                 nextText: 0
@@ -219,7 +220,12 @@ export const events = [{
             {
                 text: "Fight him",
                 eventEffect() {
-                    handleStartBattle("bandit",1,1);
+                    handleStartBattle("bandit",1,1,()=>{
+                        const player = Session.currentPlayer;
+                        player.journal.addEntry("Amateurs","That day I showed those dogs who's the daddy!","note")
+                        player.updateJournalDisplay()
+                        showPassage(12)
+                    });
                 },
                 nextText: 0
             },
@@ -234,7 +240,7 @@ export const events = [{
                     player.stats.charisma = 1
                     player.updateStats()
                     player.removeCredit(2050,'remove')
-                    player.journal.addEntry("Rape","You were robed and raped...","note")
+                    player.journal.addEntry("Rape","That day...I was robed and raped...","note")
                     player.updateJournalDisplay()
                 },
                 nextText: 11
@@ -248,6 +254,20 @@ export const events = [{
         options: [
             {
                 text: "Well that sucks",
+                eventEffect(){
+
+                },
+                nextText: 0
+            },
+        ]
+    },
+    {
+        id: 12,
+        text: `Easy peasy lemon squeezy! "SCUM"- you said spitting on his dead face. One shot, one kill. First guy was a deadman at very second he approached you. Others have ran away. Nice one! \n 
+        `,
+        options: [
+            {
+                text: "Not a big deal",
                 eventEffect(){
 
                 },

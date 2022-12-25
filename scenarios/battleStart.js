@@ -4,7 +4,7 @@ import enemyTypes from "../textData/enemyTypes.js";
 const nextAreaLeft = document.getElementById('next-area-left');
 const nextAreaRight = document.getElementById('next-area-right');
 
-const handleStartBattle = (enemy,enemyLvl,numberOfEnemies) =>{
+const handleStartBattle = (enemy,enemyLvl,numberOfEnemies,effect) =>{
     nextAreaLeft.style.display = 'none';
     nextAreaRight.style.display = 'none';
     const chosenEnemy = enemyTypes[enemy];
@@ -15,8 +15,9 @@ const handleStartBattle = (enemy,enemyLvl,numberOfEnemies) =>{
             chosenEnemy.params,
             chosenEnemy.stats,
             chosenEnemy.img,
-            enemyLvl)
+            enemyLvl,
+            )
         ],
-        numberOfEnemies);
+        effect);
 }
 export default handleStartBattle

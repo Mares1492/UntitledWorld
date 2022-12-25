@@ -2,11 +2,12 @@ import Enemy from "../Character/Enemy.js";
 import Session from "../Game/Session.js";
 const landscapeContainer = document.getElementById('landscape-container');
 class Battle{
-    constructor(enemy=[new Enemy()]) {
+    constructor(enemy=[new Enemy()],effect) {
         this.enemy = enemy;
         this.turn = "Player Turn";
         this.event = "Battle Starts";
         this.counter = 10;
+        this.effect = effect;
         this.startBattle();
     }
     startBattle(){
@@ -18,7 +19,7 @@ class Battle{
         this.event = "You are victorious!";
         this.handleUpdateBattleScreen();
         setTimeout(() => {
-            Session.currentPlayer.journal.addEntry("Battle",`You have defeated a ${this.enemy[0].name}`,"note")
+            this.effect();
             Session.currentPlayer.updateJournalDisplay();
             document.getElementById('exit-city-button').style.display = 'block';
             return Session.currentPlayer.updateMap();
