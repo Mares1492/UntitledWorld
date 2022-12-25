@@ -6,7 +6,9 @@ const items = {
     ],
     meleeWeapon:[
         {name:'Knife',type:'weapon', damage: 10,hands:1},
-        {name:'Lightsword',type:'weapon', damage: 100,hands: 2},
+        {name:'Metal baton',type:'weapon', damage: 15,hands: 1},
+        {name:'Lightsaber',type:'weapon', damage: 100,hands: 2},
+
     ],
     rangedWeapon:[
         {name:'Pistol',type:'weapon', damage: 20,ammoType: 'bullet', reloadTime: 1,hands:1},
@@ -27,13 +29,20 @@ const items = {
         {name:'762',type:'ammo', effect: 30},
     ],
     armor:[
-        {name:'helmet',type:'armor', effect: 10},
-        {name:'vest',type:'armor', effect: 20},
-        {name:'boots',type:'armor', effect: 30},
+        {name:'Helmet',type:'armor',armorType:"head", armor: 5},
+        {name:'Vest',type:'armor',armorType:"body", armor: 5},
+        {name:'Boots',type:'armor',armorType:"legs", armor: 5},
+        {name:'Personal rookie suit',armorType:"full",type:'armor', effect: 30},
+    ],
+    equipment:[
+        {name:'Backpack',type:'equipment'}, //TODO: add effect and weight
+        {name:'Smart Glasses',type:'equipment'},
+        {name:'Binoculars',type:'equipment'},
+        {name:'Flashlight',type:'equipment'},
+        {name:'Compass',type:'equipment'},
+        {name:'Personal jump pack',type:'equipment'},
     ],
     misc:[
-        {name:'Flashlight',type:'misc', effect: 10},
-        {name:'Compass',type:'misc', effect: 20},
         {name:'Map',type:'misc', effect: 30},
     ],
 }

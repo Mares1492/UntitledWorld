@@ -6,12 +6,16 @@ class Journal{
         this.owner = owner;
         this.entries = new Map();
     }
-    addEntry(name,text,type,data){
-        if (type === 'note'){
-            this.entries.set(name, new Note(name,text,type));
-        }
-        if (type === 'quest'){
-            this.entries.set(name, new Quest(name,text,type,data));
+    addEntry(name,description,type,data=null){
+        switch (type) {
+            case "quest":
+                this.entries.set(name, new Quest(this.entries.size+1,name, description, type ,data));
+                break;
+            case "note":
+                this.entries.set(name, new Note(this.entries.size+1,name, description, type));
+                break;
+            default:
+                break;
         }
     }
     removeEntry(name){

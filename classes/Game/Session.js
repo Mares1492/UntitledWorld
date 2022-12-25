@@ -3,10 +3,12 @@ import StarSystem from "../StarSystem/StarSystem.js";
 import Planet from "../Planet/Planet.js";
 import generateRegion from "../../generationScripts/generateRegion.js";
 import items from "../../textData/ItemData.js";
+import {events} from "../../textData/eventData.js";
 import Food from "../Items/Food/Food.js";
 import Item from "../Items/Item.js";
 import MeleeWeapon from "../Items/Weapon/MeleeWeapon.js";
 import RangedWeapon from "../Items/Weapon/RangedWeapon.js";
+import GameEvent from "../Events/GameEvent.js";
 
 class Session{
     static currentPlayer;
@@ -35,12 +37,14 @@ class Session{
             appearance,
             job.params,
             job.stats,
-            {planet:this.homePlanet.name,region:"Home"}
+            {planet:this.homePlanet.name,region:"Home"},
+            job.name
         );
         Session.currentPlayer = this.player;
         this.homeRegion = generateRegion(startPlanet.startingRegionDescription,"Home");
         this.spawnPlayer();
         this.createItems();
+        this.createEvents();
     }
     spawnPlayer(){
         const city = this.homeRegion.getCity("City-1")
@@ -68,7 +72,7 @@ class Session{
             item?.type,
             item?.effect
         ));
-        items.misc.forEach(item => new Item( //TODO: create misc class
+        items.equipment.forEach(item => new Item( //TODO: create equipment class
             item.name,
             item?.value,
             item?.weight,
@@ -99,6 +103,15 @@ class Session{
             item?.weight,
             item?.type
         ));
+    }
+    createEvents(){
+        events.forEach(event => {
+            new GameEvent(
+                event.id,
+                event.text,
+                event.options,
+            )
+        })
     }
 }
 

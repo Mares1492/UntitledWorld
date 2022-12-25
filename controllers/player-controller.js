@@ -77,11 +77,21 @@ const handleAction = (player,type) => {
                 break
             case 'shop':
                 player.setIsUnableToAct(500)
-                region
-                    .getCity(player.getCity())
-                    .getArea(player.getArea())
-                    .getTile(x,y)
-                    .handleShowShop();
+                if (player.location.city) {
+                    region
+                        .getCity(player.getCity())
+                        .getArea(player.getArea())
+                        .getTile(x,y)
+                        .handleShowShop();
+                } else if (player.location.colony) {
+                    region
+                        .getColony(player.getColony())
+                        .getArea()
+                        .getTile(x,y)
+                        .handleShowShop();
+                } else {
+                    alert("You can't shop here!");
+                }
                 break
             case 'talk':
                 //...
@@ -153,6 +163,10 @@ const handleAction = (player,type) => {
             case 'update journal':
                 console.log("Updating journal");
                 player.updateJournalDisplay();
+                break
+            case 'activity':
+                player.setIsUnableToAct(500)
+                alert("You have not yet signed a Planetary Rush contract!");
                 break
             default:
                 console.log('No right action found')

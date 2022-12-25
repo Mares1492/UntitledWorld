@@ -1,5 +1,7 @@
 class Entry{
-    constructor(name,description,type){
+    static entries = new Map();
+    constructor(id,name,description,type){
+        this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;

@@ -1,18 +1,19 @@
 import {events} from "../../textData/eventData.js";
 const textElement = document.getElementById('modal-text');
-const optionButtonsElement = document.getElementById('option-ButtonState');
-import Event from '../Events/Event.js';
+const optionButtonsElement = document.getElementById('option-buttons');
 
 
 let state = {}
 // Varastatud kood, lel, vajab cleanupi, praegu tho don't care, it works tekstidega
 
 function startGame() {
-    // state = {}
-    // showPassage(1)
+    state = {}
+    showPassage(1)
 }
 
-function showPassage(PassageIndex) {
+export function showPassage(PassageIndex) {
+    document.getElementById('modal-passage').style.display = 'block';
+    console.log(`triggering event: ${PassageIndex}`)
     const textNode = events.find(textNode => textNode.id === PassageIndex)
     textElement.innerText = textNode.text
 
@@ -25,8 +26,10 @@ function showPassage(PassageIndex) {
         if (showOption(option)) {
             const button = document.createElement('button')
             button.innerText = option.text
-            button.classList.add('option-ButtonState')
-            button.addEventListener('click', () => selectOption(option))
+            button.classList.add('option-buttons')
+            button.addEventListener('click', () => {
+                option.eventEffect()
+                selectOption(option)})
             optionButtonsElement.appendChild(button)
         }
     })
@@ -40,6 +43,7 @@ function selectOption(option) {
 
     const nextTextNodeId = option.nextText
     if (nextTextNodeId === 0) {
+        state = {}
         return closeTextModal()
     }
     state = Object.assign(state, option.setState)

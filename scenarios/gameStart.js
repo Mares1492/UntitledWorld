@@ -2,6 +2,7 @@ import Session from "../classes/Game/Session.js";
 import startingPlanets from "../textData/startPlanets.js";
 import Appearance from "../classes/Character/Appearance.js";
 import jobs from "../textData/characterJobs.js";
+import startGame from "../classes/Text/PassageLogic.js";
 const error = document.getElementById("error");
 
 const handleStartGame = () =>{
@@ -30,8 +31,7 @@ const handleStartGame = () =>{
         new Appearance(gender),
         startingPlanets[pickedJob.startingPlanet]);
     //TODO: add planet selection based on job or other factors
-    //document.getElementById('modal-passage').style.display = 'block';
-    //startGame();
+    startGame(); //TODO: mb rename it to showText or something
 }
 export default handleStartGame;
 
