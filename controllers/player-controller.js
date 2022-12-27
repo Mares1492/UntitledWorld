@@ -1,7 +1,9 @@
 import Planet from "../classes/Planet/Planet.js";
+import Session from "../classes/Game/Session.js";
 
 
-const handleAction = (player,type) => {
+const handleAction = (type) => {
+    const player = Session.currentPlayer;
     document.getElementById("shop-component").style.display = "none";//TODO: find a better place for this
     if (player.getIsPlayerAbleToAct(type)) {
         const x = parseInt(document.getElementById('tile-x-cords').innerHTML);
@@ -138,6 +140,14 @@ const handleAction = (player,type) => {
                     alert("You can't take off from here!");
                 }
                 break
+            case 'take off(no transport)':
+                player.handleLeavePlanetSurface();
+                document.getElementById('go-to-button').style.display = 'none';
+                document.getElementById('landing-button').style.display = 'block';
+                document.getElementById('take-off-button').style.display = 'none';
+
+                player.updateMap()
+                break
             case 'next area':
                 player.setIsUnableToAct(500)
                 const nextArea = player.handleGoToOtherArea("next");
@@ -166,6 +176,10 @@ const handleAction = (player,type) => {
                 break
             case 'activity':
                 player.setIsUnableToAct(500)
+                if (player.isSignedIn){
+                    alert("There are no activities available right now!");
+                    break;
+                }
                 alert("You have not yet signed a Planetary Rush contract!");
                 break
             default:

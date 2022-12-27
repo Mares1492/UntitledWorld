@@ -5,7 +5,6 @@ class GameEvent{
         this.options = options;
         this.page = 0;
         this.pages = this.splitByPages(content);
-        console.log(this.pages);
         GameEvent.eventList.set(this.id,this);
 
     }

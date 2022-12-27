@@ -13,14 +13,16 @@ function startGame() {
 
 export function showPassage(PassageIndex) {
     document.getElementById('modal-passage').style.display = 'block';
-    console.log(`triggering event: ${PassageIndex}`)
+    if (typeof PassageIndex === "function"){
+        PassageIndex = PassageIndex() //TODO: that's a bit hacky(js only solution), think of a better way to do this
+        if (PassageIndex === 0) return closeTextModal()
+    }
     const textNode = events.find(textNode => textNode.id === PassageIndex)
     textElement.innerText = textNode.text
 
     while (optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild)
     }
-
 
     textNode.options.forEach(option => {
         if (showOption(option)) {

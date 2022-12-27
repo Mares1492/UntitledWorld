@@ -46,7 +46,7 @@ const terrainElements = {
     spaceStation:{symbol:'|_|_<|>_|_|',color: 'rgba(0,0,0,0)',img:"./img/space-station.png?",width:"40",height:"40",name:"Space Station",style:"box-shadow:inset 0 -1em 1em #000000;opacity:0.7;",description:"Somewhere in space."},
     aliens:{symbol:'X',color: '#b71c1c',img:["./img/aliens.png?","./img/aliens2.png?","./img/aliens3.png?"],width:"20",height:"20",name:"x-x-x-x-x-x-x-x",description:"Alien activity detected.",isPassable:false,isLandable:false},
     military:{symbol:'KILL',color: '#ff9e80',img:["./img/military.png?","./img/military2.png?"],
-    width:"30",height:"30",name:"Military deployment area",description:"Serious guys with guns, better stay away.",isPassable:false,isLandable:false},
+    width:"30",height:"30",name:"Military deployment area",description:"Serious guys with serious guns, better stay away.",isPassable:false,isLandable:false},
 }
 
 const positiveAdjectives = ["lot","many","much"];
