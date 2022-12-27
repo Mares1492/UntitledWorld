@@ -15,7 +15,7 @@ const items = {
         {name:'Rifle',type:'weapon', damage: 50,ammoType: 'bullet', reloadTime: 2},
         {name:'Shotgun',type:'weapon', damage: 100,ammoType: 'shell', reloadTime: 2},
         {name:'Sniper',type:'weapon', damage: 200,ammoType: 'bullet', reloadTime: 2},
-        {name:'Rocket Launcher',type:'weapon', damage: 500,ammoType: 'rocket', reloadTime: 3},
+        {name:'StarShip Launcher',type:'weapon', damage: 500,ammoType: 'rocket', reloadTime: 3},
     ],
     medicine:[
         {name:'Bandage',type:'medicine', effect: 10},

@@ -20,7 +20,7 @@ const activityBtn = document.getElementById('activity-button');
 
 //Prototype section start ↓
 
-//player.setTransport(new Rocket("Rocket","./img/rocket-on-ground.png?",30))
+//player.setTransport(new StarShip("StarShip","./img/rocket-on-ground.png?",30))
 
 //Prototype section end ↑
 
@@ -32,13 +32,13 @@ generateBtn.addEventListener('click',()=>{
     generateRegion();
 });
 nextAreaLeftBtn.addEventListener('click',() =>
-    handleAction(Session.currentPlayer,"prev area"));
+    handleAction("prev area"));
 
 nextAreaRightBtn.addEventListener('click',() =>
-    handleAction(Session.currentPlayer,"next area"));
+    handleAction("next area"));
 
 enterCityBtn.addEventListener('click',() =>{
-    const result = handleAction(Session.currentPlayer,"enter city")
+    const result = handleAction("enter city")
     if (result) {
         exitCityBtn.style.display = 'block';
         enterCityBtn.style.display = 'none';
@@ -47,37 +47,37 @@ enterCityBtn.addEventListener('click',() =>{
 
 landingBtn.addEventListener('click', () => {
     if (!Session.currentPlayer.location.city && !Session.currentPlayer.location.colony){
-        handleAction(Session.currentPlayer,"land");
+        handleAction("land");
     }else {
         alert(`Your ${Session.currentPlayer.transport.name} cannot land in the middle of the city`);
     }
 });
 
 takeOffBtn.addEventListener('click', () =>
-    handleAction(Session.currentPlayer,"take off"));
+    handleAction("take off"));
 
 exitCityBtn.addEventListener('click',() => {
-    const result = handleAction(Session.currentPlayer,"exit city");
+    const result = handleAction("exit city");
     if (result){
         exitCityBtn.style.display = 'none';
     }
 });
 
 goToBtn.addEventListener('click', () =>
-    handleAction(Session.currentPlayer, "walk"));
+    handleAction("walk"));
 
 journalBtn.addEventListener('click',() =>
-    handleAction(Session.currentPlayer,"update journal"));
+    handleAction("update journal"));
 
 inventoryBtn.addEventListener('click',() =>
-    handleAction(Session.currentPlayer,"update inventory"));
+    handleAction("update inventory"));
 
 bgColorInput.addEventListener('change', (e) => {
     document.body.style.backgroundColor = e.target.value;
 });
 
 shopBtn.addEventListener('click',() =>
-    handleAction(Session.currentPlayer,"shop"));
+    handleAction("shop"));
 
 activityBtn.addEventListener('click',() =>
-    handleAction(Session.currentPlayer,"activity"));
+    handleAction("activity"));

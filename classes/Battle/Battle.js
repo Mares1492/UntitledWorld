@@ -63,10 +63,10 @@ class Battle{
     enemyTurn(){
         this.turnTimeout = setTimeout(()=>{
             this.turn = "Player Turn";
-            Session.currentPlayer.handleDefense(Math.floor(Math.random() * 3));
+            this.event = `Enemy tries to shoot you but misses!`; //TODO: add enemy attack
             this.handleUpdateBattleScreen();
             this.nextRound();
-        },10000)
+        },Math.floor(Math.random()*3000)+1000)
     }
     handleUpdateBattleScreen(){
         landscapeContainer.innerHTML =
@@ -75,12 +75,16 @@ class Battle{
                 <span id="timer" class="center">10</span>
                 <div class="battle-screen-header">
                     <div class="battle-screen-side left">
-                        <div class="battle-screen-name"><img alt="avatar ">${Session.currentPlayer.name}</div>
+                        <div class="battle-screen-name"><img src="./img/user-not-found.png" width="50" height="50" alt="avatar">
+                            <span class="battle-screen-name-font">${Session.currentPlayer.name}</span>
+                        </div>
                         <div class="battle-screen-health">${Session.currentPlayer.params.health}</div>
                     </div>
                     <div class="battle-screen-turn center">${this.turn}</div>
                     <div class="battle-screen-side rigth">
-                        <div class="battle-screen-name"><img src='${this.enemy[0].img}' alt="avatar ">${this.enemy[0].name}</div>
+                        <div class="battle-screen-name"><img src='${this.enemy[0].img}' width="50" height="50" alt="avatar">
+                            <span class="battle-screen-name-font">${this.enemy[0].name}</span>
+                        </div>
                         <div class="battle-screen-health">${this.enemy[0].params.health}</div>
                     </div>               
                 </div>

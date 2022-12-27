@@ -12,6 +12,7 @@ class Enemy extends NPC {
         faction= "strangers",
         relationship=-100) {
         super(name, params, stats, level, status, location, faction, relationship);
+        this.img = img;
     }
 }
 export default Enemy;

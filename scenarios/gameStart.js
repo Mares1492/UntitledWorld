@@ -12,6 +12,10 @@ const handleStartGame = () =>{
         error.innerHTML = "Please enter a name";
         return;
     }
+    if (name.length > 12){
+        error.innerHTML = "Long names(12+) are not cool this age. Try to use short form or symbol";
+        return;
+    }
     const gender = document.querySelector('input[name="gender"]:checked')?.value;
     if (!gender){
         error.innerHTML = "Please select a gender"

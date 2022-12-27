@@ -2,7 +2,7 @@ import Character from "./Character.js";
 import Planet from "./../Planet/Planet.js";
 import Journal from "./../Journal/Journal.js";
 import GameEvent from "../Events/GameEvent.js";
-import {showPassage} from "../Text/PassageLogic.js";
+import passageLogic, {showPassage} from "../Text/PassageLogic.js";
 const charName = document.getElementById("character-name")
 const charParams = document.getElementById("character-params")
 const charStats = document.getElementById("character-stats")
@@ -38,6 +38,11 @@ class Player extends Character{
         this.updateStats();
         this.journal = new Journal(this.name)
         this.tilesPassed = 0;
+        this.isSignedIn = false;
+        this.backstory = backstory;
+        this.appearance = appearance;
+        this.isBelieveTheLetter = false;
+
   }
 
     updateName(name){
@@ -177,9 +182,18 @@ class Player extends Character{
             }
         }
     }
+    removeItems(item,amount) {
+        if (this.inventory.has(item)) {
+            if (amount === 0) {
+                this.inventory.delete(item);
+                return;
+            }
+            this.inventory.set(item,this.inventory.get(item) - amount);
+        }
+    }
     setTransport(transport) {
         this.transport = transport;
-        transport.setOwner(this.name);
+        this.transport.setOwner(this.name);
     }
     getTransport() {
         return this.transport;
@@ -367,13 +381,14 @@ class Player extends Character{
                 }
         }
         for (let i = 0; i < path.length; i++) {
-            passable = location.getTile(path[i].x, path[i].y).handlePlayerBypassing(path[i].timeout,this.getItem)
+            passable = location.getTile(path[i].x, path[i].y).handlePlayerBypassing(path[i].timeout)
             if (!passable) {
                 return {x:path[i].x,y:path[i].y};
             }
             this.tilesPassed++;
-            if(this.tilesPassed===3){
+            if(this.tilesPassed > 3 && !this.firstEventTriggered && this.isSignedIn) { // hardcoded for demo, remove later
                 //GameEvent.getEvent(10).trigger() TODO: add event handling through GameEvent class
+                this.firstEventTriggered = true;
                 showPassage(10);
                 return {x:path[i].x,y:path[i].y};
             }
@@ -506,17 +521,23 @@ class Player extends Character{
       console.log('No map to update');
     }
 
-    updateInventoryDisplay(){
+    updateInventoryDisplay(){//TODO: add effect handling, 'One Way Ticket' is hardcoded badly
         const inventory = document.getElementById('ji-container');
         if (this.inventory.size) {
             inventory.innerHTML = Array.from(this.inventory).map(item =>
                 `<div class="inventory-container">
-                    <div class="inventory-item is-pointable" onclick="alert('Effect is work in progress')">
+                    <div id="${item[0]}" class="inventory-item is-pointable"> 
                         <span class="inventory-name left">${item[0]}</span>
                         <span class="inventory-amount right">x${item[1]}</span>
                     </div>
                 </div>`
             ).join('');
+            const elements = inventory.querySelectorAll("div.inventory-item")
+            elements.forEach(element => element.addEventListener('click', () => alert(`This item has no effect at the moment`)));
+            const owt = document.getElementById("One Way Ticket")
+            if (owt) {
+                owt.addEventListener('click',()=>passageLogic(2));
+            }
         } else {
             inventory.innerHTML = `<div class="inventory-container">
                     <div class="inventory-item">
@@ -524,7 +545,7 @@ class Player extends Character{
                     </div>
                 </div>`;
         }
-        inventory.style.animation = 'pixalate 0.5s ease-out;';
+        inventory.style.animation = 'pixalate 0.5s ease-out;'; //Doesn't work right now
     }
     updateJournalDisplay() {
         const journal = document.getElementById('ji-container');

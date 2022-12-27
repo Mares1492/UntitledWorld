@@ -14,7 +14,7 @@ const enemyTypes = {
             agi:3,
             cha:3,
         },
-        img: "./img/bandit.png"
+        img: "./img/bandit.png?"
     },
 }
 export default enemyTypes;

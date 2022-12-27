@@ -1,20 +1,20 @@
 import Transport from "./Transport.js";
 import Planet from "../Planet/Planet.js";
 
-class Rocket extends Transport {
+class StarShip extends Transport {
     hasLanded = false;
-    constructor(name, img,size, owner=null) {
+    constructor(name, img,size,type,owner=null) {
         super(name,null, owner, img, size);
-        this.type = "Rocket"
+        this.type = type;
     }
 
     landAt(planet,region,x,y) {
         if (this.hasLanded) {
-            alert("Rocket is already landed");
+            alert(`${this.name} is already landed`);
             return false;
         }
         console.log(`Landing at ${planet}|${region} at ${x},${y}`);
-        const landed = Planet.getPlanet(planet).getRegion(region).getTile(x,y).handleLanding(this.type,this.size,this.img);
+        const landed = Planet.getPlanet(planet).getRegion(region).getTile(x,y).handleLanding(this.name,this.size,this.img);
         if (landed) {
             this.x = x;
             this.y = y;
@@ -43,4 +43,4 @@ class Rocket extends Transport {
     }
 
 }
-export default Rocket;
+export default StarShip;

@@ -89,7 +89,7 @@ class Terrain {
             this.height = this.terrSize;
         }
     }
-    handleLanding(shipType,size,shipImg) {
+    handleLanding(shipName,size,shipImg) {
         console.log(`Trying to land on ${this.name}| Landing is possible: ${this.isLandable}`);
         if (this.isLandable){
             if (this.playerTransportPresent) {
@@ -107,7 +107,7 @@ class Terrain {
             this.height = size;
             this.playerTransportPresent = true;
             this.playerPresent = true;
-            this.description = `Your ${shipType} is here`;
+            this.description = `${shipName} is here`;
             this.img = shipImg;
             console.log(`Landed on ${this.name} at ${this.x},${this.y}`);
             return true;
@@ -141,7 +141,7 @@ class Terrain {
                     <div class="shop-container">
                     ${showcase.items.map(item =>
                     `<div class="shop-item-container">
-                            <div class="shop-item left">${item.name} - ${item.price}$ </div> 
+                            <div class="shop-item left">${item.name} - ${item.price}<img src="./img/credit-note.png" alt="credits" width="23" height="23"></div>     
                             <div class="shop-item right">${item.amount}It available 
                             <button
                             type="button"           
