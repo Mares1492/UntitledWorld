@@ -524,14 +524,18 @@ Recently, the same repeating visions torment you in your dreams: You have taken 
     },{
         id: 23,
         text: `- Spend some time learning to flight. This chip will help you to learn faster. Hope to see you soon.
+        
             ***This is the end of the demo.***
+            
             But you can fly around the map or land and take a walk if you want.
 `,
         options: [
             {
                 text: "Back to the planet I guess",
                 eventEffect(){
-
+                    const player = Session.currentPlayer
+                    player.journal.addEntry("Early Success","Now officially a space ship owner and a galactic adventurer!","note")
+                    player.updateJournalDisplay()
                 },
                 nextText: 0
             },
