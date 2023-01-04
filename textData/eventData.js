@@ -464,7 +464,9 @@ Recently, the same repeating visions torment you in your dreams: You have taken 
                 text: "Continue",
                 eventEffect(){
                     const player = Session.currentPlayer
-                    player.handleExitCity();
+                    if (player.location.city || player.location.colony) {
+                        player.handleExitCity();
+                    }
                     buttonVisibilityHandler('exit-city');
                     handleAction('take off(no transport)')
                 },
