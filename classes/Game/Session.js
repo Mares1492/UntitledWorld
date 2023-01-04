@@ -52,7 +52,7 @@ class Session{
         document.getElementById("map-component").style.display = "block";
         document.getElementById("info-component").style.display = "flex";
         Session.currentPlayer.handleEnterCity(city,"city");
-        document.getElementById("exit-city-button").style.display = "block";
+        document.getElementById("exit-city-button").style.display = "none";
         document.getElementById("enter-city-button").style.display = "none";
         document.getElementById("landing-button").style.display = "none";
         document.getElementById("take-off-button").style.display = "none";
