@@ -16,6 +16,8 @@ const gameBtn = document.getElementById('start-game-button');
 const generateBtn = document.getElementById('generate');
 const shopBtn = document.getElementById('shop-button');
 const activityBtn = document.getElementById('activity-button');
+const findRegionBtn = document.getElementById('find-region-btn');
+const worldDescription = document.getElementById('world-description');
 
 
 //Prototype section start ↓
@@ -81,3 +83,11 @@ shopBtn.addEventListener('click',() =>
 
 activityBtn.addEventListener('click',() =>
     handleAction("activity"));
+
+findRegionBtn.addEventListener('click',() => {
+    if (worldDescription.style.visibility === 'hidden') {
+        worldDescription.style.visibility = 'visible';
+    } else {
+        worldDescription.style.visibility = 'hidden';
+    }
+});

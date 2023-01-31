@@ -538,6 +538,8 @@ Recently, the same repeating visions torment you in your dreams: You have taken 
                     const player = Session.currentPlayer
                     player.journal.addEntry("Early Success","Now officially a space ship owner and a galactic adventurer!","note")
                     player.updateJournalDisplay()
+                    document.getElementById('find-region-btn').style.display = 'block'
+
                 },
                 nextText: 0
             },

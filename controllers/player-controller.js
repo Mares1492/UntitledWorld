@@ -116,6 +116,7 @@ const handleAction = (type) => {
                     player.updateMap();
                     document.getElementById('go-to-button').style.display = 'block';
                     document.getElementById('landing-button').style.display = 'none';
+                    document.getElementById('find-region-btn').style.display = 'none';
                     document.getElementById(`${x + '-' + y}`).style.animation = "landingAnimation 5s";
                     setTimeout(() => {
                         document.getElementById(`${x + '-' + y}`).style.animation = "";
@@ -132,6 +133,7 @@ const handleAction = (type) => {
                     document.getElementById('go-to-button').style.display = 'none';
                     document.getElementById('landing-button').style.display = 'block';
                     document.getElementById('take-off-button').style.display = 'none';
+                    document.getElementById('find-region-btn').style.display = 'block';
                     document.getElementById(`${x + '-' + y}`).style.animation = "takeOffAnimation 5s ease-in";
                     setTimeout(() => {
                         player.updateMap()
