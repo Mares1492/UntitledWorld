@@ -476,9 +476,11 @@ img{
     flex-wrap: wrap;
 }
 
-.world-description{
-    visibility: hidden;
+#world-description{
     position: absolute;
+    background-color: white;
+    border: black solid 3px;
+    border-radius: 5%;
     left: 50%;
     right: 30%;
     display: flex;
@@ -486,6 +488,7 @@ img{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    z-index: 10000000000;
 }
 .modal-overlay{
     display: none;
@@ -635,8 +638,13 @@ img{
 
 }
 
-#exit-city-button{
+.under-map-button{
     margin-top: 2em;
+}
+
+#find-region-btn{
+    border: #d4d1d1 2px solid;
+    border-radius: 5px;
 }
 
 .over-landscape-n-next-area-container{
@@ -760,6 +768,23 @@ img{
     color: #000000;
     text-shadow: 1px 1px 1px #ffffff;
     flex-direction: row;
+}
+.battle-screen-health{
+    width: 80%;
+    height: 20%;
+    border: 1px solid #000000;
+    background-color: #801100;
+}
+.current-health{
+    width: 0;
+    height: 100%;
+    background-color: green;
+    text-align: end;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+#player-health #enemy-health{
+    transition: width 0.5s ease-in-out;
 }
 
 

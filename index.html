@@ -83,11 +83,11 @@
                 </div>
             </div>
         </div>
-        <div class="world-description">
+        <div id="world-description" style="visibility: hidden">
             <label class="beautiful-text" for="region-name">Region name:</label>
-            <input id="region-name" type="text"  placeholder="Totally original name"/>
+            <input id="region-name" type="text"  placeholder="Name of the region"/>
             <label class="beautiful-text" for="story">Region description:</label>
-            <textarea id="story" placeholder="Put your story here..." rows="5" cols="33"></textarea>
+            <textarea id="story" placeholder="AI will navigate to a region that suits your description. First sentence should contain only basic terrain. Others should contain additions" rows="5" cols="33"></textarea>
             <button class = "big-beautiful-button" id="generate">Generate</button>
         </div>
         <div class="beautiful-text" id="landscape-description"></div>
@@ -98,7 +98,8 @@
             </div>
             <img class="next-area modal-btn" style="display:none" id="next-area-right" src="./img/next-area-right.png" alt="next area right">
         </div>
-        <img id="exit-city-button" style="display:none" class="modal-btn" src="./img/exit-city.png" width="100" height="100" alt="landing">
+        <img id="exit-city-button" style="display:none" class="modal-btn under-map-button" src="./img/exit-city.png" width="100" height="100" alt="landing">
+        <img id="find-region-btn" style="display:none" class="modal-btn under-map-button" src="./img/world.png" width="64" height="64" alt="landing">
     </div>
     <div class="info-component" id="info-component">
         <div class = "character-container">
