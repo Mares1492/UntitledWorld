@@ -761,6 +761,21 @@ img{
     text-shadow: 1px 1px 1px #ffffff;
     flex-direction: row;
 }
+.battle-screen-health{
+    width: 80%;
+    height: 20%;
+    border: 1px solid #000000;
+    background-color: #801100;
+}
+.current-health{
+    width: 0;
+    height: 100%;
+    background-color: green;
+    transition: width 0.5s ease-in-out;
+    text-align: end;
+    font-size: 1.5em;
+    font-weight: bold;
+}
 
 
 @keyframes battleNote{

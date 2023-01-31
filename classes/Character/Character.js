@@ -6,6 +6,7 @@ class Character {
       this.status = status;
       this.location = location;
       this.stats = stats;
+      this.currentHealth = params.health;
   }
 
     getStatus() {
@@ -24,11 +25,17 @@ class Character {
     }
     loseHealth(dmg) {
         console.log(`${this.name} loses health!`);
-        this.params.health -= dmg;
-        if (this.params.health <= 0) {
-            this.params.health = 0
+        this.currentHealth -= dmg;
+        if (this.currentHealth <= 0) {
+            this.currentHealth = 0
             this.die();
         }
+    }
+    getHealth() {
+        return this.currentHealth;
+    }
+    getMaxHealth() {
+        return this.params.health;
     }
 
 }
