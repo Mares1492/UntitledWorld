@@ -17,6 +17,8 @@ All Icons are provided by [icons8](https://icons8.com/).
 - Oversimplified combat demonstration
 ### Note
 - Somewhat empty :cry:
+- Not perfect in many aspects 
+- Getting back to it after improving my skills :muscle:
 
 #### Team
 - Martin Lukas : lead role , texts, world, design
