@@ -6,7 +6,10 @@
     <title>Planet</title>
     <script type="module" src="index.js" ></script>
     <script>
-        const closeModal = () => document.getElementById('modal').style.display = 'none'
+        const closeModals = () => {
+            document.getElementById('modal').style.display = 'none'
+            document.getElementById('world-description').style.visibility = 'hidden'
+        }
     </script>
 </head>
 <body>
@@ -61,7 +64,7 @@
         </div>
     </div>
     <div class = "map-component" id="map-component">
-        <div id = "modal" onclick="closeModal()" class="modal-overlay">
+        <div id = "modal" onclick="closeModals()" class="modal-overlay">
             <div class="modal-content">
                 <div id="tile-name" class="modal-header">
                     Tile description
